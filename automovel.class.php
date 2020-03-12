@@ -65,7 +65,7 @@ class Automovel{
 
         $consulta = $this->pdo->query("SELECT count(*) AS automoveis FROM automoveis WHERE descricao LIKE '%$pesquisa%' OR marca LIKE '%$pesquisa%'");
         $retorno[0] = $consulta->fetch(PDO::FETCH_ASSOC);
-        $pagina = $pagina * 5;
+        $pagina = is_numeric($pagina) ? $pagina * 5 : 0;
         $consulta = $this->pdo->query("SELECT id,descricao,placa,marca FROM automoveis WHERE descricao LIKE '%$pesquisa%' OR marca LIKE '%$pesquisa%' LIMIT $pagina, 5 ");
         $retorno[1] = $consulta->fetchAll(PDO::FETCH_ASSOC);
         $this->pdo = null;

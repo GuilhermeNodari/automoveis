@@ -30,7 +30,7 @@ if (isset($_POST['id'])) {
     $automovel = new Automovel();
     $componente = new Componentes();
     $componente->idComponentes = $_POST['idComponentes'];
-    $componente->idAutomovel = $automovel->lastInsert()['id'];
+    $componente->idAutomovel = empty($_POST["id"]) ? $automovel->lastInsert()['id'] : $_POST["id"];
     $componente->componentes = implode($componentes, ';');
     $componente->adicionar();
 

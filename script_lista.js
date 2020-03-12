@@ -1,6 +1,5 @@
 $(document).ready(function(){
     listar();
-    //teste
 });
 
 function editarCadastro(id) {
