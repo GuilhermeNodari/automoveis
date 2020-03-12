@@ -86,7 +86,7 @@ class Automovel{
 
     public function dados($id) {
 
-        $consulta = $this->pdo->prepare("SELECT * FROM automoveis INNER JOIN componentes ON automoveis.id = componentes.idAutomovel WHERE automoveis.id = :id;");
+        $consulta = $this->pdo->prepare("SELECT * FROM automoveis LEFT JOIN componentes ON automoveis.id = componentes.idAutomovel WHERE automoveis.id = :id;");
         $consulta->bindParam(':id', $id, PDO::PARAM_STR);
         $consulta->execute();
         $retorno = $consulta->fetchAll(PDO::FETCH_ASSOC);
