@@ -16,15 +16,21 @@ if (isset($_POST['id'])) {
     $automovel = new Automovel();
     $automovel->id = $_POST['id'];
     $automovel->descricao = trim($_POST['descricao']);
-    $automovel->placa = trim($_POST['placa']);
+    $placa = str_replace('-', '', $_POST['placa']);
+    $automovel->placa = trim($placa);
     $automovel->renavan = trim($_POST['renavan']);
     $automovel->ano_modelo = trim($_POST['ano_modelo']);
     $automovel->ano_fabricacao = trim($_POST['ano_fabricacao']);
     $automovel->cor = trim($_POST['cor']);
-    $automovel->km = trim($_POST['km']);
+    $km = str_replace('.', '', $_POST['km']);
+    $automovel->km = trim($km);
     $automovel->marca = trim($_POST['marca']);
-    $automovel->preco = trim($_POST['preco']);
-    $automovel->preco_fipe = trim($_POST['preco_fipe']);
+    $preco = str_replace('.', '', $_POST['preco']);
+    $preco = str_replace(',', '.', $preco);
+    $automovel->preco = trim($preco);
+    $precoFipe = str_replace('.', '', $_POST['preco_fipe']);
+    $precoFipe = str_replace(',', '.', $precoFipe);
+    $automovel->preco_fipe = trim($precoFipe);
     $automovel->adicionar();
 
     $automovel = new Automovel();

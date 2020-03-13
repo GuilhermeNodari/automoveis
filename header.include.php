@@ -3,6 +3,7 @@
         <meta charset="UTF-8">
         <title>Automóveis</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.mask.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="https://kit.fontawesome.com/82b6d70f74.js" crossorigin="anonymous"></script>
         <script type="text/javascript" src="validacoes.js"></script>

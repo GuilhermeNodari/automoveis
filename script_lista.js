@@ -69,6 +69,13 @@ function editarCadastro(id) {
         ),
     );
 
+    $('#preco').mask('000.000,00', {reverse: true});
+    $('#preco_fipe').mask('000.000,00', {reverse: true});
+    $('#km').mask('000.000', {reverse: true});
+    $('#placa').mask('AAA-0000');
+    $('#ano_modelo').mask('0000');
+    $('#ano_fabricacao').mask('0000');
+
     var adicionais = ['arCondicionado', 'airBag', 'cdPlayer', 'direcaoHidraulica', 'vidroEletrico', 'travaEletrica', 'cambioAutomatico', 'rodasLiga', 'alarme'];
     var valor = ['Ar Condicionado', 'Air Bag', 'CD Player', 'Direção Hidráulica', 'Vidro Elétrico', 'Trava Elétrica', 'Câmbio Automático', 'Rodas de Liga', 'Alarme'];
 

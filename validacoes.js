@@ -1,15 +1,15 @@
 function validar(event) {
 
     var descricao = $('#descricao').val().trim();
-    var placa = $('#placa').val().trim();
+    var placa = $('#placa').val().replace('-','').trim();
     var renavan = $('#renavan').val().trim();
     var ano_modelo = $('#ano_modelo').val().trim();
     var ano_fabricacao = $('#ano_fabricacao').val().trim();
     var cor = $('#cor').val().trim();
-    var km = $('#km').val().trim();
+    var km = $('#km').val().replace('.','').trim();
     var marca = $('#marca').val().trim();
-    var preco = $('#preco').val().trim();
-    var preco_fipe = $('#preco_fipe').val().trim();
+    var preco = $('#preco').val().replace('.','').replace(',','.').trim();
+    var preco_fipe = $('#preco_fipe').val().replace('.','').replace(',','.').trim();
 
     var data = new Date();
     var ano = data.getFullYear();
@@ -272,6 +272,4 @@ function validar(event) {
     } else {
         return true;
     }
-
-    
 }
