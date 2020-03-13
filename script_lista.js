@@ -72,7 +72,6 @@ function editarCadastro(id) {
     $('#preco').mask('000.000,00', {reverse: true});
     $('#preco_fipe').mask('000.000,00', {reverse: true});
     $('#km').mask('000.000', {reverse: true});
-    $('#placa').mask('AAA-0000');
     $('#ano_modelo').mask('0000');
     $('#ano_fabricacao').mask('0000');
 
@@ -107,10 +106,10 @@ function editarCadastro(id) {
                     $('#ano_modelo').val(value.ano_modelo);
                     $('#ano_fabricacao').val(value.ano_fabricacao);
                     $('#cor').val(value.cor);
-                    $('#km').val(value.km);
+                    $('#km').val(value.km).mask('#.##0', {reverse: true});
                     $('#marca').val(value.marca);
-                    $('#preco').val(value.preco);
-                    $('#preco_fipe').val(value.preco_fipe);
+                    $('#preco').val(value.preco).mask("#.##0,00", {reverse: true});
+                    $('#preco_fipe').val(value.preco_fipe).mask("#.##0,00", {reverse: true});
                     $('#idComponentes').val(value.id);
                     var banco = value.componentes.split(';');
                     $.each (adicionais, function(key, valueAdicionais) {
@@ -128,23 +127,36 @@ function editarCadastro(id) {
 
 
 function excluirCadastro(id) {
-    $.ajax({
-        type: 'POST',
-        url:  'acoesAutomovel.php',
-        data: {
-            idExcluir: id
-        },
-        success: function(data){
-            Swal.fire({
-                icon: 'success',
-                title: 'Excluído com sucesso!',
-                showConfirmButton: true,
-            }).then((result) => {
-                window.location.href = 'home.php';
-            })
+    Swal.fire({
+        title: 'Você quer realmente excluir?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim!',
+        cancelButtonText: "Não!"
+    }).then((result) => {
+        if (typeof result.value != 'undefined') {
+            $.ajax({
+                type: 'POST',
+                url:  'acoesAutomovel.php',
+                data: {
+                    idExcluir: id
+                },
+                success: function(data){
+                    Swal.fire({
+                        title: 'Excluído com sucesso!',
+                        icon: 'success',
+                        showConfirmButton: true
+                    }).then((result) => {
+                        window.location.href = 'home.php';
+                    })
+                }
+            });
         }
     });
 }
+                
 
 function paginacao(retornoAjax){
 

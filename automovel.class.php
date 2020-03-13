@@ -38,7 +38,7 @@ class Automovel{
         if($this->id == ''){
             $sql = "INSERT INTO automoveis(descricao, placa, renavan, ano_modelo, ano_fabricacao, cor, km, marca, preco, preco_fipe) VALUES (:descricao, :placa, :renavan, :ano_modelo, :ano_fabricacao, :cor, :km, :marca, :preco, :preco_fipe)";
         }else{
-            $sql = "UPDATE automoveis SET descricao = :descricao, placa = :placa, renavan = :renavan, ano_modelo = :ano_modelo, ano_fabricacao = :ano_fabricacao, cor = :cor, km = :km, marca = :marca, preco = :preco, preco = :preco WHERE id=$this->id";
+            $sql = "UPDATE automoveis SET descricao = :descricao, placa = :placa, renavan = :renavan, ano_modelo = :ano_modelo, ano_fabricacao = :ano_fabricacao, cor = :cor, km = :km, marca = :marca, preco = :preco, preco_fipe = :preco_fipe WHERE id=$this->id";
         }
                               
         $this->stmt = $this->pdo->prepare($sql);

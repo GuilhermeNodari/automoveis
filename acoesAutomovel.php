@@ -16,8 +16,7 @@ if (isset($_POST['id'])) {
     $automovel = new Automovel();
     $automovel->id = $_POST['id'];
     $automovel->descricao = trim($_POST['descricao']);
-    $placa = str_replace('-', '', $_POST['placa']);
-    $automovel->placa = trim($placa);
+    $automovel->placa = trim($_POST['placa']);
     $automovel->renavan = trim($_POST['renavan']);
     $automovel->ano_modelo = trim($_POST['ano_modelo']);
     $automovel->ano_fabricacao = trim($_POST['ano_fabricacao']);
