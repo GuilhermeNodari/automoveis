@@ -59,8 +59,11 @@ function editarCadastro(id) {
                     ),
                 ),
                 $('<h1>', {style:'text-align:center'}).append('Componenetes Adicionais'),
+                $('<br>'),
                 $('<hr>'),
-                $('<input>', {type:'hidden', class:'form-control', id:'idComponentes', name:'idComponentes'}),
+                $('<button>', {class:'btn btn-primary', type:'button'}).append('Cadastrar/Ver Componentes').on('click', function(){
+                    editarComponente();
+                }),
                 $('<button>', {class:'btn btn-primary', type:'submit', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
                     validar(event);
                 }),
@@ -74,18 +77,6 @@ function editarCadastro(id) {
     $('#km').mask('000.000', {reverse: true});
     $('#ano_modelo').mask('0000');
     $('#ano_fabricacao').mask('0000');
-
-    var adicionais = ['arCondicionado', 'airBag', 'cdPlayer', 'direcaoHidraulica', 'vidroEletrico', 'travaEletrica', 'cambioAutomatico', 'rodasLiga', 'alarme'];
-    var valor = ['Ar Condicionado', 'Air Bag', 'CD Player', 'Direção Hidráulica', 'Vidro Elétrico', 'Trava Elétrica', 'Câmbio Automático', 'Rodas de Liga', 'Alarme'];
-
-    for (var i = 0; i < adicionais.length; i++) {
-        $('#idComponentes').after(
-            $('<div>', {class:'custom-control custom-checkbox custom-control-inline'}).append(
-                $('<input>', {type:'checkbox', class:'custom-control-input', id:adicionais[i], name:adicionais[i], value:adicionais[i]}),
-                $('<label>', {class:'custom-control-label', for:adicionais[i]}).append(valor[i]),
-            ),
-        )
-    }
     
     $('#salvar').before('<br><br>');
 
@@ -99,7 +90,7 @@ function editarCadastro(id) {
             success: function(data){
                 data = JSON.parse(data);
                 $.each (data, function(key, value) {
-                    $('#id').val(value.idAutomovel);
+                    $('#id').val(value.id);
                     $('#descricao').val(value.descricao);
                     $('#placa').val(value.placa);
                     $('#renavan').val(value.renavan);
@@ -110,21 +101,88 @@ function editarCadastro(id) {
                     $('#marca').val(value.marca);
                     $('#preco').val(value.preco).mask("#.##0,00", {reverse: true});
                     $('#preco_fipe').val(value.preco_fipe).mask("#.##0,00", {reverse: true});
-                    $('#idComponentes').val(value.id);
-                    var banco = value.componentes.split(';');
-                    $.each (adicionais, function(key, valueAdicionais) {
-                        $.each (banco, function(key, valueBanco) {
-                            if (valueAdicionais == valueBanco) {
-                                $('#'+valueBanco).attr('checked','checked');
-                            }
-                        });
-                    });
                 });
             }
         });
     }
 }
 
+
+function editarComponente(id) {
+    $('.form').hide();
+    $('.lista').hide();
+    $('.pagination').hide();
+    $('.formComponente').append(
+        $('<div>', {class:'container'}).append(
+            $('<h1>', {style:'text-align:center'}).append('Dados dos Componentes'),
+            $('<hr>'),
+            $('<form>', {action:'acoesComponente.php', method:'POST', id:'formComponentes'}).append(
+                $('<div>', {class:'form-row'}).append(
+                    $('<div>', {class:'form-group col-md-12'}).append(
+                        $('<input>', {type:'hidden', class:'form-control', id:'id', name:'id'}),
+                        $('<label>', {for:'componente'}).append('Componente'),
+                        $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
+                    ),
+                ),
+                $('<button>', {class:'btn btn-primary', type:'submit', style:'margin-right:10px', id:'salvar'}).append('Salvar'),
+                $('<button>', {class:'btn btn-light', type:'button', onClick:'window.location.href = "home.php"'}).append('Voltar'),
+            ),
+        ),
+    );
+    
+    listarComponentes().done(function(dados) {
+        $('.listaComponente').append(
+            $('<div>', {class:'container'}).append(
+                $('<br>'),
+                $('<table>', {class:'table table-hover'}).append(
+                    $('<thead>').append(
+                        $('<tr>').append(
+                            $('<th>').append('Nome'),
+                            $('<th>').append('Ações')
+                        ),
+                    ),
+                    $('<tbody>'),
+                ),
+            ),
+        );
+
+        $.each (dados, function(key, value) {
+            $('tbody').append(
+                $('<tr>').append(
+                    $('<td>').append(value.componentes),
+                    $('<td>').append(
+                        $('<a>', {href:'#'}).append(
+                            $('<i>', {class:'fas fa-trash'}).on('click', function() {
+                                excluirCadastro(value.id);
+                            }),
+                        ).append(' '),
+                        $('<a>', {href:'#'}).append(
+                            $('<i>', {class:'fas fa-pen'}).on('click', function() {
+                                editarCadastro(value.id);
+                            }),
+                        ),
+                    ),
+                ),
+            );
+        })
+    });
+}
+
+function listarComponentes() {
+    var objDeferred = $.Deferred();
+    $.ajax({
+        type: 'POST',
+        url:  'acoesComponente.php',
+        data: {
+            acao: 'listar',
+        },
+        success: function(data){
+            dados = JSON.parse(data);
+            objDeferred.resolve(dados);
+        }
+    });
+    return objDeferred.promise();
+}
 
 function excluirCadastro(id) {
     Swal.fire({

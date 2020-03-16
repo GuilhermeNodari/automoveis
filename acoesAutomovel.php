@@ -1,17 +1,16 @@
 <?php
 
 include_once 'automovel.class.php';
-include_once 'componentes.class.php';
 
 if (isset($_POST['id'])) {
 
-    $adicionais = ['arCondicionado', 'airBag', 'cdPlayer', 'direcaoHidraulica', 'vidroEletrico', 'travaEletrica', 'cambioAutomatico', 'rodasLiga', 'alarme'];
+    // $adicionais = ['arCondicionado', 'airBag', 'cdPlayer', 'direcaoHidraulica', 'vidroEletrico', 'travaEletrica', 'cambioAutomatico', 'rodasLiga', 'alarme'];
 
-    foreach ($adicionais as $chave => $valor) {
-        if (isset($_POST[$valor])) {
-            $componentes[] = $valor;
-        }
-    }
+    // foreach ($adicionais as $chave => $valor) {
+    //     if (isset($_POST[$valor])) {
+    //         $componentes[] = $valor;
+    //     }
+    // }
 
     $automovel = new Automovel();
     $automovel->id = $_POST['id'];
@@ -31,13 +30,6 @@ if (isset($_POST['id'])) {
     $precoFipe = str_replace(',', '.', $precoFipe);
     $automovel->preco_fipe = trim($precoFipe);
     $automovel->adicionar();
-
-    $automovel = new Automovel();
-    $componente = new Componentes();
-    $componente->idComponentes = $_POST['idComponentes'];
-    $componente->idAutomovel = empty($_POST["id"]) ? $automovel->lastInsert()['id'] : $_POST["id"];
-    $componente->componentes = implode($componentes, ';');
-    $componente->adicionar();
 
     header('Location: home.php');
 

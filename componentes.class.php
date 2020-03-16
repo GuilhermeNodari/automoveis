@@ -1,9 +1,8 @@
 <?php
 
 class Componentes{
-    private $idComponentes;
-    private $idAutomovel;
-    private $componentes;
+    private $idComponente;
+    private $componente;
 
     private $pdo;
     private $stmt;
@@ -28,19 +27,26 @@ class Componentes{
 
     public function adicionar() {
 
-        if($this->idComponentes == ""){
-            $sql = "INSERT INTO componentes(idAutomovel, componentes) VALUES (:idAutomovel, :componentes)";
+        if($this->idComponente == ""){
+            $sql = "INSERT INTO componentes(componentes) VALUES (:componente)";
         }else{
-            $sql = "UPDATE componentes SET idAutomovel = :idAutomovel, componentes = :componentes WHERE id=$this->idComponentes";
+            $sql = "UPDATE componentes SET componentes = :componente WHERE id=$this->idComponente";
         }
                               
         $this->stmt = $this->pdo->prepare($sql);
-
-        $this->stmt->bindParam(':idAutomovel', $this->idAutomovel, PDO::PARAM_STR);
-        $this->stmt->bindParam(':componentes', $this->componentes, PDO::PARAM_STR);
-                                              
+        $this->stmt->bindParam(':componente', $this->componente, PDO::PARAM_STR);                           
         $this->stmt->execute();
     
+    }
+
+    public function listar() {
+
+        $consulta = $this->pdo->prepare("SELECT * FROM componentes");
+        $consulta->execute();
+        $retorno = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        $this->pdo = null;
+        return $retorno;
+
     }
 
 }

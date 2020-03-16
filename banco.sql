@@ -16,7 +16,5 @@ CREATE TABLE `automoveis` (
 
 CREATE TABLE `componentes` (
   `id` int(11) AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  `idAutomovel` int(11) NOT NULL,
-  FOREIGN KEY(`idAutomovel`) REFERENCES `automoveis`(`id`),
   `componentes` varchar(200) NULL
 )
