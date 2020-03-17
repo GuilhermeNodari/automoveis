@@ -49,6 +49,27 @@ class Componentes{
 
     }
 
+    public function dados($id) {
+
+        $consulta = $this->pdo->prepare("SELECT * FROM componentes WHERE id = :id;");
+        $consulta->bindParam(':id', $id, PDO::PARAM_STR);
+        $consulta->execute();
+        $retorno = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        $this->pdo = null;
+        return $retorno;
+        
+    }
+
+    public function excluir($id) {
+
+        $this->stmt = $this->pdo->prepare('DELETE FROM componentes WHERE id = :id');
+        $this->stmt->bindParam(':id', $id, PDO::PARAM_STR); 
+        $this->stmt->execute();
+        $this->pdo = null;
+        $this->stmt = null;
+
+    }
+
 }
 
 ?>

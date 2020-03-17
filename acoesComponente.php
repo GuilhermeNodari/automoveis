@@ -2,22 +2,36 @@
 
 include_once 'componentes.class.php';
 
-if (isset($_POST['id'])) {
+if (isset($_POST['idComponente'])) {
 
     $componentes = new Componentes();
-    $componentes->id = $_POST['id'];
+    $componentes->idComponente = $_POST['idComponente'];
     $componentes->componente = trim($_POST['componente']);
     $componentes->adicionar();
 
-    header("Location: Javascript:editarComponente();");
+    header("Location: home.php");
 
 } else if (isset($_POST['acao'])) {
 
     $componentes = new Componentes();
     $dados = $componentes->listar();
+
     echo json_encode($dados);
 
-}
+} else if (isset($_POST['idEditar'])) {
+    
+    $id = $_POST["idEditar"];
+    $componentes = new Componentes();
+    $dados = $componentes->dados($id); 
+    
+    echo json_encode($dados);
 
+} else {
+
+    $id = $_POST['idExcluir'];
+    $componentes = new Componentes();
+    $componentes->excluir($id);
+
+}
 
 ?>

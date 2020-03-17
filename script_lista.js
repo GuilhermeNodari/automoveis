@@ -61,7 +61,7 @@ function editarCadastro(id) {
                 $('<h1>', {style:'text-align:center'}).append('Componenetes Adicionais'),
                 $('<br>'),
                 $('<hr>'),
-                $('<button>', {class:'btn btn-primary', type:'button'}).append('Cadastrar/Ver Componentes').on('click', function(){
+                $('<button>', {class:'btn btn-primary', type:'button', id:'buttoncomponentes'}).append('Cadastrar/Ver Componentes').on('click', function(){
                     editarComponente();
                 }),
                 $('<button>', {class:'btn btn-primary', type:'submit', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
@@ -77,6 +77,17 @@ function editarCadastro(id) {
     $('#km').mask('000.000', {reverse: true});
     $('#ano_modelo').mask('0000');
     $('#ano_fabricacao').mask('0000');
+
+    listarComponentes().done(function(dados) {
+        $.each (dados, function(key, value) {
+            $('#buttoncomponentes').before(
+                $('<div>', {class:'form-check form-check-inline'}).append(
+                    $('<input>', {class:'form-check-input', type:'checkbox', id:value.id}),
+                    $('<label>', {class:'form-check-label', for:'componente_'+value.id}).append(value.componentes),
+                ),
+            );
+        })
+    })
     
     $('#salvar').before('<br><br>');
 
@@ -109,9 +120,14 @@ function editarCadastro(id) {
 
 
 function editarComponente(id) {
+
     $('.form').hide();
     $('.lista').hide();
     $('.pagination').hide();
+
+    $('.formComponente').html('');
+    $('.listaComponente').html('');
+
     $('.formComponente').append(
         $('<div>', {class:'container'}).append(
             $('<h1>', {style:'text-align:center'}).append('Dados dos Componentes'),
@@ -119,7 +135,7 @@ function editarComponente(id) {
             $('<form>', {action:'acoesComponente.php', method:'POST', id:'formComponentes'}).append(
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-12'}).append(
-                        $('<input>', {type:'hidden', class:'form-control', id:'id', name:'id'}),
+                        $('<input>', {type:'hidden', class:'form-control', id:'idComponente', name:'idComponente'}),
                         $('<label>', {for:'componente'}).append('Componente'),
                         $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
                     ),
@@ -129,6 +145,23 @@ function editarComponente(id) {
             ),
         ),
     );
+
+    if (typeof id != 'undefined') {
+        $.ajax({
+            type: 'POST',
+            url:  'acoesComponente.php',
+            data: {
+                idEditar: id
+            },
+            success: function(data){
+                data = JSON.parse(data);
+                $.each (data, function(key, value) {
+                    $('#idComponente').val(value.id);
+                    $('#componente').val(value.componentes);
+                });
+            }
+        });
+    }
     
     listarComponentes().done(function(dados) {
         $('.listaComponente').append(
@@ -146,25 +179,64 @@ function editarComponente(id) {
             ),
         );
 
-        $.each (dados, function(key, value) {
-            $('tbody').append(
-                $('<tr>').append(
-                    $('<td>').append(value.componentes),
-                    $('<td>').append(
-                        $('<a>', {href:'#'}).append(
-                            $('<i>', {class:'fas fa-trash'}).on('click', function() {
-                                excluirCadastro(value.id);
-                            }),
-                        ).append(' '),
-                        $('<a>', {href:'#'}).append(
-                            $('<i>', {class:'fas fa-pen'}).on('click', function() {
-                                editarCadastro(value.id);
-                            }),
+        if (dados.length != 0) {
+            $.each (dados, function(key, value) {
+                $('tbody').append(
+                    $('<tr>').append(
+                        $('<td>').append(value.componentes),
+                        $('<td>').append(
+                            $('<a>', {href:'#'}).append(
+                                $('<i>', {class:'fas fa-trash'}).on('click', function() {
+                                    excluirComponente(value.id);
+                                }),
+                            ).append(' '),
+                            $('<a>', {href:'#'}).append(
+                                $('<i>', {class:'fas fa-pen'}).on('click', function() {
+                                    editarComponente(value.id);
+                                }),
+                            ),
                         ),
                     ),
+                );
+            })
+        } else {
+            $('tbody').append(
+                $('<tr>').append(
+                    $('<td>', {colspan:'2', style:'text-align:center;'}).append('Não há componentes cadastrados'),
                 ),
             );
-        })
+        }
+    });
+}
+
+function excluirComponente(id) {
+    Swal.fire({
+        title: 'Você quer realmente excluir?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim!',
+        cancelButtonText: "Não!"
+    }).then((result) => {
+        if (typeof result.value != 'undefined') {
+            $.ajax({
+                type: 'POST',
+                url:  'acoesComponente.php',
+                data: {
+                    idExcluir: id
+                },
+                success: function(data){
+                    Swal.fire({
+                        title: 'Excluído com sucesso!',
+                        icon: 'success',
+                        showConfirmButton: true
+                    }).then((result) => {
+                        window.location.href = 'home.php';
+                    })
+                }
+            });
+        }
     });
 }
 
