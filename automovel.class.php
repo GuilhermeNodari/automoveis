@@ -35,6 +35,7 @@ class Automovel{
     }
 
     public function adicionar() {
+
         if($this->id == ''){
             $sql = "INSERT INTO automoveis(descricao, placa, renavan, ano_modelo, ano_fabricacao, cor, km, marca, preco, preco_fipe) VALUES (:descricao, :placa, :renavan, :ano_modelo, :ano_fabricacao, :cor, :km, :marca, :preco, :preco_fipe)";
         }else{
@@ -43,8 +44,9 @@ class Automovel{
                               
         $this->stmt = $this->pdo->prepare($sql);
 
+        $placa = strtoupper($this->placa);
         $this->stmt->bindParam(':descricao', $this->descricao, PDO::PARAM_STR);
-        $this->stmt->bindParam(':placa', strtoupper($this->placa), PDO::PARAM_STR);
+        $this->stmt->bindParam(':placa', $placa, PDO::PARAM_STR);
         $this->stmt->bindParam(':renavan', $this->renavan, PDO::PARAM_STR);
         $this->stmt->bindParam(':ano_modelo', $this->ano_modelo, PDO::PARAM_STR); 
         $this->stmt->bindParam(':ano_fabricacao', $this->ano_fabricacao, PDO::PARAM_STR);
@@ -61,13 +63,31 @@ class Automovel{
 
     }
 
+    public function adicionarComponentes($idAutomovel, $idComponente) {
+
+        $this->pdo = new PDO('mysql:host=localhost;dbname=lista_automoveis', 'root', 'asdf000');
+        $sql = "INSERT INTO automoveis_componentes(id_automovel, id_componente) VALUES (:id_automovel, :id_componente)"; 
+        $this->stmt = $this->pdo->prepare($sql);
+
+        $this->stmt->bindParam(':id_automovel', $idAutomovel, PDO::PARAM_STR);
+        $this->stmt->bindParam(':id_componente', $idComponente, PDO::PARAM_STR);   
+
+        $this->stmt->execute();
+        $this->pdo = null;
+        $this->stmt = null;
+
+    }
+
     public function listar($pesquisa, $pagina) {
 
         $consulta = $this->pdo->query("SELECT count(*) AS automoveis FROM automoveis WHERE descricao LIKE '%$pesquisa%' OR marca LIKE '%$pesquisa%'");
         $retorno[0] = $consulta->fetch(PDO::FETCH_ASSOC);
+        
         $pagina = is_numeric($pagina) ? $pagina * 5 : 0;
+
         $consulta = $this->pdo->query("SELECT id,descricao,placa,marca FROM automoveis WHERE descricao LIKE '%$pesquisa%' OR marca LIKE '%$pesquisa%' LIMIT $pagina, 5 ");
         $retorno[1] = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
         $this->pdo = null;
 
         return $retorno;
@@ -78,7 +98,9 @@ class Automovel{
 
         $this->stmt = $this->pdo->prepare('DELETE FROM automoveis WHERE id = :id');
         $this->stmt->bindParam(':id', $id, PDO::PARAM_STR); 
+
         $this->stmt->execute();
+
         $this->pdo = null;
         $this->stmt = null;
 
@@ -87,10 +109,13 @@ class Automovel{
     public function dados($id) {
 
         $consulta = $this->pdo->prepare("SELECT * FROM automoveis WHERE id = :id;");
+
         $consulta->bindParam(':id', $id, PDO::PARAM_STR);
         $consulta->execute();
         $retorno = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
         $this->pdo = null;
+
         return $retorno;
         
     }
@@ -98,10 +123,13 @@ class Automovel{
     public function lastInsert() {
 
         $this->stmt = $this->pdo->prepare("SELECT id FROM automoveis ORDER BY id DESC LIMIT 1");
+
         $this->stmt->execute();
         $consulta = $this->stmt->fetch(PDO::FETCH_ASSOC);
+
         $this->pdo = null;
         $this->stmt = null;
+
         return $consulta;
 
     }

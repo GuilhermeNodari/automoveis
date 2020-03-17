@@ -12,9 +12,16 @@ CREATE TABLE `automoveis` (
   `marca` varchar(20) NOT NULL,
   `preco` decimal(8,2) NOT NULL,
   `preco_fipe` decimal(8,2) NOT NULL
-)
+);
 
 CREATE TABLE `componentes` (
   `id` int(11) AUTO_INCREMENT NOT NULL PRIMARY KEY,
   `componentes` varchar(200) NULL
-)
+);
+
+CREATE TABLE `automoveis_componentes` (
+  `id_automovel` INT(11) NOT NULL,
+  FOREIGN KEY (`id_automovel`) REFERENCES `automoveis`(`id`),
+  `id_componente` INT(11) NOT NULL,
+  FOREIGN KEY (`id_componente`) REFERENCES `componentes`(`id`)
+);

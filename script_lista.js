@@ -82,7 +82,7 @@ function editarCadastro(id) {
         $.each (dados, function(key, value) {
             $('#buttoncomponentes').before(
                 $('<div>', {class:'form-check form-check-inline'}).append(
-                    $('<input>', {class:'form-check-input', type:'checkbox', id:value.id}),
+                    $('<input>', {class:'form-check-input', type:'checkbox', id:value.id, name:value.id}),
                     $('<label>', {class:'form-check-label', for:'componente_'+value.id}).append(value.componentes),
                 ),
             );
