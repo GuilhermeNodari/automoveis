@@ -36,7 +36,8 @@ if (isset($_POST['id'])) {
     foreach ($_POST as $chave => $valor) {
         foreach ($dados as $chave2 => $valor2) {
             if ($chave == $valor2['id']) {
-                $automovel->adicionarComponentes($automovel->lastInsert()['id'], $chave);
+                $id = empty($_POST['id']) ? $automovel->lastInsert()['id'] : $_POST['id'];
+                $automovel->adicionarComponentes($id, $chave);
             }
         }
     }
