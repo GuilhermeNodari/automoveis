@@ -18,7 +18,7 @@ class Componentes{
     public function __construct() {
         
         try {
-            $this->pdo = new PDO('mysql:host=localhost;dbname=lista_automoveis', 'root', 'asdf000');
+            $this->pdo = new PDO('mysql:host=localhost;dbname=lista_automoveis', 'root', '');
         } catch(PDOException $e) {
             echo 'Erro gerado: ' . $e->getMessage(); 
         }

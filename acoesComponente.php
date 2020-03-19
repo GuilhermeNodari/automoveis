@@ -11,7 +11,7 @@ if (isset($_POST['idComponente'])) {
 
     header("Location: home.php");
 
-} else if (isset($_POST['acao'])) {
+} else if (isset($_POST['listar'])) {
 
     $componentes = new Componentes();
     $dados = $componentes->listar();

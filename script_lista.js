@@ -1,6 +1,5 @@
 $(document).ready(function(){
     listar();
-    // teste
 });
 
 function editarCadastro(id) {
@@ -62,6 +61,7 @@ function editarCadastro(id) {
                 $('<h1>', {style:'text-align:center'}).append('Componenetes Adicionais'),
                 $('<br>'),
                 $('<hr>'),
+                $('<input>', {type:'hidden', class:'form-control', name:'atualizar', id:'atualizar', value:'false'}),
                 $('<button>', {class:'btn btn-primary', type:'button', id:'buttoncomponentes'}).append('Cadastrar/Ver Componentes').on('click', function(){
                     editarComponente();
                 }),
@@ -102,7 +102,7 @@ function editarCadastro(id) {
             success: function(data){
                 data = JSON.parse(data);
                 $.each (data, function(key, value) {
-                    $('#id').val(value.id);
+                    $('#id').val(value.id_automovel);
                     $('#descricao').val(value.descricao);
                     $('#placa').val(value.placa);
                     $('#renavan').val(value.renavan);
@@ -113,6 +113,12 @@ function editarCadastro(id) {
                     $('#marca').val(value.marca);
                     $('#preco').val(value.preco).mask("#.##0,00", {reverse: true});
                     $('#preco_fipe').val(value.preco_fipe).mask("#.##0,00", {reverse: true});
+                    $('#atualizar').val('true');
+                    $.each(dados, function(key2, value2) {
+                        if (value.id_componente == value2.id) {
+                            $('#'+value.id_componente).attr('checked','checked');
+                        }
+                    })
                 });
             }
         });
@@ -247,7 +253,7 @@ function listarComponentes() {
         type: 'POST',
         url:  'acoesComponente.php',
         data: {
-            acao: 'listar',
+            listar: 'listar',
         },
         success: function(data){
             dados = JSON.parse(data);

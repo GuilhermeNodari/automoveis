@@ -29,6 +29,10 @@ if (isset($_POST['id'])) {
 
     $automovel = new Automovel();
 
+    if ($_POST['atualizar'] == 'true') {
+        $automovel->excluirComponentes($_POST['id']);
+    }
+
     foreach ($_POST as $chave => $valor) {
         foreach ($dados as $chave2 => $valor2) {
             if ($chave == $valor2['id']) {

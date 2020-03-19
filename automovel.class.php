@@ -27,7 +27,7 @@ class Automovel{
     public function __construct() {
         
         try {
-            $this->pdo = new PDO('mysql:host=localhost;dbname=lista_automoveis', 'root', 'asdf000');
+            $this->pdo = new PDO('mysql:host=localhost;dbname=lista_automoveis', 'root', '');
         } catch(PDOException $e) {
             echo 'Erro gerado ' . $e->getMessage(); 
         }
@@ -63,9 +63,22 @@ class Automovel{
 
     }
 
+    public function excluirComponentes($idAutomovel) {
+
+        $sql = "DELETE FROM automoveis_componentes WHERE id_automovel=:id_automovel";
+        $this->stmt = $this->pdo->prepare($sql);
+
+        $this->stmt->bindParam(':id_automovel', $idAutomovel, PDO::PARAM_STR);
+
+        $this->stmt->execute();
+        $this->pdo = null;
+        $this->stmt = null;
+
+    }
+
     public function adicionarComponentes($idAutomovel, $idComponente) {
 
-        $this->pdo = new PDO('mysql:host=localhost;dbname=lista_automoveis', 'root', 'asdf000');
+        $this->pdo = new PDO('mysql:host=localhost;dbname=lista_automoveis', 'root', '');
         $sql = "INSERT INTO automoveis_componentes(id_automovel, id_componente) VALUES (:id_automovel, :id_componente)"; 
         $this->stmt = $this->pdo->prepare($sql);
 
@@ -108,7 +121,7 @@ class Automovel{
 
     public function dados($id) {
 
-        $consulta = $this->pdo->prepare("SELECT * FROM automoveis WHERE id = :id;");
+        $consulta = $this->pdo->prepare("SELECT * FROM automoveis AS a INNER JOIN automoveis_componentes AS ac INNER JOIN componentes AS c ON a.id = ac.id_automovel AND c.id = ac.id_componente WHERE a.id = :id;");
 
         $consulta->bindParam(':id', $id, PDO::PARAM_STR);
         $consulta->execute();
@@ -122,6 +135,7 @@ class Automovel{
 
     public function lastInsert() {
 
+        $this->pdo = new PDO('mysql:host=localhost;dbname=lista_automoveis', 'root', '');
         $this->stmt = $this->pdo->prepare("SELECT id FROM automoveis ORDER BY id DESC LIMIT 1");
 
         $this->stmt->execute();
