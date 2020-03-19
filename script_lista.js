@@ -102,7 +102,8 @@ function editarCadastro(id) {
             success: function(data){
                 data = JSON.parse(data);
                 $.each (data, function(key, value) {
-                    $('#id').val(value.id_automovel);
+                    var id = typeof value.id_automovel == 'undefined'  ? value.id : value.id_automovel; 
+                    $('#id').val(id);
                     $('#descricao').val(value.descricao);
                     $('#placa').val(value.placa);
                     $('#renavan').val(value.renavan);

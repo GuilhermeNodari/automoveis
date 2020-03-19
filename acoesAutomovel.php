@@ -53,9 +53,12 @@ if (isset($_POST['id'])) {
 } else if (isset($_POST['idEditar'])) {
     
     $id = $_POST["idEditar"];
+
     $automovel = new Automovel();
-    $dados = $automovel->dados($id);
-    $dados = mb_convert_encoding($dados, "UTF-8", "auto"); 
+    $dadosComponentes = $automovel->dadosComponentes($id);
+
+    $automovel = new Automovel();
+    $dados = $automovel->dados($id, $dadosComponentes);
     
     echo json_encode($dados);
 

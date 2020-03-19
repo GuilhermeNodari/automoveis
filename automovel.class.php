@@ -119,9 +119,29 @@ class Automovel{
 
     }
 
-    public function dados($id) {
+    public function dadosComponentes($id) {
 
-        $consulta = $this->pdo->prepare("SELECT * FROM automoveis AS a INNER JOIN automoveis_componentes AS ac INNER JOIN componentes AS c ON a.id = ac.id_automovel AND c.id = ac.id_componente WHERE a.id = :id;");
+        $consulta = $this->pdo->prepare("SELECT * FROM automoveis_componentes WHERE id_automovel = :id_automovel");
+
+        $consulta->bindParam(':id_automovel', $id, PDO::PARAM_STR);
+        $consulta->execute();
+        $retorno = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+        $this->pdo = null;
+
+        return $retorno;
+        
+    }
+
+    public function dados($id, $dadosComponentes) {
+
+        if (empty($dadosComponentes)) {
+            $sql = "SELECT * FROM automoveis WHERE id = :id";
+        } else {
+            $sql = "SELECT * FROM automoveis AS a INNER JOIN automoveis_componentes AS ac INNER JOIN componentes AS c ON a.id = ac.id_automovel AND c.id = ac.id_componente WHERE a.id = :id";
+        }
+
+        $consulta = $this->pdo->prepare($sql);
 
         $consulta->bindParam(':id', $id, PDO::PARAM_STR);
         $consulta->execute();
