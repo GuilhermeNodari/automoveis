@@ -273,3 +273,31 @@ function validar(event) {
         return true;
     }
 }
+
+function validarComponente(event) {
+
+    var componente = $('#componente').val().trim();
+    var enviar = true;
+
+    if (componente == '') {
+
+        $('#erro_componente').html('');
+        $('#componente').after('<p id="erro_componente">Componente vazio!</p>');
+        $('#erro_componente').css({
+            'color': 'red',
+            'font-size': '15px'
+          });
+        enviar = false;
+
+    } else {
+        $('#erro_componente').html('');
+    }
+
+    if (!enviar) {
+        event.preventDefault();
+        return false;
+    } else {
+        return true;
+    }
+
+}

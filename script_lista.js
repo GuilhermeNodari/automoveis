@@ -148,7 +148,9 @@ function editarComponente(id) {
                         $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
                     ),
                 ),
-                $('<button>', {class:'btn btn-primary', type:'submit', style:'margin-right:10px', id:'salvar'}).append('Salvar'),
+                $('<button>', {class:'btn btn-primary', type:'submit', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
+                    validarComponente(event);
+                }),
                 $('<button>', {class:'btn btn-light', type:'button', onClick:'window.location.href = "home.php"'}).append('Voltar'),
             ),
         ),
