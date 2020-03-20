@@ -110,10 +110,12 @@ function editarCadastro(id) {
                     $('#ano_modelo').val(value.ano_modelo);
                     $('#ano_fabricacao').val(value.ano_fabricacao);
                     $('#cor').val(value.cor);
-                    $('#km').val(value.km).mask('#.##0', {reverse: true});
+                    $('#km').val(value.km).mask('###.##0', {reverse: true});
                     $('#marca').val(value.marca);
-                    $('#preco').val(value.preco).mask("#.##0,00", {reverse: true});
-                    $('#preco_fipe').val(value.preco_fipe).mask("#.##0,00", {reverse: true});
+                    var preco = value.preco.replace('.','');
+                    $('#preco').val(preco).mask("###.##0,00", {reverse: true});
+                    var preco_fipe = value.preco_fipe.replace('.','');
+                    $('#preco_fipe').val(preco_fipe).mask("###.##0,00", {reverse: true});
                     $('#atualizar').val('true');
                     $.each(dados, function(key2, value2) {
                         if (value.id_componente == value2.id) {
