@@ -66,8 +66,10 @@ if (isset($_POST['id'])) {
 
     $pesquisa = !empty($_POST['pesquisa']) ? $_POST['pesquisa'] : '';
     $pagina = $_POST['pagina'];
+    $ordem = $_POST['ordem'];
+    $coluna = $_POST['coluna'];
     $automovel = new Automovel();
-    $lista = $automovel->listar($pesquisa, $pagina);
+    $lista = $automovel->listar($pesquisa, $pagina, $coluna, $ordem);
     
     echo json_encode($lista);
 

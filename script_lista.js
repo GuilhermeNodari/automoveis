@@ -317,11 +317,11 @@ function paginacao(retornoAjax){
 
 }
 
-function listar(pesquisa, pagina) {
+function listar(pesquisa, pagina, coluna, ordem) {
 
     $('.lista').html('');
     
-    pesquisarAutomoveis(pesquisa, parseInt(pagina)-1, function(retornoAjax) {
+    pesquisarAutomoveis(pesquisa, parseInt(pagina)-1, coluna, ordem, function(retornoAjax) {
         paginacao(retornoAjax);
         $('.lista').append(
             $('<div>', {class:'container'}).append(
@@ -329,7 +329,7 @@ function listar(pesquisa, pagina) {
                 $('<hr>'),
                 $('<div>', {class:'form-group col-md-12 input'}).append(
                     $('<input>', {type:'text', class:'form-control', id:'pesquisa', name:'pesquisa', placeholder:'Pesquise aqui por descrição ou marca'}).on('keyup', function() {
-                        pesquisarAutomoveis($('#pesquisa').val(), 0, function(retornoAjax) {
+                        pesquisarAutomoveis($('#pesquisa').val(), 0, coluna, ordem, function(retornoAjax) {
                             $('tbody').html('');
                             paginacao(retornoAjax);
                             retornoAjax = JSON.parse(retornoAjax);
@@ -369,9 +369,42 @@ function listar(pesquisa, pagina) {
                 $('<table>', {class:'table table-hover'}).append(
                     $('<thead>').append(
                         $('<tr>').append(
-                            $('<th>').append('Descrição'),
-                            $('<th>').append('Placa'),
-                            $('<th>').append('Marca'),
+                            $('<th>').append('Descrição').append(' ').append(
+                                $('<a>', {href:'#'}).append(
+                                    $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
+                                        listar(pesquisa, pagina, 'descricao', 'ASC');
+                                    }),
+                                ).append(' '),
+                                $('<a>', {href:'#'}).append(
+                                    $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
+                                        listar(pesquisa, pagina, 'descricao', 'DESC');
+                                    }),
+                                ),
+                            ),
+                            $('<th>').append('Placa').append(' ').append(
+                                $('<a>', {href:'#'}).append(
+                                    $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
+                                        listar(pesquisa, pagina, 'placa', 'ASC');
+                                    }),
+                                ).append(' '),
+                                $('<a>', {href:'#'}).append(
+                                    $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
+                                        listar(pesquisa, pagina, 'placa', 'DESC');
+                                    }),
+                                ),
+                            ),
+                            $('<th>').append('Marca').append(' ').append(
+                                $('<a>', {href:'#'}).append(
+                                    $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
+                                        listar(pesquisa, pagina, 'marca', 'ASC');
+                                    }),
+                                ).append(' '),
+                                $('<a>', {href:'#'}).append(
+                                    $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
+                                        listar(pesquisa, pagina, 'marca', 'DESC');
+                                    }),
+                                ),
+                            ),
                             $('<th>').append('Ações')
                         ),
                     ),
@@ -415,13 +448,15 @@ function listar(pesquisa, pagina) {
     });
 }
 
-function pesquisarAutomoveis(pesquisa,pagina,callback) {
+function pesquisarAutomoveis(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC', callback) {
     $.ajax({
         type: 'POST',
         url:  'acoesAutomovel.php',
         data: {
             pagina: pagina,
             pesquisa: pesquisa,
+            coluna: coluna,
+            ordem: ordem
         },
         success: function(data){
             callback(data);
