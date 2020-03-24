@@ -101,28 +101,24 @@ function editarCadastro(id) {
             },
             success: function(data){
                 data = JSON.parse(data);
-                $.each (data, function(key, value) {
-                    var id = typeof value.id_automovel == 'undefined'  ? value.id : value.id_automovel; 
-                    $('#id').val(id);
-                    $('#descricao').val(value.descricao);
-                    $('#placa').val(value.placa);
-                    $('#renavan').val(value.renavan);
-                    $('#ano_modelo').val(value.ano_modelo);
-                    $('#ano_fabricacao').val(value.ano_fabricacao);
-                    $('#cor').val(value.cor);
-                    $('#km').val(value.km).mask('###.##0', {reverse: true});
-                    $('#marca').val(value.marca);
-                    var preco = value.preco.replace('.','');
-                    $('#preco').val(preco).mask("###.##0,00", {reverse: true});
-                    var preco_fipe = value.preco_fipe.replace('.','');
-                    $('#preco_fipe').val(preco_fipe).mask("###.##0,00", {reverse: true});
-                    $('#atualizar').val('true');
-                    $.each(dados, function(key2, value2) {
-                        if (value.id_componente == value2.id) {
-                            $('#'+value.id_componente).attr('checked','checked');
-                        }
-                    })
-                });
+				var automovel = data.automovel;
+				$('#id').val(automovel.id);
+				$('#descricao').val(automovel.descricao);
+				$('#placa').val(automovel.placa);
+				$('#renavan').val(automovel.renavan);
+				$('#ano_modelo').val(automovel.ano_modelo);
+				$('#ano_fabricacao').val(automovel.ano_fabricacao);
+				$('#cor').val(automovel.cor);
+				$('#km').val(automovel.km).mask('###.##0', {reverse: true});
+				$('#marca').val(automovel.marca);
+				var preco = automovel.preco.replace('.','');
+				$('#preco').val(preco).mask("###.##0,00", {reverse: true});
+				var preco_fipe = automovel.preco_fipe.replace('.','');
+				$('#preco_fipe').val(preco_fipe).mask("###.##0,00", {reverse: true});
+				$('#atualizar').val('true');
+				$.each(data.componentes, function(key2, value2) {
+					$('#'+value2.id).attr('checked','checked');
+				})
             }
         });
     }
@@ -333,7 +329,7 @@ function listar(pesquisa, pagina) {
                 $('<hr>'),
                 $('<div>', {class:'form-group col-md-12 input'}).append(
                     $('<input>', {type:'text', class:'form-control', id:'pesquisa', name:'pesquisa', placeholder:'Pesquise aqui por descrição ou marca'}).on('keyup', function() {
-                        pesquisarAutomoveis($('#pesquisa').val(),0,function(retornoAjax) {
+                        pesquisarAutomoveis($('#pesquisa').val(), 0, function(retornoAjax) {
                             $('tbody').html('');
                             paginacao(retornoAjax);
                             retornoAjax = JSON.parse(retornoAjax);

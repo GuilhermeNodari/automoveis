@@ -102,25 +102,19 @@ class Automovel extends Database{
 
     public function dadosComponentes($id) {
 
-        $this->stmt = $this->pdo->prepare("SELECT * FROM automoveis_componentes WHERE id_automovel = :id_automovel");
-
+        $this->stmt = $this->pdo->prepare("SELECT co.id, ac.id_componente FROM automoveis_componentes AS ac INNER JOIN componentes AS co ON co.id = ac.id_componente WHERE ac.id_automovel = :id_automovel");
         $this->stmt->bindParam(':id_automovel', $id, PDO::PARAM_STR);
+
         $this->stmt->execute();
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
         
     }
 
-    public function dados($id, $dadosComponentes) {
+    public function dados($id) {
 
-        if (empty($dadosComponentes)) {
-            $sql = "SELECT * FROM automoveis WHERE id = :id";
-        } else {
-            $sql = "SELECT * FROM automoveis AS a INNER JOIN automoveis_componentes AS ac INNER JOIN componentes AS c ON a.id = ac.id_automovel AND c.id = ac.id_componente WHERE a.id = :id";
-        }
-
-        $this->stmt = $this->pdo->prepare($sql);
-
+        $this->stmt = $this->pdo->prepare("SELECT * FROM automoveis WHERE id = :id");
         $this->stmt->bindParam(':id', $id, PDO::PARAM_STR);
+
         $this->stmt->execute();
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
 

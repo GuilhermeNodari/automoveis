@@ -55,11 +55,11 @@ if (isset($_POST['id'])) {
     $id = $_POST["idEditar"];
 
     $automovel = new Automovel();
-    $dadosComponentes = $automovel->dadosComponentes($id);
-
+	$dadosComponentes = $automovel->dadosComponentes($id);
     $automovel = new Automovel();
-    $dados = $automovel->dados($id, $dadosComponentes);
-    
+	$dados['automovel'] = $automovel->dados($id)[0];
+	$dados['componentes'] = $dadosComponentes;
+	
     echo json_encode($dados);
 
 } else {
@@ -67,7 +67,7 @@ if (isset($_POST['id'])) {
     $pesquisa = !empty($_POST['pesquisa']) ? $_POST['pesquisa'] : '';
     $pagina = $_POST['pagina'];
     $automovel = new Automovel();
-    $lista = $automovel->listar($pesquisa,$pagina);
+    $lista = $automovel->listar($pesquisa, $pagina);
     
     echo json_encode($lista);
 
