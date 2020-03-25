@@ -6,6 +6,8 @@
         <script type="text/javascript" src="jquery.mask.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="https://kit.fontawesome.com/82b6d70f74.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="routie.js"></script>
+        <script type="text/javascript" src="routie.min.js"></script>
         <script type="text/javascript" src="validacoes.js"></script>
         <script type="text/javascript" src="script_lista.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -21,10 +23,10 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav">
                       <li class="nav-item">
-                          <a class="nav-link" href="home.php">Lista</a>
+                          <a class="nav-link" href="home.php#listar">Lista</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link" href="Javascript:editarCadastro();">Cadastro</a>
+                          <a class="nav-link" href="home.php#cadastro">Cadastro</a>
                       </li>
                   </ul>
               </div>

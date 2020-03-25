@@ -1,11 +1,32 @@
 $(document).ready(function(){
-    listar();
+    routie({
+        'listar': function() {
+            listar();
+        },
+        'listar/:pesquisa/:pagina/:coluna/:ordem': function(pesquisa, pagina, coluna, ordem) {
+            listar(pesquisa, pagina, coluna, ordem);
+        },
+        'cadastro': function() {
+            editarCadastro();
+        },
+        'editar/:id': function(id) {
+            editarCadastro(id);
+        },
+        'componentes': function() {
+            editarComponente();
+        },
+        'editarcomponente/:id': function(id) {
+            editarComponente(id);
+        },
+    });
 });
 
 function editarCadastro(id) {
+
     $('.lista').hide();
     $('.pagination').hide();
     $('.form').html('');
+    
     $('.form').append(
         $('<div>', {class:'container'}).append(
             $('<h1>', {style:'text-align:center'}).append('Dados Cadastrais'),
@@ -63,12 +84,12 @@ function editarCadastro(id) {
                 $('<hr>'),
                 $('<input>', {type:'hidden', class:'form-control', name:'atualizar', id:'atualizar', value:'false'}),
                 $('<button>', {class:'btn btn-primary', type:'button', id:'buttoncomponentes'}).append('Cadastrar/Ver Componentes').on('click', function(){
-                    editarComponente();
+                    routie('componentes');
                 }),
                 $('<button>', {class:'btn btn-primary', type:'submit', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
                     validar(event);
                 }),
-                $('<button>', {class:'btn btn-light', type:'button', onClick:'window.location.href = "home.php"'}).append('Voltar'),
+                $('<button>', {class:'btn btn-light', type:'button', onClick:'window.location.href = "home.php#listar"'}).append('Voltar'),
             ),
         ),
     );
@@ -122,6 +143,9 @@ function editarCadastro(id) {
             }
         });
     }
+
+    $('.form').show();
+
 }
 
 
@@ -149,7 +173,7 @@ function editarComponente(id) {
                 $('<button>', {class:'btn btn-primary', type:'submit', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
                     validarComponente(event);
                 }),
-                $('<button>', {class:'btn btn-light', type:'button', onClick:'window.location.href = "home.php"'}).append('Voltar'),
+                $('<button>', {class:'btn btn-light', type:'button', onClick:'window.location.href = "home.php#listar"'}).append('Voltar'),
             ),
         ),
     );
@@ -200,7 +224,7 @@ function editarComponente(id) {
                             ).append(' '),
                             $('<a>', {href:'#'}).append(
                                 $('<i>', {class:'fas fa-pen'}).on('click', function() {
-                                    editarComponente(value.id);
+                                    routie('editarcomponente/'+value.id);
                                 }),
                             ),
                         ),
@@ -240,7 +264,7 @@ function excluirComponente(id) {
                         icon: 'success',
                         showConfirmButton: true
                     }).then((result) => {
-                        window.location.href = 'home.php';
+                        window.location.href = 'home.php#componentes';
                     })
                 }
             });
@@ -287,7 +311,7 @@ function excluirCadastro(id) {
                         icon: 'success',
                         showConfirmButton: true
                     }).then((result) => {
-                        window.location.href = 'home.php';
+                        window.location.href = 'home.php#listar';
                     })
                 }
             });
@@ -309,7 +333,7 @@ function paginacao(retornoAjax){
         $('.pagination').append(
             $('<li>', {class:'page-item'}).append(
                 $('<a>', {class:'page-link'}).on('click', function(){
-                    listar($('#pesquisa').val(), $(this).text())
+                    routie('listar/' + $('#pesquisa').val() + '/' + $(this).text() + 'descricao/ASC');
                 }).append(i+1),
             ),
         )
@@ -319,7 +343,10 @@ function paginacao(retornoAjax){
 
 function listar(pesquisa, pagina, coluna, ordem) {
 
+    $('.formComponente').html('');
+    $('.listaComponente').html('');
     $('.lista').html('');
+    $('.form').html('');
     
     pesquisarAutomoveis(pesquisa, parseInt(pagina)-1, coluna, ordem, function(retornoAjax) {
         paginacao(retornoAjax);
@@ -348,7 +375,7 @@ function listar(pesquisa, pagina, coluna, ordem) {
                                                 ).append(' '),
                                                 $('<a>', {href:'#'}).append(
                                                     $('<i>', {class:'fas fa-pen'}).on('click', function() {
-                                                        editarCadastro(value.id);
+                                                        routie('editar/'+value.id);
                                                     }),
                                                 ),
                                             ),
@@ -369,40 +396,46 @@ function listar(pesquisa, pagina, coluna, ordem) {
                 $('<table>', {class:'table table-hover'}).append(
                     $('<thead>').append(
                         $('<tr>').append(
-                            $('<th>').append('Descrição').append(' ').append(
-                                $('<a>', {href:'#'}).append(
-                                    $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
-                                        listar(pesquisa, pagina, 'descricao', 'ASC');
-                                    }),
-                                ).append(' '),
-                                $('<a>', {href:'#'}).append(
-                                    $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
-                                        listar(pesquisa, pagina, 'descricao', 'DESC');
-                                    }),
+                            $('<th>', {style:'display: flex;'}).append('Descrição').append(
+                                $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column;'}).append(
+                                    $('<a>', {href:'#', style:'height: 4px;'}).append(
+                                        $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
+                                            routie('listar/'+ pesquisa + '/' + pagina + '/descricao/ASC');
+                                        }),
+                                    ),
+                                    $('<a>', {href:'#'}).append(
+                                        $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
+                                            routie('listar/'+ pesquisa + '/' + pagina + '/descricao/DESC');
+                                        }),
+                                    ),
                                 ),
                             ),
-                            $('<th>').append('Placa').append(' ').append(
-                                $('<a>', {href:'#'}).append(
-                                    $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
-                                        listar(pesquisa, pagina, 'placa', 'ASC');
-                                    }),
-                                ).append(' '),
-                                $('<a>', {href:'#'}).append(
-                                    $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
-                                        listar(pesquisa, pagina, 'placa', 'DESC');
-                                    }),
+                            $('<th>', {style:'display: flex;'}).append('Placa').append(
+                                $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column;'}).append(
+                                    $('<a>', {href:'#', style:'height: 4px;'}).append(
+                                        $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
+                                            routie('listar/'+ pesquisa + '/' + pagina + '/placa/ASC');
+                                        }),
+                                    ),
+                                    $('<a>', {href:'#'}).append(
+                                        $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
+                                            routie('listar/'+ pesquisa + '/' + pagina + '/placa/DESC');
+                                        }),
+                                    ),
                                 ),
                             ),
-                            $('<th>').append('Marca').append(' ').append(
-                                $('<a>', {href:'#'}).append(
-                                    $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
-                                        listar(pesquisa, pagina, 'marca', 'ASC');
-                                    }),
-                                ).append(' '),
-                                $('<a>', {href:'#'}).append(
-                                    $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
-                                        listar(pesquisa, pagina, 'marca', 'DESC');
-                                    }),
+                            $('<th>', {style:'display: flex;'}).append('Marca').append(
+                                $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column;'}).append(
+                                    $('<a>', {href:'#', style:'height: 4px;'}).append(
+                                        $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
+                                            routie('listar/'+ pesquisa + '/' + pagina + '/marca/ASC');
+                                        }),
+                                    ),
+                                    $('<a>', {href:'#'}).append(
+                                        $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
+                                            routie('listar/'+ pesquisa + '/' + pagina + '/marca/DESC');
+                                        }),
+                                    ),
                                 ),
                             ),
                             $('<th>').append('Ações')
@@ -431,7 +464,7 @@ function listar(pesquisa, pagina, coluna, ordem) {
                             ).append(' '),
                             $('<a>', {href:'#'}).append(
                                 $('<i>', {class:'fas fa-pen'}).on('click', function() {
-                                    editarCadastro(value.id);
+                                    routie('editar/'+value.id);
                                 }),
                             ),
                         ),
@@ -446,6 +479,10 @@ function listar(pesquisa, pagina, coluna, ordem) {
             );
         }
     });
+
+    $('.lista').show();
+    $('.pagination').show();
+
 }
 
 function pesquisarAutomoveis(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC', callback) {

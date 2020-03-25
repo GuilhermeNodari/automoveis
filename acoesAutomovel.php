@@ -42,7 +42,7 @@ if (isset($_POST['id'])) {
         }
     }
 
-    header('Location: home.php');
+    header('Location: home.php#listar');
 
 } else if (isset($_POST['idExcluir'])) {
 

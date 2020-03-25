@@ -9,7 +9,7 @@ if (isset($_POST['idComponente'])) {
     $componentes->componente = trim($_POST['componente']);
     $componentes->adicionar();
 
-    header("Location: home.php");
+    header("Location: home.php#componentes");
 
 } else if (isset($_POST['listar'])) {
 
