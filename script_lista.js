@@ -269,7 +269,7 @@ function excluirComponente(id) {
                             icon: 'success',
                             showConfirmButton: true
                         }).then((result) => {
-                            window.location.href = 'home.php#listar';
+                            window.location.href = 'home.php#componentes';
                         })
                     } else {
                         Swal.fire({
@@ -427,7 +427,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                     $('<thead>').append(
                         $('<tr>').append(
                             $('<th>').append(
-                                $('<div>', {style:'width: 90px;'}).append('Descrição').append(
+                                $('<div>', {style:'width: 26.5%;'}).append('Descrição').append(
                                     $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
                                         $('<a>', {href:'#', style:'height: 4px;'}).append(
                                             $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
@@ -445,7 +445,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                 ),
                             ),
                             $('<th>').append(
-                                $('<div>', {style:'width: 58px;'}).append('Placa').append(
+                                $('<div>', {style:'width: 24.5%;'}).append('Placa').append(
                                     $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
                                         $('<a>', {href:'#', style:'height: 4px;'}).append(
                                             $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
@@ -463,7 +463,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                 ),
                             ),
                             $('<th>').append(
-                                $('<div>', {style:'width: 65px;'}).append('Marca').append(
+                                $('<div>', {style:'width: 25.5%;'}).append('Marca').append(
                                     $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
                                         $('<a>', {href:'#', style:'height: 4px;'}).append(
                                             $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
