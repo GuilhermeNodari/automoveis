@@ -30,7 +30,9 @@ if (isset($_POST['idComponente'])) {
 
     $id = $_POST['idExcluir'];
     $componentes = new Componentes();
-    $componentes->excluir($id);
+    $retorno = $componentes->excluir($id);
+
+    echo json_encode($retorno);
 
 }
 

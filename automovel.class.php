@@ -77,14 +77,14 @@ class Automovel extends Database{
 
     }
 
-    public function listar($pesquisa, $pagina, $coluna, $ordem) {
+    public function listar($pesquisa, $pagina, $limite, $coluna, $ordem) {
 
         $this->stmt = $this->pdo->query("SELECT count(*) AS automoveis FROM automoveis WHERE descricao LIKE '%$pesquisa%' OR marca LIKE '%$pesquisa%'");
         $retorno[0] = $this->stmt->fetch(PDO::FETCH_ASSOC);
         
-        $pagina = is_numeric($pagina) ? $pagina * 5 : 0;
+        $pagina = is_numeric($pagina) ? $pagina * $limite : 0;
 
-        $this->stmt = $this->pdo->query("SELECT id,descricao,placa,marca FROM automoveis WHERE descricao LIKE '%$pesquisa%' OR marca LIKE '%$pesquisa%' ORDER BY $coluna $ordem LIMIT $pagina, 5 ");
+        $this->stmt = $this->pdo->query("SELECT id,descricao,placa,marca FROM automoveis WHERE descricao LIKE '%$pesquisa%' OR marca LIKE '%$pesquisa%' ORDER BY $coluna $ordem LIMIT $pagina, $limite ");
         $retorno[1] = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $retorno;
@@ -97,6 +97,8 @@ class Automovel extends Database{
         $this->stmt->bindParam(':id', $id, PDO::PARAM_STR); 
 
         $this->stmt->execute();
+
+        return $this->stmt->rowCount();
 
     }
 

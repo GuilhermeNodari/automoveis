@@ -48,7 +48,9 @@ if (isset($_POST['id'])) {
 
     $id = $_POST['idExcluir'];
     $automovel = new Automovel();
-    $automovel->excluir($id);
+    $retorno = $automovel->excluir($id);
+
+    echo json_encode($retorno);
 
 } else if (isset($_POST['idEditar'])) {
     
@@ -66,10 +68,11 @@ if (isset($_POST['id'])) {
 
     $pesquisa = !empty($_POST['pesquisa']) ? $_POST['pesquisa'] : '';
     $pagina = $_POST['pagina'];
+    $limite = 5;
     $ordem = $_POST['ordem'];
     $coluna = $_POST['coluna'];
     $automovel = new Automovel();
-    $lista = $automovel->listar($pesquisa, $pagina, $coluna, $ordem);
+    $lista = $automovel->listar($pesquisa, $pagina, $limite, $coluna, $ordem);
     
     echo json_encode($lista);
 

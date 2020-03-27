@@ -150,7 +150,6 @@ function editarCadastro(id) {
 
 }
 
-
 function editarComponente(id) {
 
     $('.form').html('');
@@ -200,7 +199,7 @@ function editarComponente(id) {
         $('.listaComponente').append(
             $('<div>', {class:'container'}).append(
                 $('<br>'),
-                $('<table>', {class:'table table-hover'}).append(
+                $('<table>', {class:'table table-striped'}).append(
                     $('<thead>').append(
                         $('<tr>').append(
                             $('<th>').append('Nome'),
@@ -256,7 +255,7 @@ function excluirComponente(id) {
         confirmButtonText: 'Sim!',
         cancelButtonText: "Não!"
     }).then((result) => {
-        if (typeof result.value != 'undefined') {
+        if (result.value) {
             $.ajax({
                 type: 'POST',
                 url:  'acoesComponente.php',
@@ -264,13 +263,24 @@ function excluirComponente(id) {
                     idExcluir: id
                 },
                 success: function(data){
-                    Swal.fire({
-                        title: 'Excluído com sucesso!',
-                        icon: 'success',
-                        showConfirmButton: true
-                    }).then((result) => {
-                        window.location.href = 'home.php#componentes';
-                    })
+                    if (data == 1) {
+                        Swal.fire({
+                            title: 'Excluído com sucesso!',
+                            icon: 'success',
+                            showConfirmButton: true
+                        }).then((result) => {
+                            window.location.href = 'home.php#listar';
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Componente não pode ser excluído!',
+                            text: 'Componente está linkado com algum automóvel',
+                            icon: 'error',
+                            showConfirmButton: true
+                        }).then((result) => {
+                            window.location.href = 'home.php#componentes';
+                        })
+                    }
                 }
             });
         }
@@ -303,7 +313,7 @@ function excluirCadastro(id) {
         confirmButtonText: 'Sim!',
         cancelButtonText: "Não!"
     }).then((result) => {
-        if (typeof result.value != 'undefined') {
+        if (result.value) {
             $.ajax({
                 type: 'POST',
                 url:  'acoesAutomovel.php',
@@ -311,13 +321,24 @@ function excluirCadastro(id) {
                     idExcluir: id
                 },
                 success: function(data){
-                    Swal.fire({
-                        title: 'Excluído com sucesso!',
-                        icon: 'success',
-                        showConfirmButton: true
-                    }).then((result) => {
-                        window.location.href = 'home.php#listar';
-                    })
+                    if (data == 1) {
+                        Swal.fire({
+                            title: 'Excluído com sucesso!',
+                            icon: 'success',
+                            showConfirmButton: true
+                        }).then((result) => {
+                            window.location.href = 'home.php#listar';
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Automóvel não pode ser excluído!',
+                            text: 'Automóvel está linkado com algum componente',
+                            icon: 'error',
+                            showConfirmButton: true
+                        }).then((result) => {
+                            window.location.href = 'home.php#listar';
+                        })
+                    }
                 }
             });
         }
@@ -402,54 +423,60 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                     })
                 ),
 
-                $('<table>', {class:'table table-hover'}).append(
+                $('<table>', {class:'table table-striped'}).append(
                     $('<thead>').append(
                         $('<tr>').append(
-                            $('<th>', {style:'display: flex;'}).append('Descrição').append(
-                                $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column;'}).append(
-                                    $('<a>', {href:'#', style:'height: 4px;'}).append(
-                                        $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
-                                            buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
-                                            routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/descricao/ASC');
-                                        }),
-                                    ),
-                                    $('<a>', {href:'#'}).append(
-                                        $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
-                                            buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
-                                            routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/descricao/DESC');
-                                        }),
-                                    ),
-                                ),
-                            ),
-                            $('<th>', {style:'display: flex;'}).append('Placa').append(
-                                $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column;'}).append(
-                                    $('<a>', {href:'#', style:'height: 4px;'}).append(
-                                        $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
-                                            buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
-                                            routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/placa/ASC');
-                                        }),
-                                    ),
-                                    $('<a>', {href:'#'}).append(
-                                        $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
-                                            buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
-                                            routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/placa/DESC');
-                                        }),
+                            $('<th>').append(
+                                $('<div>', {style:'width: 90px;'}).append('Descrição').append(
+                                    $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
+                                        $('<a>', {href:'#', style:'height: 4px;'}).append(
+                                            $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
+                                                buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
+                                                routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/descricao/ASC');
+                                            }),
+                                        ),
+                                        $('<a>', {href:'#'}).append(
+                                            $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
+                                                buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
+                                                routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/descricao/DESC');
+                                            }),
+                                        ),
                                     ),
                                 ),
                             ),
-                            $('<th>', {style:'display: flex;'}).append('Marca').append(
-                                $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column;'}).append(
-                                    $('<a>', {href:'#', style:'height: 4px;'}).append(
-                                        $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
-                                            buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
-                                            routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/marca/ASC');
-                                        }),
+                            $('<th>').append(
+                                $('<div>', {style:'width: 58px;'}).append('Placa').append(
+                                    $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
+                                        $('<a>', {href:'#', style:'height: 4px;'}).append(
+                                            $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
+                                                buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
+                                                routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/placa/ASC');
+                                            }),
+                                        ),
+                                        $('<a>', {href:'#'}).append(
+                                            $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
+                                                buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
+                                                routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/placa/DESC');
+                                            }),
+                                        ),
                                     ),
-                                    $('<a>', {href:'#'}).append(
-                                        $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
-                                            buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
-                                            routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/marca/DESC');
-                                        }),
+                                ),
+                            ),
+                            $('<th>').append(
+                                $('<div>', {style:'width: 65px;'}).append('Marca').append(
+                                    $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
+                                        $('<a>', {href:'#', style:'height: 4px;'}).append(
+                                            $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
+                                                buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
+                                                routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/marca/ASC');
+                                            }),
+                                        ),
+                                        $('<a>', {href:'#'}).append(
+                                            $('<i>', {class:'fas fa-sort-down'}).on('click', function() {
+                                                buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
+                                                routie('listar/'+ buscaOrdenacao + '/' + $('#pagina').val() + '/marca/DESC');
+                                            }),
+                                        ),
                                     ),
                                 ),
                             ),

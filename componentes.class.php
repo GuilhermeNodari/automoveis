@@ -65,6 +65,7 @@ class Componentes extends Database{
         $this->stmt->bindParam(':id', $id, PDO::PARAM_STR); 
 
         $this->stmt->execute();
+        return $this->stmt->rowCount();
 
     }
 
