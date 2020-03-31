@@ -8,9 +8,29 @@ $(document).ready(function(){
         },
         'cadastro': function() {
             editarCadastro();
+            adicionarPopover('popoverDescricao','A descrição serve para descrever o carro, com seu nome e motorização por exemplo');
+            adicionarPopover('popoverPlaca','Digite a placa do seu carro. Exemplo: XXX1234');
+            adicionarPopover('popoverRenavan',' O Código RENAVAM é, hoje, um código numeral de 11 dígitos e está localizado na parte superior de sua CNH');
+            adicionarPopover('popoverAnoModelo','Digite o ano do modelo do seu carro. Exemplo: 2020');
+            adicionarPopover('popoverAnoFabricacao','Digite o ano de fabricação do seu carro. Exemplo: 2020');
+            adicionarPopover('popoverCor','Digite a cor do seu carro. Exemplo: Branco');
+            adicionarPopover('popoverKM','Digite a quilometragem do seu carro, está localizada no painel do seu automóvel');
+            adicionarPopover('popoverMarca','Digite a marca do seu carro. Exemplo: Fiat');
+            adicionarPopover('popoverPreco','Digite o preço que você quer ganhar do seu carro');
+            adicionarPopover('popoverPrecoFipe','Digite o preço do seu carro que está na Tabela FIPE, que é a principal referência no mercado de carros usados e seminovos, além de ser usada como base para contratos e seguros. Entre no site: https://veiculos.fipe.org.br/');
         },
         'editar/:id': function(id) {
             editarCadastro(id);
+            $('#popoverDescricao').hide();
+            $('#popoverPlaca').hide();
+            $('#popoverRenavan').hide();
+            $('#popoverAnoModelo').hide();
+            $('#popoverAnoFabricacao').hide();
+            $('#popoverCor').hide();
+            $('#popoverKM').hide();
+            $('#popoverMarca').hide();
+            $('#popoverPreco').hide();
+            $('#popoverPrecoFipe').hide();
         },
         'componentes': function() {
             editarComponente();
@@ -20,6 +40,18 @@ $(document).ready(function(){
         },
     });
 });
+
+function adicionarPopover(id, texto) {
+    $('#'+id).attr({
+        'data-toggle': 'popover',
+        'data-trigger': 'hover',
+        'data-placement': 'right',
+        'data-content': texto
+    });
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
+}
 
 function editarCadastro(id) {
 
@@ -37,47 +69,87 @@ function editarCadastro(id) {
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-4'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'id', name:'id'}),
-                        $('<label>', {for:'descricao'}).append('Descrição'),
+                        $('<label>', {for:'descricao'}).append('Descrição').append(
+                            $('<a>', {href:'#cadastro', id:'popoverDescricao'}).append(
+                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+                            ),
+                        ),
                         $('<input>', {type:'text', class:'form-control', id:'descricao', name:'descricao'})
                     ),
                     $('<div>', {class:'form-group col-md-4'}).append(
-                        $('<label>', {for:'placa'}).append('Placa'),
+                        $('<label>', {for:'placa'}).append('Placa').append(
+                            $('<a>', {href:'#cadastro', id:'popoverPlaca'}).append(
+                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+                            ),
+                        ),
                         $('<input>', {type:'text', class:'form-control', id:'placa', name:'placa'})
                     ),
                     $('<div>', {class:'form-group col-md-4'}).append(
-                        $('<label>', {for:'renavan'}).append('Código RENAVAN'),
+                        $('<label>', {for:'renavan'}).append('Código RENAVAN').append(
+                            $('<a>', {href:'#cadastro', id:'popoverRenavan'}).append(
+                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+                            ),
+                        ),
                         $('<input>', {type:'text', class:'form-control', id:'renavan', name:'renavan'})
                     ),
                 ),
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'ano_modelo'}).append('Ano do Modelo'),
+                        $('<label>', {for:'ano_modelo'}).append('Ano do Modelo').append(
+                            $('<a>', {href:'#cadastro', id:'popoverAnoModelo'}).append(
+                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+                            ),
+                        ),
                         $('<input>', {type:'text', class:'form-control', id:'ano_modelo', name:'ano_modelo'})
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'ano_fabricacao'}).append('Ano de Fabricação'),
+                        $('<label>', {for:'ano_fabricacao'}).append('Ano de Fabricação').append(
+                            $('<a>', {href:'#cadastro', id:'popoverAnoFabricacao'}).append(
+                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+                            ),
+                        ),
                         $('<input>', {type:'text', class:'form-control', id:'ano_fabricacao', name:'ano_fabricacao'})
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'cor'}).append('Cor'),
+                        $('<label>', {for:'cor'}).append('Cor').append(
+                            $('<a>', {href:'#cadastro', id:'popoverCor'}).append(
+                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+                            ),
+                        ),
                         $('<input>', {type:'text', class:'form-control', id:'cor', name:'cor'})
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'km'}).append('KM'),
+                        $('<label>', {for:'km'}).append('KM').append(
+                            $('<a>', {href:'#cadastro', id:'popoverKM'}).append(
+                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+                            ),
+                        ),
                         $('<input>', {type:'text', class:'form-control', id:'km', name:'km'})
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'marca'}).append('Marca'),
+                        $('<label>', {for:'marca'}).append('Marca').append(
+                            $('<a>', {href:'#cadastro', id:'popoverMarca'}).append(
+                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+                            ),
+                        ),
                         $('<input>', {type:'text', class:'form-control', id:'marca', name:'marca'})
                     ),
                 ),
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'preco'}).append('Preço'),
+                        $('<label>', {for:'preco'}).append('Preço').append(
+                            $('<a>', {href:'#cadastro', id:'popoverPreco'}).append(
+                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+                            ),
+                        ),
                         $('<input>', {type:'text', class:'form-control', id:'preco', name:'preco'})
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'preco_fipe'}).append('Preço Fipe'),
+                        $('<label>', {for:'preco_fipe'}).append('Preço Fipe').append(
+                            $('<a>', {href:'#cadastro', id:'popoverPrecoFipe'}).append(
+                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+                            ),
+                        ),
                         $('<input>', {type:'text', class:'form-control', id:'preco_fipe', name:'preco_fipe'})
                     ),
                 ),
@@ -388,6 +460,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                     $('<input>', {type:'text', class:'form-control', id:'pesquisa', name:'pesquisa', placeholder:'Pesquise aqui por descrição ou marca'}).on('keyup', function() {
                         pesquisarAutomoveis($('#pesquisa').val(), 0, coluna, ordem, function(retornoAjax) {
                             $('tbody').html('');
+                            $('.ordenacao').show();
                             paginacao(retornoAjax, coluna, ordem);
                             retornoAjax = JSON.parse(retornoAjax);
                             if (retornoAjax[1].length > 0) {
@@ -413,6 +486,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                     );
                                 })
                             } else {
+                                $('.ordenacao').hide();
                                 $('tbody').append(
                                     $('<tr>').append(
                                         $('<td>', {colspan:'5', style:'text-align:center'}).append('Não foi encontrado nenhum automóvel!')
@@ -427,8 +501,8 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                     $('<thead>').append(
                         $('<tr>').append(
                             $('<th>').append(
-                                $('<div>', {style:'width: 26.5%;'}).append('Descrição').append(
-                                    $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
+                                $('<div>', {style:'width: 27.5%;'}).append('Descrição').append(
+                                    $('<div>', {class:'ordenacao', style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
                                         $('<a>', {href:'#', style:'height: 4px;'}).append(
                                             $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
                                                 buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
@@ -446,7 +520,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                             ),
                             $('<th>').append(
                                 $('<div>', {style:'width: 24.5%;'}).append('Placa').append(
-                                    $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
+                                    $('<div>', {class:'ordenacao', style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
                                         $('<a>', {href:'#', style:'height: 4px;'}).append(
                                             $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
                                                 buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
@@ -463,8 +537,8 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                 ),
                             ),
                             $('<th>').append(
-                                $('<div>', {style:'width: 25.5%;'}).append('Marca').append(
-                                    $('<div>', {style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
+                                $('<div>', {style:'width: 26.5%;'}).append('Marca').append(
+                                    $('<div>', {class:'ordenacao', style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
                                         $('<a>', {href:'#', style:'height: 4px;'}).append(
                                             $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
                                                 buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
@@ -514,6 +588,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                 );
             })
         } else {
+            $('.ordenacao').hide();
             $('tbody').append(
                 $('<tr>').append(
                     $('<td>', {colspan:'5', style:'text-align:center'}).append('Não há automóveis cadastrados!'),
