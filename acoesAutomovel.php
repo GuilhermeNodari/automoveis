@@ -1,7 +1,7 @@
 <?php
 
-include_once 'automovel.class.php';
-include_once 'componentes.class.php';
+include_once 'class/automovel.class.php';
+include_once 'class/componentes.class.php';
 
 if (isset($_POST['id'])) {
 

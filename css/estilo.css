@@ -1,0 +1,11 @@
+h1 {
+    text-align: center;
+}
+
+.ordenacao {
+    margin-left: 5px; 
+    margin-top: 3px; 
+    display: flex; 
+    flex-direction: column; 
+    float: right;
+}

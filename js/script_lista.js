@@ -63,7 +63,7 @@ function editarCadastro(id) {
     
     $('.form').append(
         $('<div>', {class:'container'}).append(
-            $('<h1>', {style:'text-align:center'}).append('Dados Cadastrais'),
+            $('<h1>').append('Dados Cadastrais'),
             $('<hr>'),
             $('<form>', {action:'acoesAutomovel.php', method:'POST', id:'form'}).append(
                 $('<div>', {class:'form-row'}).append(
@@ -153,7 +153,7 @@ function editarCadastro(id) {
                         $('<input>', {type:'text', class:'form-control', id:'preco_fipe', name:'preco_fipe'})
                     ),
                 ),
-                $('<h1>', {style:'text-align:center'}).append('Componenetes Adicionais'),
+                $('<h1>').append('Componenetes Adicionais'),
                 $('<br>'),
                 $('<hr>'),
                 $('<input>', {type:'hidden', class:'form-control', name:'atualizar', id:'atualizar', value:'false'}),
@@ -232,7 +232,7 @@ function editarComponente(id) {
 
     $('.formComponente').append(
         $('<div>', {class:'container'}).append(
-            $('<h1>', {style:'text-align:center'}).append('Dados dos Componentes'),
+            $('<h1>').append('Dados dos Componentes'),
             $('<hr>'),
             $('<form>', {action:'acoesComponente.php', method:'POST', id:'formComponentes'}).append(
                 $('<div>', {class:'form-row'}).append(
@@ -454,7 +454,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
         paginacao(retornoAjax, coluna, ordem);
         $('.lista').append(
             $('<div>', {class:'container'}).append(
-                $('<h1>', {style:'text-align:center'}).append('Lista de Automóveis'),
+                $('<h1>').append('Lista de Automóveis'),
                 $('<hr>'),
                 $('<div>', {class:'form-group col-md-12 input'}).append(
                     $('<input>', {type:'text', class:'form-control', id:'pesquisa', name:'pesquisa', placeholder:'Pesquise aqui por descrição ou marca'}).on('keyup', function() {
@@ -502,7 +502,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                         $('<tr>').append(
                             $('<th>').append(
                                 $('<div>', {style:'width: 27.5%;'}).append('Descrição').append(
-                                    $('<div>', {class:'ordenacao', style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
+                                    $('<div>', {class:'ordenacao'}).append(
                                         $('<a>', {href:'#', style:'height: 4px;'}).append(
                                             $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
                                                 buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
@@ -520,7 +520,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                             ),
                             $('<th>').append(
                                 $('<div>', {style:'width: 24.5%;'}).append('Placa').append(
-                                    $('<div>', {class:'ordenacao', style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
+                                    $('<div>', {class:'ordenacao'}).append(
                                         $('<a>', {href:'#', style:'height: 4px;'}).append(
                                             $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
                                                 buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
@@ -538,7 +538,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                             ),
                             $('<th>').append(
                                 $('<div>', {style:'width: 26.5%;'}).append('Marca').append(
-                                    $('<div>', {class:'ordenacao', style:'margin-left: 5px; margin-top: 3px; display: flex; flex-direction: column; float: right;'}).append(
+                                    $('<div>', {class:'ordenacao'}).append(
                                         $('<a>', {href:'#', style:'height: 4px;'}).append(
                                             $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
                                                 buscaOrdenacao = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
