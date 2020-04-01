@@ -1,4 +1,18 @@
 $(document).ready(function(){
+
+    function popover() {
+        adicionarPopover('popoverDescricao','A descrição serve para descrever o carro, com seu nome e motorização por exemplo');
+        adicionarPopover('popoverPlaca','Digite a placa do seu carro. Exemplo: XXX1234');
+        adicionarPopover('popoverRenavan',' O Código RENAVAM é, hoje, um código numeral de 11 dígitos e está localizado na parte superior de sua CNH');
+        adicionarPopover('popoverAnoModelo','Digite o ano do modelo do seu carro. Exemplo: 2020');
+        adicionarPopover('popoverAnoFabricacao','Digite o ano de fabricação do seu carro. Exemplo: 2020');
+        adicionarPopover('popoverCor','Digite a cor do seu carro. <br> Exemplo: Branco');
+        adicionarPopover('popoverKM','Digite a quilometragem do seu carro, está localizada no painel do seu automóvel');
+        adicionarPopover('popoverMarca','Digite a marca do seu carro. <br> Exemplo: Fiat');
+        adicionarPopover('popoverPreco','Digite o preço que você quer ganhar do seu carro');
+        adicionarPopover('popoverPrecoFipe','Digite o preço do seu carro que está na Tabela FIPE, que é a principal referência no mercado de carros usados e seminovos, além de ser usada como base para contratos e seguros. <br> Entre no site: <a href="https://veiculos.fipe.org.br/"> Veículos FIPE </a>');
+    }
+
     routie({
         'listar': function() {
             listar();
@@ -8,29 +22,11 @@ $(document).ready(function(){
         },
         'cadastro': function() {
             editarCadastro();
-            adicionarPopover('popoverDescricao','A descrição serve para descrever o carro, com seu nome e motorização por exemplo');
-            adicionarPopover('popoverPlaca','Digite a placa do seu carro. Exemplo: XXX1234');
-            adicionarPopover('popoverRenavan',' O Código RENAVAM é, hoje, um código numeral de 11 dígitos e está localizado na parte superior de sua CNH');
-            adicionarPopover('popoverAnoModelo','Digite o ano do modelo do seu carro. Exemplo: 2020');
-            adicionarPopover('popoverAnoFabricacao','Digite o ano de fabricação do seu carro. Exemplo: 2020');
-            adicionarPopover('popoverCor','Digite a cor do seu carro. Exemplo: Branco');
-            adicionarPopover('popoverKM','Digite a quilometragem do seu carro, está localizada no painel do seu automóvel');
-            adicionarPopover('popoverMarca','Digite a marca do seu carro. Exemplo: Fiat');
-            adicionarPopover('popoverPreco','Digite o preço que você quer ganhar do seu carro');
-            adicionarPopover('popoverPrecoFipe','Digite o preço do seu carro que está na Tabela FIPE, que é a principal referência no mercado de carros usados e seminovos, além de ser usada como base para contratos e seguros. Entre no site: https://veiculos.fipe.org.br/');
+            popover();
         },
         'editar/:id': function(id) {
             editarCadastro(id);
-            $('#popoverDescricao').hide();
-            $('#popoverPlaca').hide();
-            $('#popoverRenavan').hide();
-            $('#popoverAnoModelo').hide();
-            $('#popoverAnoFabricacao').hide();
-            $('#popoverCor').hide();
-            $('#popoverKM').hide();
-            $('#popoverMarca').hide();
-            $('#popoverPreco').hide();
-            $('#popoverPrecoFipe').hide();
+            popover();
         },
         'componentes': function() {
             editarComponente();
@@ -44,9 +40,9 @@ $(document).ready(function(){
 function adicionarPopover(id, texto) {
     $('#'+id).attr({
         'data-toggle': 'popover',
-        'data-trigger': 'hover',
+        'data-html': 'true',
         'data-placement': 'right',
-        'data-content': texto
+        'data-content': '<div>'+ texto + '</div>'
     });
     $(document).ready(function(){
         $('[data-toggle="popover"]').popover();
@@ -153,8 +149,8 @@ function editarCadastro(id) {
                         $('<input>', {type:'text', class:'form-control', id:'preco_fipe', name:'preco_fipe'})
                     ),
                 ),
-                $('<h1>').append('Componenetes Adicionais'),
                 $('<br>'),
+                $('<h1>').append('Componenetes Adicionais'),
                 $('<hr>'),
                 $('<input>', {type:'hidden', class:'form-control', name:'atualizar', id:'atualizar', value:'false'}),
                 $('<button>', {class:'btn btn-primary', type:'button', id:'buttoncomponentes'}).append('Cadastrar/Ver Componentes').on('click', function(){
