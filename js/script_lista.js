@@ -49,6 +49,8 @@ function adicionarPopover(id, texto) {
         'data-html': 'true',
         'data-placement': 'right',
         'data-content': '<a href="#" style="float:right;" onClick="Javascript:esconderPopover('+id+')"> <i class="far fa-times-circle"></i> </a> <div>'+ texto + '</div>' 
+    }).on('click', function() {
+        $('[data-toggle="popover"]').popover('hide');
     });
     $('#'+id).popover();
 }
