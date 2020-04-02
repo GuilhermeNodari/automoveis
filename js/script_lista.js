@@ -48,7 +48,7 @@ function adicionarPopover(id, texto) {
         'data-toggle': 'popover',
         'data-html': 'true',
         'data-placement': 'right',
-        'data-content': '<a href="#cadastro" style="float:right;" onClick="Javascript:esconderPopover('+id+')"> <i class="far fa-times-circle"></i> </a> <div>'+ texto + '</div>' 
+        'data-content': '<a href="#" style="float:right;" onClick="Javascript:esconderPopover('+id+')"> <i class="far fa-times-circle"></i> </a> <div>'+ texto + '</div>' 
     });
     $('#'+id).popover();
 }
@@ -70,7 +70,7 @@ function editarCadastro(id) {
                     $('<div>', {class:'form-group col-md-4'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'id', name:'id'}),
                         $('<label>', {for:'descricao'}).append('Descrição').append(
-                            $('<a>', {href:'#cadastro', id:'popoverDescricao'}).append(
+                            $('<a>', {href:'#', id:'popoverDescricao'}).append(
                                 $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
                             ),
                         ),
@@ -78,7 +78,7 @@ function editarCadastro(id) {
                     ),
                     $('<div>', {class:'form-group col-md-4'}).append(
                         $('<label>', {for:'placa'}).append('Placa').append(
-                            $('<a>', {href:'#cadastro', id:'popoverPlaca'}).append(
+                            $('<a>', {href:'#', id:'popoverPlaca'}).append(
                                 $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
                             ),
                         ),
@@ -86,7 +86,7 @@ function editarCadastro(id) {
                     ),
                     $('<div>', {class:'form-group col-md-4'}).append(
                         $('<label>', {for:'renavan'}).append('Código RENAVAN').append(
-                            $('<a>', {href:'#cadastro', id:'popoverRenavan'}).append(
+                            $('<a>', {href:'#', id:'popoverRenavan'}).append(
                                 $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
                             ),
                         ),
@@ -96,7 +96,7 @@ function editarCadastro(id) {
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-2'}).append(
                         $('<label>', {for:'ano_modelo'}).append('Ano do Modelo').append(
-                            $('<a>', {href:'#cadastro', id:'popoverAnoModelo'}).append(
+                            $('<a>', {href:'#', id:'popoverAnoModelo'}).append(
                                 $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
                             ),
                         ),
@@ -104,7 +104,7 @@ function editarCadastro(id) {
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
                         $('<label>', {for:'ano_fabricacao'}).append('Ano de Fabricação').append(
-                            $('<a>', {href:'#cadastro', id:'popoverAnoFabricacao'}).append(
+                            $('<a>', {href:'#', id:'popoverAnoFabricacao'}).append(
                                 $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
                             ),
                         ),
@@ -112,7 +112,7 @@ function editarCadastro(id) {
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
                         $('<label>', {for:'cor'}).append('Cor').append(
-                            $('<a>', {href:'#cadastro', id:'popoverCor'}).append(
+                            $('<a>', {href:'#', id:'popoverCor'}).append(
                                 $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
                             ),
                         ),
@@ -120,7 +120,7 @@ function editarCadastro(id) {
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
                         $('<label>', {for:'km'}).append('KM').append(
-                            $('<a>', {href:'#cadastro', id:'popoverKM'}).append(
+                            $('<a>', {href:'#', id:'popoverKM'}).append(
                                 $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
                             ),
                         ),
@@ -128,7 +128,7 @@ function editarCadastro(id) {
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
                         $('<label>', {for:'marca'}).append('Marca').append(
-                            $('<a>', {href:'#cadastro', id:'popoverMarca'}).append(
+                            $('<a>', {href:'#', id:'popoverMarca'}).append(
                                 $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
                             ),
                         ),
@@ -138,7 +138,7 @@ function editarCadastro(id) {
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-2'}).append(
                         $('<label>', {for:'preco'}).append('Preço').append(
-                            $('<a>', {href:'#cadastro', id:'popoverPreco'}).append(
+                            $('<a>', {href:'#', id:'popoverPreco'}).append(
                                 $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
                             ),
                         ),
@@ -146,7 +146,7 @@ function editarCadastro(id) {
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
                         $('<label>', {for:'preco_fipe'}).append('Preço Fipe').append(
-                            $('<a>', {href:'#cadastro', id:'popoverPrecoFipe'}).append(
+                            $('<a>', {href:'#', id:'popoverPrecoFipe'}).append(
                                 $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
                             ),
                         ),
