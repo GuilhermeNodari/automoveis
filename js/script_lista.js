@@ -23,10 +23,12 @@ $(document).ready(function(){
         'cadastro': function() {
             editarCadastro();
             popover();
+            $('.chosen').chosen({width: '78.75%'});
         },
         'editar/:id': function(id) {
             editarCadastro(id);
             popover();
+            $('.chosen').chosen({width: '78.75%'});
         },
         'componentes': function() {
             editarComponente();
@@ -44,14 +46,21 @@ function esconderPopover(elemento) {
 }
 
 function adicionarPopover(id, texto) {
+    $('label#'+id).append(
+        $('<a>', {href:'#', id:id}).append(
+            $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+        ),
+    );
+
     $('#'+id).attr({
         'data-toggle': 'popover',
         'data-html': 'true',
         'data-placement': 'right',
-        'data-content': '<a href="#" style="float:right;" onClick="Javascript:esconderPopover('+id+')"> <i class="far fa-times-circle"></i> </a> <div>'+ texto + '</div>' 
+        'data-content': '<a href="#" style="float:right;" onClick="Javascript:esconderPopover('+id+')"> <i class="far fa-times-circle"></i> </a> <div>'+ texto + '</div>'
     }).on('click', function() {
         $('[data-toggle="popover"]').popover('hide');
     });
+
     $('#'+id).popover();
 }
 
@@ -71,87 +80,47 @@ function editarCadastro(id) {
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-4'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'id', name:'id'}),
-                        $('<label>', {for:'descricao'}).append('Descrição').append(
-                            $('<a>', {href:'#', id:'popoverDescricao'}).append(
-                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
-                            ),
-                        ),
+                        $('<label>', {for:'descricao', id:'popoverDescricao'}).append('Descrição'),
                         $('<input>', {type:'text', class:'form-control', id:'descricao', name:'descricao'})
                     ),
                     $('<div>', {class:'form-group col-md-4'}).append(
-                        $('<label>', {for:'placa'}).append('Placa').append(
-                            $('<a>', {href:'#', id:'popoverPlaca'}).append(
-                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
-                            ),
-                        ),
+                        $('<label>', {for:'placa', id:'popoverPlaca'}).append('Placa'),
                         $('<input>', {type:'text', class:'form-control', id:'placa', name:'placa'})
                     ),
                     $('<div>', {class:'form-group col-md-4'}).append(
-                        $('<label>', {for:'renavan'}).append('Código RENAVAN').append(
-                            $('<a>', {href:'#', id:'popoverRenavan'}).append(
-                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
-                            ),
-                        ),
+                        $('<label>', {for:'renavan', id:'popoverRenavan'}).append('Código RENAVAN'),
                         $('<input>', {type:'text', class:'form-control', id:'renavan', name:'renavan'})
                     ),
                 ),
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'ano_modelo'}).append('Ano do Modelo').append(
-                            $('<a>', {href:'#', id:'popoverAnoModelo'}).append(
-                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
-                            ),
-                        ),
+                        $('<label>', {for:'ano_modelo', id:'popoverAnoModelo'}).append('Ano do Modelo'),
                         $('<input>', {type:'text', class:'form-control', id:'ano_modelo', name:'ano_modelo'})
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'ano_fabricacao'}).append('Ano de Fabricação').append(
-                            $('<a>', {href:'#', id:'popoverAnoFabricacao'}).append(
-                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
-                            ),
-                        ),
+                        $('<label>', {for:'ano_fabricacao', id:'popoverAnoFabricacao'}).append('Ano de Fabricação'),
                         $('<input>', {type:'text', class:'form-control', id:'ano_fabricacao', name:'ano_fabricacao'})
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'cor'}).append('Cor').append(
-                            $('<a>', {href:'#', id:'popoverCor'}).append(
-                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
-                            ),
-                        ),
+                        $('<label>', {for:'cor', id:'popoverCor'}).append('Cor'),
                         $('<input>', {type:'text', class:'form-control', id:'cor', name:'cor'})
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'km'}).append('KM').append(
-                            $('<a>', {href:'#', id:'popoverKM'}).append(
-                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
-                            ),
-                        ),
+                        $('<label>', {for:'km', id:'popoverKM'}).append('KM'),
                         $('<input>', {type:'text', class:'form-control', id:'km', name:'km'})
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'marca'}).append('Marca').append(
-                            $('<a>', {href:'#', id:'popoverMarca'}).append(
-                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
-                            ),
-                        ),
+                        $('<label>', {for:'marca', id:'popoverMarca'}).append('Marca'),
                         $('<input>', {type:'text', class:'form-control', id:'marca', name:'marca'})
                     ),
                 ),
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'preco'}).append('Preço').append(
-                            $('<a>', {href:'#', id:'popoverPreco'}).append(
-                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
-                            ),
-                        ),
+                        $('<label>', {for:'preco', id:'popoverPreco'}).append('Preço'),
                         $('<input>', {type:'text', class:'form-control', id:'preco', name:'preco'})
                     ),
                     $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'preco_fipe'}).append('Preço Fipe').append(
-                            $('<a>', {href:'#', id:'popoverPrecoFipe'}).append(
-                                $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
-                            ),
-                        ),
+                        $('<label>', {for:'preco_fipe', id:'popoverPrecoFipe'}).append('Preço Fipe'),
                         $('<input>', {type:'text', class:'form-control', id:'preco_fipe', name:'preco_fipe'})
                     ),
                 ),
@@ -159,7 +128,8 @@ function editarCadastro(id) {
                 $('<h1>').append('Componenetes Adicionais'),
                 $('<hr>'),
                 $('<input>', {type:'hidden', class:'form-control', name:'atualizar', id:'atualizar', value:'false'}),
-                $('<button>', {class:'btn btn-primary', type:'button', id:'buttoncomponentes'}).append('Cadastrar/Ver Componentes').on('click', function(){
+                $('<select>',{multiple:'true', class:'chosen', 'data-placeholder':'Escolhas os componentes...'}),
+                $('<button>', {class:'btn btn-primary', type:'button', id:'buttoncomponentes', style:'margin-left: 5px;'}).append('Cadastrar/Ver Componentes').on('click', function(){
                     routie('componentes');
                 }),
                 $('<button>', {class:'btn btn-primary', type:'submit', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
@@ -170,19 +140,17 @@ function editarCadastro(id) {
         ),
     );
 
-    $('#preco').mask('000.000,00', {reverse: true});
-    $('#preco_fipe').mask('000.000,00', {reverse: true});
+    $('#placa').mask('AAA9999');
+    $('#preco').mask('000.000.000,00', {reverse: true});
+    $('#preco_fipe').mask('000.000.000,00', {reverse: true});
     $('#km').mask('000.000', {reverse: true});
     $('#ano_modelo').mask('0000');
     $('#ano_fabricacao').mask('0000');
 
     listarComponentes().done(function(dados) {
         $.each (dados, function(key, value) {
-            $('#buttoncomponentes').before(
-                $('<div>', {class:'form-check form-check-inline'}).append(
-                    $('<input>', {class:'form-check-input', type:'checkbox', id:value.id, name:value.id}),
-                    $('<label>', {class:'form-check-label', for:'componente_'+value.id}).append(value.componentes),
-                ),
+            $('.chosen').append(
+                $('<option>').append(value.componentes)
             );
         })
     })
@@ -209,9 +177,9 @@ function editarCadastro(id) {
 				$('#km').val(automovel.km).mask('###.##0', {reverse: true});
 				$('#marca').val(automovel.marca);
 				var preco = automovel.preco.replace('.','');
-				$('#preco').val(preco).mask("###.##0,00", {reverse: true});
+				$('#preco').val(preco).mask("###.###.##0,00", {reverse: true});
 				var preco_fipe = automovel.preco_fipe.replace('.','');
-				$('#preco_fipe').val(preco_fipe).mask("###.##0,00", {reverse: true});
+				$('#preco_fipe').val(preco_fipe).mask("###.###.##0,00", {reverse: true});
 				$('#atualizar').val('true');
 				$.each(data.componentes, function(key2, value2) {
 					$('#'+value2.id).attr('checked','checked');
@@ -521,7 +489,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                 ),
                             ),
                             $('<th>').append(
-                                $('<div>', {style:'width: 24.5%;'}).append('Placa').append(
+                                $('<div>', {style:'width: 23.5%;'}).append('Placa').append(
                                     $('<div>', {class:'ordenacao'}).append(
                                         $('<a>', {href:'#', style:'height: 4px;'}).append(
                                             $('<i>', {class:'fas fa-sort-up'}).on('click', function() {

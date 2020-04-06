@@ -17,9 +17,11 @@ if (isset($_POST['id'])) {
     $automovel->km = trim($km);
     $automovel->marca = trim($_POST['marca']);
     $preco = str_replace('.', '', $_POST['preco']);
+    $preco = str_replace('.', '', $preco);
     $preco = str_replace(',', '.', $preco);
     $automovel->preco = trim($preco);
     $precoFipe = str_replace('.', '', $_POST['preco_fipe']);
+    $precoFipe = str_replace('.', '', $precoFipe);
     $precoFipe = str_replace(',', '.', $precoFipe);
     $automovel->preco_fipe = trim($precoFipe);
     $automovel->adicionar();

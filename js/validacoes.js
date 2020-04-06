@@ -8,8 +8,8 @@ function validar(event) {
     var cor = $('#cor').val().trim();
     var km = $('#km').val().replace('.','').trim();
     var marca = $('#marca').val().trim();
-    var preco = $('#preco').val().replace('.','').replace(',','.').trim();
-    var preco_fipe = $('#preco_fipe').val().replace('.','').replace(',','.').trim();
+    var preco = $('#preco').val().replace('.','').replace('.','').replace(',','.').trim();
+    var preco_fipe = $('#preco_fipe').val().replace('.','').replace('.','').replace(',','.').trim();
 
     var data = new Date();
     var ano = data.getFullYear();
@@ -40,7 +40,7 @@ function validar(event) {
           });
         enviar = false;
 
-    } else if(placa.length != 7) {
+    } else if (placa.length != 7) {
 
         $('#erro_placa').html('');
         $('#placa').after('<p id="erro_placa">Placa inválida!</p>');
@@ -58,6 +58,26 @@ function validar(event) {
 
         $('#erro_renavan').html('');
         $('#renavan').after('<p id="erro_renavan">Código RENAVAN vazio!</p>');
+        $('#erro_renavan').css({
+            'color': 'red',
+            'font-size': '15px'
+          });
+        enviar = false;
+
+    } else if (isNaN(renavan)) {
+
+        $('#erro_renavan').html('');
+        $('#renavan').after('<p id="erro_renavan">Código RENAVAN não permite letras!</p>');
+        $('#erro_renavan').css({
+            'color': 'red',
+            'font-size': '15px'
+          });
+        enviar = false;
+        
+    } else if (renavan.length != 11) {
+
+        $('#erro_renavan').html('');
+        $('#renavan').after('<p id="erro_renavan">Código RENAVAN inválido!</p>');
         $('#erro_renavan').css({
             'color': 'red',
             'font-size': '15px'
