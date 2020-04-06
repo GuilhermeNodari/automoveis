@@ -57,11 +57,17 @@ function adicionarPopover(id, texto) {
         'data-html': 'true',
         'data-placement': 'right',
         'data-content': '<a href="#" style="float:right;" onClick="Javascript:esconderPopover('+id+')"> <i class="far fa-times-circle"></i> </a> <div>'+ texto + '</div>'
-    }).on('click', function() {
-        $('[data-toggle="popover"]').popover('hide');
     });
 
     $('#'+id).popover();
+    
+    $('html').on('click', function(e) {
+        $('[data-toggle="popover"]').each(function () {
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
+    });
 }
 
 function editarCadastro(id) {
