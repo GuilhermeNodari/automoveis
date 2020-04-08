@@ -189,8 +189,9 @@ function editarCadastro(id) {
 				$('#preco_fipe').val(preco_fipe).mask("###.###.##0,00", {reverse: true});
                 $('#atualizar').val('true');
 				$.each(data.componentes, function(key2, value2) {
-					$('#'+value2.id).attr('selected','true');
+					$('#'+value2.id).attr('selected', 'selected');
                 })
+                $('select').trigger('chosen:updated');
             }
         });
     }
@@ -200,8 +201,10 @@ function editarCadastro(id) {
 }
 
 function enviarForm() {
+
     var arrayAutomovel = $('#form').serializeArray();
     var arrayComponentes = $(".chosen").chosen().val();
+
     $.ajax({
         type: 'POST',
         url:  'acoesAutomovel.php',
@@ -213,6 +216,7 @@ function enviarForm() {
             window.location.href = 'home.php#listar';
         }
     });
+
 }
 
 function editarComponente(id) {
