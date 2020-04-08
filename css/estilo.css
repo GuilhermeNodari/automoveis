@@ -9,3 +9,8 @@ h1 {
     flex-direction: column; 
     float: right;
 }
+
+#buttonComponentes {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

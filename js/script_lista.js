@@ -23,12 +23,10 @@ $(document).ready(function(){
         'cadastro': function() {
             editarCadastro();
             popover();
-            $('.chosen').chosen({width: '78.75%'});
         },
         'editar/:id': function(id) {
             editarCadastro(id);
             popover();
-            $('.chosen').chosen({width: '78.75%'});
         },
         'componentes': function() {
             editarComponente();
@@ -82,7 +80,7 @@ function editarCadastro(id) {
         $('<div>', {class:'container'}).append(
             $('<h1>').append('Dados Cadastrais'),
             $('<hr>'),
-            $('<form>', {action:'acoesAutomovel.php', method:'POST', id:'form'}).append(
+            $('<form>', {id:'form'}).append(
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-4'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'id', name:'id'}),
@@ -135,11 +133,13 @@ function editarCadastro(id) {
                 $('<hr>'),
                 $('<input>', {type:'hidden', class:'form-control', name:'atualizar', id:'atualizar', value:'false'}),
                 $('<select>',{multiple:'true', class:'chosen', 'data-placeholder':'Escolhas os componentes...'}),
-                $('<button>', {class:'btn btn-primary', type:'button', id:'buttoncomponentes', style:'margin-left: 5px;'}).append('Cadastrar/Ver Componentes').on('click', function(){
+                $('<button>', {class:'btn btn-primary', type:'button', id:'buttonComponentes'}).append('Cadastrar/Ver Componentes').on('click', function(){
                     routie('componentes');
                 }),
-                $('<button>', {class:'btn btn-primary', type:'submit', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
-                    validar(event);
+                $('<button>', {class:'btn btn-primary', type:'button', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
+                    if (validar(event)) {
+                        enviarForm();
+                    }
                 }),
                 $('<button>', {class:'btn btn-light', type:'button', onClick:'window.location.href = "home.php#listar"'}).append('Voltar'),
             ),
@@ -156,12 +156,13 @@ function editarCadastro(id) {
     listarComponentes().done(function(dados) {
         $.each (dados, function(key, value) {
             $('.chosen').append(
-                $('<option>').append(value.componentes)
+                $('<option>', {id:value.id, value:value.id}).append(value.componentes)
             );
         })
+        $('.chosen').chosen({width: '100%'});
     })
     
-    $('#salvar').before('<br><br>');
+    $('#salvar').before('<br>');
 
     if (typeof id != 'undefined') {
         $.ajax({
@@ -186,16 +187,32 @@ function editarCadastro(id) {
 				$('#preco').val(preco).mask("###.###.##0,00", {reverse: true});
 				var preco_fipe = automovel.preco_fipe.replace('.','');
 				$('#preco_fipe').val(preco_fipe).mask("###.###.##0,00", {reverse: true});
-				$('#atualizar').val('true');
+                $('#atualizar').val('true');
 				$.each(data.componentes, function(key2, value2) {
-					$('#'+value2.id).attr('checked','checked');
-				})
+					$('#'+value2.id).attr('selected','true');
+                })
             }
         });
     }
 
     $('.form').show();
 
+}
+
+function enviarForm() {
+    var arrayAutomovel = $('#form').serializeArray();
+    var arrayComponentes = $(".chosen").chosen().val();
+    $.ajax({
+        type: 'POST',
+        url:  'acoesAutomovel.php',
+        data: {
+            automovel: arrayAutomovel,
+            componentes: arrayComponentes
+        },
+        success: function(data){
+            window.location.href = 'home.php#listar';
+        }
+    });
 }
 
 function editarComponente(id) {

@@ -3,48 +3,54 @@
 include_once 'class/automovel.class.php';
 include_once 'class/componentes.class.php';
 
-if (isset($_POST['id'])) {
+if (isset($_POST['automovel'])) {
+
+    $arrayAutomovel = [];
+
+    for($k=0; $k < count($_POST['automovel']); $k++){
+        $automovel = $_POST['automovel'][$k];
+        $arrayAutomovel += [$automovel['name'] => $automovel['value']]; 
+    }
 
     $automovel = new Automovel();
-    $automovel->id = $_POST['id'];
-    $automovel->descricao = trim($_POST['descricao']);
-    $automovel->placa = trim($_POST['placa']);
-    $automovel->renavan = trim($_POST['renavan']);
-    $automovel->ano_modelo = trim($_POST['ano_modelo']);
-    $automovel->ano_fabricacao = trim($_POST['ano_fabricacao']);
-    $automovel->cor = trim($_POST['cor']);
-    $km = str_replace('.', '', $_POST['km']);
+    $automovel->id = $arrayAutomovel['id'];
+    $automovel->descricao = trim($arrayAutomovel['descricao']);
+    $automovel->placa = trim($arrayAutomovel['placa']);
+    $automovel->renavan = trim($arrayAutomovel['renavan']);
+    var_dump($automovel->renavan);
+    $automovel->ano_modelo = trim($arrayAutomovel['ano_modelo']);
+    $automovel->ano_fabricacao = trim($arrayAutomovel['ano_fabricacao']);
+    $automovel->cor = trim($arrayAutomovel['cor']);
+    $km = str_replace('.', '', $arrayAutomovel['km']);
     $automovel->km = trim($km);
-    $automovel->marca = trim($_POST['marca']);
-    $preco = str_replace('.', '', $_POST['preco']);
+    $automovel->marca = trim($arrayAutomovel['marca']);
+    $preco = str_replace('.', '', $arrayAutomovel['preco']);
     $preco = str_replace('.', '', $preco);
     $preco = str_replace(',', '.', $preco);
     $automovel->preco = trim($preco);
-    $precoFipe = str_replace('.', '', $_POST['preco_fipe']);
+    $precoFipe = str_replace('.', '', $arrayAutomovel['preco_fipe']);
     $precoFipe = str_replace('.', '', $precoFipe);
     $precoFipe = str_replace(',', '.', $precoFipe);
     $automovel->preco_fipe = trim($precoFipe);
     $automovel->adicionar();
-
+    
     $componentes = new Componentes();
     $dados = $componentes->listar();
 
     $automovel = new Automovel();
 
-    if ($_POST['atualizar'] == 'true') {
-        $automovel->excluirComponentes($_POST['id']);
+    if ($arrayAutomovel['atualizar'] == 'true') {
+        $automovel->excluirComponentes($arrayAutomovel['id']);
     }
 
-    foreach ($_POST as $chave => $valor) {
+    foreach ($_POST['componentes'] as $chave => $valor) {
         foreach ($dados as $chave2 => $valor2) {
-            if ($chave == $valor2['id']) {
-                $id = empty($_POST['id']) ? $automovel->lastInsert()['id'] : $_POST['id'];
-                $automovel->adicionarComponentes($id, $chave);
+            if ($valor == $valor2['id']) {
+                $id = empty($arrayAutomovel['id']) ? $automovel->lastInsert()['id'] : $arrayAutomovel['id'];
+                $automovel->adicionarComponentes($id, $valor);
             }
         }
     }
-
-    header('Location: home.php#listar');
 
 } else if (isset($_POST['idExcluir'])) {
 
