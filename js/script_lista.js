@@ -28,13 +28,8 @@ $(document).ready(function(){
             editarCadastro(id);
             popover();
         },
-        'componentes': function() {
-            editarComponente();
-        },
-        'editarcomponente/:id': function(id) {
-            editarComponente(id);
-        },
     });
+
 });
 
 function esconderPopover(elemento) {
@@ -134,7 +129,7 @@ function editarCadastro(id) {
                 $('<input>', {type:'hidden', class:'form-control', name:'atualizar', id:'atualizar', value:'false'}),
                 $('<select>',{multiple:'true', class:'chosen', 'data-placeholder':'Escolhas os componentes...'}),
                 $('<button>', {class:'btn btn-primary', type:'button', id:'buttonComponentes'}).append('Cadastrar/Ver Componentes').on('click', function(){
-                    routie('componentes');
+                    dialogComponente();
                 }),
                 $('<button>', {class:'btn btn-primary', type:'button', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
                     if (validar(event)) {
@@ -219,11 +214,27 @@ function enviarForm() {
 
 }
 
-function editarComponente(id) {
+function listarComponentes() {
 
-    $('.form').html('');
-    $('.lista').html('');
-    $('.pagination').html('');
+    var objDeferred = $.Deferred();
+
+    $.ajax({
+        type: 'POST',
+        url:  'acoesComponente.php',
+        data: {
+            listar: 'listar',
+        },
+        success: function(data){
+            dados = JSON.parse(data);
+            objDeferred.resolve(dados);
+        }
+    });
+
+    return objDeferred.promise();
+}
+
+function dialogComponente(id) {
+
     $('.formComponente').html('');
     $('.listaComponente').html('');
 
@@ -231,7 +242,7 @@ function editarComponente(id) {
         $('<div>', {class:'container'}).append(
             $('<h1>').append('Dados dos Componentes'),
             $('<hr>'),
-            $('<form>', {action:'acoesComponente.php', method:'POST', id:'formComponentes'}).append(
+            $('<form>', {id:'formComponentes'}).append(
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-12'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'idComponente', name:'idComponente'}),
@@ -239,10 +250,11 @@ function editarComponente(id) {
                         $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
                     ),
                 ),
-                $('<button>', {class:'btn btn-primary', type:'submit', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
-                    validarComponente(event);
+                $('<button>', {class:'btn btn-primary', type:'button', style:'margin-right:10px', id:'salvarComponentes'}).append('Salvar').on('click', function() {
+                    if (validarComponente(event)) {
+                        enviarFormComponente();
+                    }
                 }),
-                $('<button>', {class:'btn btn-light', type:'button', onClick:'window.location.href = "home.php#listar"'}).append('Voltar'),
             ),
         ),
     );
@@ -293,7 +305,7 @@ function editarComponente(id) {
                             ).append(' '),
                             $('<a>', {href:'#'}).append(
                                 $('<i>', {class:'fas fa-pen'}).on('click', function() {
-                                    routie('editarcomponente/'+value.id);
+                                    dialogComponente(value.id);
                                 }),
                             ),
                         ),
@@ -311,6 +323,29 @@ function editarComponente(id) {
 
     $('.formComponente').show();
     $('.listaComponente').show();
+
+    $('.dialogComponente').dialog({
+        height: 500,
+        width: 700
+    });
+
+}
+
+function enviarFormComponente() {
+
+    var arrayComponentes = $('#formComponentes').serializeArray();
+
+    $.ajax({
+        type: 'POST',
+        url:  'acoesComponente.php',
+        data: {
+            componentes: arrayComponentes
+        },
+        success: function(data){
+            window.location.href = 'home.php#cadastro';
+            $('.dialogComponente').dialog('close');
+        }
+    });
 
 }
 
@@ -338,7 +373,8 @@ function excluirComponente(id) {
                             icon: 'success',
                             showConfirmButton: true
                         }).then((result) => {
-                            window.location.href = 'home.php#componentes';
+                            window.location.href = 'home.php#cadastro';
+                            $('.dialogComponente').dialog('close');
                         })
                     } else {
                         Swal.fire({
@@ -347,29 +383,13 @@ function excluirComponente(id) {
                             icon: 'error',
                             showConfirmButton: true
                         }).then((result) => {
-                            window.location.href = 'home.php#componentes';
+                            $('.dialogComponente').dialog('close');
                         })
                     }
                 }
             });
         }
     });
-}
-
-function listarComponentes() {
-    var objDeferred = $.Deferred();
-    $.ajax({
-        type: 'POST',
-        url:  'acoesComponente.php',
-        data: {
-            listar: 'listar',
-        },
-        success: function(data){
-            dados = JSON.parse(data);
-            objDeferred.resolve(dados);
-        }
-    });
-    return objDeferred.promise();
 }
 
 function excluirCadastro(id) {

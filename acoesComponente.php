@@ -2,14 +2,19 @@
 
 include_once 'class/componentes.class.php';
 
-if (isset($_POST['idComponente'])) {
+if (isset($_POST['componentes'])) {
+
+    $arrayComponente = [];
+
+    for($k=0; $k < count($_POST['componentes']); $k++){
+        $componente = $_POST['componentes'][$k];
+        $arrayComponente += [$componente['name'] => $componente['value']]; 
+    }
 
     $componentes = new Componentes();
-    $componentes->idComponente = $_POST['idComponente'];
-    $componentes->componente = trim($_POST['componente']);
-    $componentes->adicionar();
-
-    header("Location: home.php#componentes");
+    $componentes->idComponente = $arrayComponente['idComponente'];
+    $componentes->componente = trim($arrayComponente['componente']);
+    $dados = $componentes->adicionar();
 
 } else if (isset($_POST['listar'])) {
 
