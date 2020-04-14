@@ -340,6 +340,8 @@ function editarComponente(id) {
 
 function dialogComponente() {
 
+    $('.formComponente').html('');
+
     $('.formComponente').append(
         $('<div>', {class:'container'}).append(
             $('<form>', {id:'formComponentes'}).append(
