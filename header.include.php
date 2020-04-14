@@ -33,6 +33,9 @@
                       <li class="nav-item">
                           <a class="nav-link" href="home.php#cadastro">Cadastro</a>
                       </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="home.php#componentes">Componentes</a>
+                      </li>
                   </ul>
               </div>
             </nav>

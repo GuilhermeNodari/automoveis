@@ -28,6 +28,12 @@ $(document).ready(function(){
             editarCadastro(id);
             popover();
         },
+        'componentes': function() {
+            editarComponente();
+        },
+        'editarComponente/:id': function(id) {
+            editarComponente(id);
+        },
     });
 
 });
@@ -128,7 +134,7 @@ function editarCadastro(id) {
                 $('<hr>'),
                 $('<input>', {type:'hidden', class:'form-control', name:'atualizar', id:'atualizar', value:'false'}),
                 $('<select>',{multiple:'true', class:'chosen', 'data-placeholder':'Escolhas os componentes...'}),
-                $('<button>', {class:'btn btn-primary', type:'button', id:'buttonComponentes'}).append('Cadastrar/Ver Componentes').on('click', function(){
+                $('<button>', {class:'btn btn-primary', type:'button', id:'buttonComponentes'}).append('Cadastrar Componente').on('click', function(){
                     dialogComponente();
                 }),
                 $('<button>', {class:'btn btn-primary', type:'button', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
@@ -233,8 +239,15 @@ function listarComponentes() {
     return objDeferred.promise();
 }
 
-function dialogComponente(id) {
+function editarComponente(id) {
 
+    if ($('.formComponente').hasClass('ui-dialog-content')) {
+        $('.formComponente').dialog('destroy');
+    }
+
+    $('.form').html('');
+    $('.lista').html('');
+    $('.paginacao').html('');
     $('.formComponente').html('');
     $('.listaComponente').html('');
 
@@ -258,7 +271,7 @@ function dialogComponente(id) {
             ),
         ),
     );
-
+    
     if (typeof id != 'undefined') {
         $.ajax({
             type: 'POST',
@@ -305,7 +318,7 @@ function dialogComponente(id) {
                             ).append(' '),
                             $('<a>', {href:'#'}).append(
                                 $('<i>', {class:'fas fa-pen'}).on('click', function() {
-                                    dialogComponente(value.id);
+                                    routie('editarComponente/'+value.id);
                                 }),
                             ),
                         ),
@@ -323,10 +336,32 @@ function dialogComponente(id) {
 
     $('.formComponente').show();
     $('.listaComponente').show();
+}
 
-    $('.dialogComponente').dialog({
-        height: 500,
-        width: 700
+function dialogComponente() {
+
+    $('.formComponente').append(
+        $('<div>', {class:'container'}).append(
+            $('<form>', {id:'formComponentes'}).append(
+                $('<div>', {class:'form-row'}).append(
+                    $('<div>', {class:'form-group col-md-12'}).append(
+                        $('<input>', {type:'hidden', class:'form-control', id:'idComponente', name:'idComponente'}),
+                        $('<label>', {for:'componente'}).append('Componente'),
+                        $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
+                    ),
+                ),
+                $('<button>', {class:'btn btn-primary', type:'button', style:'margin-right:10px', id:'salvarComponentes'}).append('Salvar').on('click', function() {
+                    if (validarComponente(event)) {
+                        enviarFormComponente();
+                    }
+                }),
+            ),
+        ),
+    );
+
+    $('.formComponente').dialog({
+        height: 210,
+        width: 500
     });
 
 }
@@ -342,8 +377,8 @@ function enviarFormComponente() {
             componentes: arrayComponentes
         },
         success: function(data){
-            window.location.href = 'home.php#cadastro';
-            $('.dialogComponente').dialog('close');
+            document.location.reload(true);
+            $('.formComponente').dialog('destroy');
         }
     });
 
@@ -373,8 +408,7 @@ function excluirComponente(id) {
                             icon: 'success',
                             showConfirmButton: true
                         }).then((result) => {
-                            window.location.href = 'home.php#cadastro';
-                            $('.dialogComponente').dialog('close');
+                            window.location.href = 'home.php#componentes';
                         })
                     } else {
                         Swal.fire({
@@ -383,7 +417,7 @@ function excluirComponente(id) {
                             icon: 'error',
                             showConfirmButton: true
                         }).then((result) => {
-                            $('.dialogComponente').dialog('close');
+                            window.location.href = 'home.php#componentes';
                         })
                     }
                 }
@@ -459,6 +493,10 @@ function paginacao(retornoAjax, coluna, ordem){
 }
 
 function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
+
+    if ($('.formComponente').hasClass('ui-dialog-content')) {
+        $('.formComponente').dialog('destroy');
+    }
 
     var busca = pesquisa == 'NULL' ? '' : pesquisa;
 
