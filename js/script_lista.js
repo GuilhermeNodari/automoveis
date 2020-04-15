@@ -379,8 +379,20 @@ function enviarFormComponente() {
             componentes: arrayComponentes
         },
         success: function(data){
-            document.location.reload(true);
+            var id = JSON.parse(data).id;
+            $('.chosen').html('');
+            listarComponentes().done(function(dados) {
+                $.each (dados, function(key, value) {
+                    $('.chosen').append(
+                        $('<option>', {id:value.id, value:value.id}).append(value.componentes)
+                    );
+                })
+                $('.chosen').chosen({width: '100%'});
+            })
+            $('#'+id).attr('selected', 'selected');
+            $('select').trigger('chosen:updated');
             $('.formComponente').dialog('destroy');
+            $('.formComponente').html('');
         }
     });
 

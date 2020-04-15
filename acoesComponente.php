@@ -15,6 +15,8 @@ if (isset($_POST['componentes'])) {
     $componentes->idComponente = $arrayComponente['idComponente'];
     $componentes->componente = trim($arrayComponente['componente']);
     $dados = $componentes->adicionar();
+    
+    echo json_encode($componentes->lastInsert());
 
 } else if (isset($_POST['listar'])) {
 

@@ -69,6 +69,15 @@ class Componentes extends Database{
 
     }
 
+    public function lastInsert() {
+
+        $this->stmt = $this->pdo->prepare("SELECT id FROM componentes ORDER BY id DESC LIMIT 1");
+
+        $this->stmt->execute();
+        return $this->stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+
 }
 
 ?>
