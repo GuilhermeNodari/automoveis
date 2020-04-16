@@ -259,6 +259,7 @@ function editarComponente(id) {
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-12'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'idComponente', name:'idComponente'}),
+                        $('<input>', {type:'hidden', class:'form-control', id:'dialog', name:'dialog', value:''}),
                         $('<label>', {for:'componente'}).append('Componente'),
                         $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
                     ),
@@ -348,6 +349,7 @@ function dialogComponente() {
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-12'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'idComponente', name:'idComponente'}),
+                        $('<input>', {type:'hidden', class:'form-control', id:'dialog', name:'dialog', value:'dialog'}),
                         $('<label>', {for:'componente'}).append('Componente'),
                         $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
                     ),
@@ -379,20 +381,29 @@ function enviarFormComponente() {
             componentes: arrayComponentes
         },
         success: function(data){
-            var id = JSON.parse(data).id;
-            $('.chosen').html('');
-            listarComponentes().done(function(dados) {
-                $.each (dados, function(key, value) {
-                    $('.chosen').append(
-                        $('<option>', {id:value.id, value:value.id}).append(value.componentes)
-                    );
+            data = JSON.parse(data);
+            var componentesSelecionados = $(".chosen").chosen().val();
+            if (data.dialog) {
+                var id = data.id;
+                $('.chosen').html('');
+                listarComponentes().done(function(dados) {
+                    $.each (dados, function(key, value) {
+                        $('.chosen').append(
+                            $('<option>', {id:value.id, value:value.id}).append(value.componentes)
+                        );
+                    })
+                    $('.chosen').chosen({width: '100%'});
+                    $.each (componentesSelecionados, function(key, value) {
+                        $('#'+value).attr('selected', 'selected');
+                    })
+                    $('#'+id).attr('selected', 'selected');
+                    $('select').trigger('chosen:updated');
                 })
-                $('.chosen').chosen({width: '100%'});
-            })
-            $('#'+id).attr('selected', 'selected');
-            $('select').trigger('chosen:updated');
-            $('.formComponente').dialog('destroy');
-            $('.formComponente').html('');
+                $('.formComponente').dialog('destroy');
+                $('.formComponente').html('');
+            } else {
+                document.location.reload(true);
+            }
         }
     });
 

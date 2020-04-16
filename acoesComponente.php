@@ -4,6 +4,7 @@ include_once 'class/componentes.class.php';
 
 if (isset($_POST['componentes'])) {
 
+    $dados = [];
     $arrayComponente = [];
 
     for($k=0; $k < count($_POST['componentes']); $k++){
@@ -11,12 +12,21 @@ if (isset($_POST['componentes'])) {
         $arrayComponente += [$componente['name'] => $componente['value']]; 
     }
 
+    $dialog = false;
+
+    if (!empty($arrayComponente['dialog'])){
+        $dialog = true;
+    }
+
     $componentes = new Componentes();
     $componentes->idComponente = $arrayComponente['idComponente'];
     $componentes->componente = trim($arrayComponente['componente']);
-    $dados = $componentes->adicionar();
+    $componentes->adicionar();
+
+    $dados = $componentes->lastInsert();
+    $dados['dialog'] = $dialog;
     
-    echo json_encode($componentes->lastInsert());
+    echo json_encode($dados);
 
 } else if (isset($_POST['listar'])) {
 
