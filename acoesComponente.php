@@ -43,13 +43,27 @@ if (isset($_POST['componentes'])) {
     
     echo json_encode($dados);
 
-} else {
+} else if (isset($_POST['idExcluir'])) {
 
     $id = $_POST['idExcluir'];
     $componentes = new Componentes();
     $retorno = $componentes->excluir($id);
 
     echo json_encode($retorno);
+
+} else {
+
+    $componentes = new Componentes();
+    $linhasAfetadas = [];
+
+    for($k=0; $k < count($_POST['componentesSelecionados']); $k++){
+        $componente = $_POST['componentesSelecionados'][$k];
+        $id = $componente['value'];
+        $linhasAfetadas[$id]['id'] = $id;
+        $linhasAfetadas[$id]['linhaAfetada'] = $componentes->excluir($id);
+    }
+
+    echo json_encode($linhasAfetadas);
 
 }
 

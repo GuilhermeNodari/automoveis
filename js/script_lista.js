@@ -294,22 +294,36 @@ function editarComponente(id) {
         $('.listaComponente').append(
             $('<div>', {class:'container'}).append(
                 $('<br>'),
-                $('<table>', {class:'table table-striped'}).append(
-                    $('<thead>').append(
-                        $('<tr>').append(
-                            $('<th>').append('Nome'),
-                            $('<th>').append('Ações')
+                $('<form>', {id:'apagarComponentesSelecionados'}).append(
+                    $('<table>', {class:'table table-striped'}).append(
+                        $('<thead>').append(
+                            $('<tr>').append(
+                                $('<th>', {class:'checkboxTabela', style:'width:5%;'}).append(''),
+                                $('<th>').append('Nome'),
+                                $('<th>').append('Ações')
+                            ),
                         ),
+                        $('<tbody>'),
                     ),
-                    $('<tbody>'),
                 ),
             ),
         );
 
         if (dados.length != 0) {
+            
             $.each (dados, function(key, value) {
                 $('tbody').append(
                     $('<tr>').append(
+                        $('<td>').append(
+                            $('<input>', {type:'checkbox', name:'componenteSelecionado', value:value.id, style:'margin-top: 5px;'}).on('click', function() {
+                                $('#apagarComponentes').remove();
+                                $('table').before(
+                                    $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionados').on('click', function() {
+                                        apagarComponentesSelecionados();
+                                    }),
+                                );
+                            }),
+                        ),
                         $('<td>').append(value.componentes),
                         $('<td>').append(
                             $('<a>', {href:'#'}).append(
@@ -325,8 +339,9 @@ function editarComponente(id) {
                         ),
                     ),
                 );
-            })
+            });
         } else {
+            $('.checkboxTabela').remove();
             $('tbody').append(
                 $('<tr>').append(
                     $('<td>', {colspan:'2', style:'text-align:center;'}).append('Não há componentes cadastrados'),
@@ -404,6 +419,36 @@ function enviarFormComponente() {
             } else {
                 document.location.reload(true);
             }
+        }
+    });
+
+}
+
+function apagarComponentesSelecionados() {
+
+    var componentesSelecionados = $('#apagarComponentesSelecionados').serializeArray();
+
+    $.ajax({
+        type: 'POST',
+        url:  'acoesComponente.php',
+        data: {
+            componentesSelecionados: componentesSelecionados
+        },
+        success: function(data){
+            data = JSON.parse(data);
+            $.each (data, function(key, value) {
+                if (value.linhaAfetada == 0) {
+                    Swal.fire({
+                        title: 'Algum componente não pôde ser excluído!',
+                        text: 'Esse componente está linkado com algum automóvel',
+                        icon: 'error',
+                        showConfirmButton: true
+                    }).then((result) => {
+                        window.location.href = 'home.php#componentes';
+                    })
+                }
+            })
+            setTimeout(function(){ document.location.reload(true); }, 1250);
         }
     });
 
