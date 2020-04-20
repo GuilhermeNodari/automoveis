@@ -310,18 +310,22 @@ function editarComponente(id) {
         );
 
         if (dados.length != 0) {
-            
             $.each (dados, function(key, value) {
                 $('tbody').append(
                     $('<tr>').append(
                         $('<td>').append(
-                            $('<input>', {type:'checkbox', name:'componenteSelecionado', value:value.id, style:'margin-top: 5px;'}).on('click', function() {
-                                $('#apagarComponentes').remove();
-                                $('table').before(
-                                    $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionados').on('click', function() {
-                                        apagarComponentesSelecionados();
-                                    }),
-                                );
+                            $('<input>', {type:'checkbox', id:'componenteSelecionado', name:'componenteSelecionado', value:value.id, style:'margin-top: 5px;'}).on('click', function() {
+                                var checkbox = document.getElementById('componenteSelecionado');
+                                if (!checkbox.checked) {
+                                    $('#apagarComponentes').remove();
+                                } else {
+                                    $('#apagarComponentes').remove();
+                                    $('table').before(
+                                        $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionados').on('click', function() {
+                                            apagarComponentesSelecionados();
+                                        }),
+                                    );
+                                }
                             }),
                         ),
                         $('<td>').append(value.componentes),
