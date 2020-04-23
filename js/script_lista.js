@@ -446,19 +446,49 @@ function apagarComponentesSelecionados() {
         },
         success: function(data){
             data = JSON.parse(data);
+            var k = 0;
+            var countData = 0;
             $.each (data, function(key, value) {
-                if (value.linhaAfetada == 0) {
+                countData++;
+                if (value.linhaAfetada == 1) {
+                    k++;
+                }
+            })
+            if (k == countData) {
+                Swal.fire({
+                    title: 'Componente(s) excluído(s) com sucesso!',
+                    text: 'Todos os componentes selecionados foram excluídos',
+                    icon: 'success',
+                    showConfirmButton: true
+                }).then((result) => {
+                    document.location.reload(true);
+                })
+            } else if (k > 0 && k < countData) {
+                Swal.fire({
+                    title: 'Componente(s) excluído(s) com sucesso!',
+                    text: 'Alguns componentes selecionados foram excluídos',
+                    icon: 'success',
+                    showConfirmButton: true
+                }).then((result) => {
                     Swal.fire({
                         title: 'Algum componente não pôde ser excluído!',
                         text: 'Esse componente está linkado com algum automóvel',
                         icon: 'error',
                         showConfirmButton: true
                     }).then((result) => {
-                        window.location.href = 'home.php#componentes';
+                        document.location.reload(true);
                     })
-                }
-            })
-            setTimeout(function(){ document.location.reload(true); }, 1250);
+                })
+            } else {
+                Swal.fire({
+                    title: 'Nenhum componente pôde ser excluído!',
+                    text: 'Esses componentes estão linkados com algum automóvel',
+                    icon: 'error',
+                    showConfirmButton: true
+                }).then((result) => {
+                    document.location.reload(true);
+                })
+            }
         }
     });
 
