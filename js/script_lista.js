@@ -315,16 +315,22 @@ function editarComponente(id) {
                     $('<tr>').append(
                         $('<td>').append(
                             $('<input>', {type:'checkbox', id:'componenteSelecionado', name:'componenteSelecionado', value:value.id, style:'margin-top: 5px;'}).on('click', function() {
-                                var checkbox = document.getElementById('componenteSelecionado');
-                                if (!checkbox.checked) {
-                                    $('#apagarComponentes').remove();
-                                } else {
+                                var checkbox = document.querySelectorAll('#componenteSelecionado');
+                                var k = 0;
+                                $.each (checkbox, function(key, value) {
+                                    if (value.checked) {
+                                        k++;
+                                    }
+                                });
+                                if (k > 0) {
                                     $('#apagarComponentes').remove();
                                     $('table').before(
                                         $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionados').on('click', function() {
                                             apagarComponentesSelecionados();
                                         }),
                                     );
+                                } else {
+                                    $('#apagarComponentes').remove();
                                 }
                             }),
                         ),
