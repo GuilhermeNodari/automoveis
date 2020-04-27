@@ -32,7 +32,7 @@ $(document).ready(function(){
             editarComponente();
         },
         'editarComponente/:id': function(id) {
-            editarComponente(id);
+            editarComponente(id,'');
         },
     });
 
@@ -239,7 +239,7 @@ function listarComponentes() {
     return objDeferred.promise();
 }
 
-function editarComponente(id) {
+function editarComponente(id, componente) {
 
     if ($('.formComponente').hasClass('ui-dialog-content')) {
         $('.formComponente').dialog('destroy');
@@ -272,6 +272,8 @@ function editarComponente(id) {
             ),
         ),
     );
+
+    $('#componente').val(componente);
     
     if (typeof id != 'undefined') {
         $.ajax({
@@ -450,7 +452,7 @@ function enviarFormComponente() {
                 $('.formComponente').dialog('destroy');
                 $('.formComponente').html('');
             } else {
-                document.location.reload(true);
+                editarComponente();
             }
         }
     });
@@ -489,7 +491,7 @@ function apagarComponentesSelecionados() {
                     icon: 'success',
                     showConfirmButton: true
                 }).then((result) => {
-                    document.location.reload(true);
+                    editarComponente('', $('#componente').val());
                 })
             } else if (k > 0 && k < countData) {
                 Swal.fire({
@@ -504,7 +506,7 @@ function apagarComponentesSelecionados() {
                         icon: 'error',
                         showConfirmButton: true
                     }).then((result) => {
-                        document.location.reload(true);
+                        editarComponente('', $('#componente').val());
                     })
                 })
             } else {
@@ -514,7 +516,7 @@ function apagarComponentesSelecionados() {
                     icon: 'error',
                     showConfirmButton: true
                 }).then((result) => {
-                    document.location.reload(true);
+                    editarComponente('', $('#componente').val());
                 })
             }
         }
@@ -546,7 +548,7 @@ function excluirComponente(id) {
                             icon: 'success',
                             showConfirmButton: true
                         }).then((result) => {
-                            window.location.href = 'home.php#componentes';
+                            editarComponente('', $('#componente').val());
                         })
                     } else {
                         Swal.fire({
@@ -555,7 +557,7 @@ function excluirComponente(id) {
                             icon: 'error',
                             showConfirmButton: true
                         }).then((result) => {
-                            window.location.href = 'home.php#componentes';
+                            editarComponente('', $('#componente').val());
                         })
                     }
                 }
