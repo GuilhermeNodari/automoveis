@@ -247,7 +247,7 @@ function editarComponente(id) {
 
     $('.form').html('');
     $('.lista').html('');
-    $('.paginacao').html('');
+    $('.pagination').html('');
     $('.formComponente').html('');
     $('.listaComponente').html('');
 
@@ -289,6 +289,50 @@ function editarComponente(id) {
             }
         });
     }
+
+    function tabelaComponentes(checked) {
+        $.each (dados, function(key, value) {
+            $('tbody').append(
+                $('<tr>').append(
+                    $('<td>').append(
+                        $('<input>', {type:'checkbox', id:'componenteSelecionado', name:'componenteSelecionado', value:value.id, style:'margin-top: 5px;', checked:checked}).on('click', function() {
+                            var checkbox = document.querySelectorAll('#componenteSelecionado');
+                            var k = 0;
+                            $.each (checkbox, function(key, value) {
+                                if (value.checked) {
+                                    k++;
+                                }
+                            });
+                            console.log(k);
+                            if (k > 0) {
+                                $('#apagarComponentes').remove();
+                                $('table').before(
+                                    $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
+                                        apagarComponentesSelecionados();
+                                    }),
+                                );
+                            } else {
+                                $('#apagarComponentes').remove();
+                            }
+                        }),
+                    ),
+                    $('<td>').append(value.componentes),
+                    $('<td>').append(
+                        $('<a>', {href:'#'}).append(
+                            $('<i>', {class:'fas fa-trash'}).on('click', function() {
+                                excluirComponente(value.id);
+                            }),
+                        ).append(' '),
+                        $('<a>', {href:'#'}).append(
+                            $('<i>', {class:'fas fa-pen'}).on('click', function() {
+                                routie('editarComponente/'+value.id);
+                            }),
+                        ),
+                    ),
+                ),
+            );
+        });
+    }
     
     listarComponentes().done(function(dados) {
         $('.listaComponente').append(
@@ -298,7 +342,25 @@ function editarComponente(id) {
                     $('<table>', {class:'table table-striped'}).append(
                         $('<thead>').append(
                             $('<tr>').append(
-                                $('<th>', {class:'checkboxTabela', style:'width:5%;'}).append(''),
+                                $('<th>', {class:'checkboxTabela', style:'width:5%;'}).append(
+                                    $('<input>', {type:'checkbox', id:'selecionarTodos', name:'selecionarTodos', style:'margin-top: 5px;'}).on('click', function() {
+                                        var checkbox = document.getElementById('selecionarTodos');
+                                        if (checkbox.checked) {
+                                            $('tbody').html('');
+                                            $('#apagarComponentes').remove();
+                                            $('table').before(
+                                                $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
+                                                    apagarComponentesSelecionados();
+                                                }),
+                                            );
+                                            tabelaComponentes('checked');
+                                        } else {
+                                            $('tbody').html('');
+                                            $('#apagarComponentes').remove();
+                                            tabelaComponentes();
+                                        }
+                                    }),
+                                ),
                                 $('<th>').append('Nome'),
                                 $('<th>').append('Ações')
                             ),
@@ -310,46 +372,7 @@ function editarComponente(id) {
         );
 
         if (dados.length != 0) {
-            $.each (dados, function(key, value) {
-                $('tbody').append(
-                    $('<tr>').append(
-                        $('<td>').append(
-                            $('<input>', {type:'checkbox', id:'componenteSelecionado', name:'componenteSelecionado', value:value.id, style:'margin-top: 5px;'}).on('click', function() {
-                                var checkbox = document.querySelectorAll('#componenteSelecionado');
-                                var k = 0;
-                                $.each (checkbox, function(key, value) {
-                                    if (value.checked) {
-                                        k++;
-                                    }
-                                });
-                                if (k > 0) {
-                                    $('#apagarComponentes').remove();
-                                    $('table').before(
-                                        $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionados').on('click', function() {
-                                            apagarComponentesSelecionados();
-                                        }),
-                                    );
-                                } else {
-                                    $('#apagarComponentes').remove();
-                                }
-                            }),
-                        ),
-                        $('<td>').append(value.componentes),
-                        $('<td>').append(
-                            $('<a>', {href:'#'}).append(
-                                $('<i>', {class:'fas fa-trash'}).on('click', function() {
-                                    excluirComponente(value.id);
-                                }),
-                            ).append(' '),
-                            $('<a>', {href:'#'}).append(
-                                $('<i>', {class:'fas fa-pen'}).on('click', function() {
-                                    routie('editarComponente/'+value.id);
-                                }),
-                            ),
-                        ),
-                    ),
-                );
-            });
+            tabelaComponentes();
         } else {
             $('.checkboxTabela').remove();
             $('tbody').append(
@@ -448,6 +471,11 @@ function apagarComponentesSelecionados() {
             data = JSON.parse(data);
             var k = 0;
             var countData = 0;
+            $.each (componentesSelecionados, function(key, value) {
+                if (value.name == 'selecionarTodos') {
+                    countData = -1;
+                }
+            })
             $.each (data, function(key, value) {
                 countData++;
                 if (value.linhaAfetada == 1) {
