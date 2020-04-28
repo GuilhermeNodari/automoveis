@@ -72,6 +72,20 @@ if (isset($_POST['automovel'])) {
 	
     echo json_encode($dados);
 
+} else if (isset($_POST['automoveisSelecionados'])) {
+    
+    $automoveis = new Automovel();
+    $linhasAfetadas = [];
+    
+    for($k=0; $k < count($_POST['automoveisSelecionados']); $k++){
+        $componente = $_POST['automoveisSelecionados'][$k];
+        $id = $componente['value'];
+        $linhasAfetadas[$id]['id'] = $id;
+        $linhasAfetadas[$id]['linhaAfetada'] = $automoveis->excluir($id);
+    }  
+  
+    echo json_encode($linhasAfetadas);
+    
 } else {
 
     $pesquisa = !empty($_POST['pesquisa']) ? $_POST['pesquisa'] : '';
