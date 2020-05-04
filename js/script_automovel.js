@@ -249,9 +249,13 @@ function paginacao(retornoAjax, coluna, ordem){
 
 }
 
-function tabelaAutomoveis(retornoAjax, checked) {
+function tabelaAutomoveis(retornoAjax, checked, pagina) {
 
     var selecionado = checked != '' ? true : false;
+    var paginaAnterior = isNaN(pagina) ? 0 : pagina;
+    checkboxPaginaSelecionados = [];
+
+    checkboxPaginaSelecionados['pagina'] = paginaAnterior;
 
     $.each (retornoAjax[1], function(key, value) {
         $('tbody').append(
@@ -262,6 +266,7 @@ function tabelaAutomoveis(retornoAjax, checked) {
                         var k = 0;
                         $.each (checkbox, function(key, value) {
                             if (value.checked) {
+                                checkboxPaginaSelecionados['ID'+value.value] = value.value;
                                 k++;
                             }
                         });
@@ -325,7 +330,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                             paginacao(retornoAjax, coluna, ordem);
                             retornoAjax = JSON.parse(retornoAjax);
                             if (retornoAjax[1].length > 0) {
-                                tabelaAutomoveis(retornoAjax, '');
+                                tabelaAutomoveis(retornoAjax, '', 0);
                                 $('.checkboxTabela').show();
                             } else {
                                 $('.ordenacao').hide();
@@ -356,11 +361,11 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                                     apagarAutomoveisSelecionados();
                                                 }),
                                             );
-                                            tabelaAutomoveis(retornoAjax, 'checked');
+                                            tabelaAutomoveis(retornoAjax, 'checked', parseInt(pagina)-1);
                                         } else {
                                             $('tbody').html('');
                                             $('#apagarAutomoveis').remove();
-                                            tabelaAutomoveis(retornoAjax, '');
+                                            tabelaAutomoveis(retornoAjax, '', parseInt(pagina)-1);
                                         }
                                     }),
                                 ),
@@ -431,7 +436,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
 
         retornoAjax = JSON.parse(retornoAjax);
         if (retornoAjax[1].length > 0) {
-            tabelaAutomoveis(retornoAjax, '');
+            tabelaAutomoveis(retornoAjax, '', parseInt(pagina)-1);
         } else {
             $('.checkboxTabela').remove();
             $('.ordenacao').hide();
