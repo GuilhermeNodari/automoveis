@@ -90,7 +90,7 @@ if (isset($_POST['automovel'])) {
 
     $pesquisa = !empty($_POST['pesquisa']) ? $_POST['pesquisa'] : '';
     $pagina = $_POST['pagina'];
-    $limite = 5;
+    $limite = 1;
     $ordem = $_POST['ordem'];
     $coluna = $_POST['coluna'];
     $automovel = new Automovel();
