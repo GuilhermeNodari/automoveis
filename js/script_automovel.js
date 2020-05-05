@@ -154,20 +154,18 @@ function enviarForm() {
 
 function apagarAutomoveisSelecionados() {
 
-    var automoveisSelecionados = $('#apagarAutomoveisSelecionados').serializeArray();
-
     $.ajax({
         type: 'POST',
         url:  'acoesAutomovel.php',
         data: {
-            automoveisSelecionados: automoveisSelecionados
+            automoveisSelecionados: idSelecionadosPagina
         },
         success: function(data){
             data = JSON.parse(data);
             var k = 0;
             var countData = 0;
-            $.each (automoveisSelecionados, function(key, value) {
-                if (value.name == 'selecionarTodos') {
+            $.each (idSelecionadosPagina, function(key, value) {
+                if (value == 'selecionarTodos') {
                     countData = -1;
                 }
             })
@@ -270,15 +268,19 @@ function paginacao(retornoAjax, coluna, ordem){
 
 }
 
+function botaoApagarTodos() {
+    $('#apagarAutomoveis').remove();
+    $('table').before(
+        $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarAutomoveis'}).append('Apagar Selecionado(s)').on('click', function() {
+            apagarAutomoveisSelecionados();
+        }),
+    );
+}
+
 function tabelaAutomoveis(retornoAjax, checked, coluna, ordem) {
 
     if (idSelecionadosPagina.length > 0) {
-        $('#apagarAutomoveis').hide();
-        $('table').before(
-            $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarAutomoveis'}).append('Apagar Selecionado(s)').on('click', function() {
-                apagarAutomoveisSelecionados();
-            }),
-        );
+        botaoApagarTodos();
     }
 
     var selecionado = checked != '' ? true : false;
@@ -390,11 +392,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                         if (checkbox.checked) {
                                             $('tbody').html('');
                                             $('#apagarAutomoveis').hide();
-                                            $('table').before(
-                                                $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarAutomoveis'}).append('Apagar Selecionado(s)').on('click', function() {
-                                                    apagarAutomoveisSelecionados();
-                                                }),
-                                            );
+                                            botaoApagarTodos();
                                             tabelaAutomoveis(retornoAjax, 'checked', coluna, ordem);
                                         } else {
                                             $('#automovelSelecionado').attr('checked', false);

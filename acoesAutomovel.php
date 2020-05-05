@@ -78,8 +78,7 @@ if (isset($_POST['automovel'])) {
     $linhasAfetadas = [];
     
     for($k=0; $k < count($_POST['automoveisSelecionados']); $k++){
-        $componente = $_POST['automoveisSelecionados'][$k];
-        $id = $componente['value'];
+        $id = $_POST['automoveisSelecionados'][$k];
         $linhasAfetadas[$id]['id'] = $id;
         $linhasAfetadas[$id]['linhaAfetada'] = $automoveis->excluir($id);
     }  
