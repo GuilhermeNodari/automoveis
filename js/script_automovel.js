@@ -229,7 +229,7 @@ function excluirCadastro(id) {
 function paginacao(retornoAjax, coluna, ordem){
 
     var dados = retornoAjax[0]['automoveis'];
-    var limite = 1;
+    var limite = 5;
     var paginas = Math.ceil(dados/limite);
 
     $('.pagination').html('');
@@ -247,11 +247,18 @@ function paginacao(retornoAjax, coluna, ordem){
     }
 
     $('#selecionarTodos').click(function() {
-        var checkbox = document.getElementById('selecionarTodos');
-        if (checkbox.checked) {
-            idSelecionadosPagina.push(checkbox.name);
+        var selecionarTodos = document.getElementById('selecionarTodos');
+        var checkboxes = document.querySelectorAll('#automovelSelecionado');
+        if (selecionarTodos.checked) {
+            idSelecionadosPagina.push(selecionarTodos.name);
+            $.each (checkboxes, function(key, value) {
+                idSelecionadosPagina.push(value.value);
+            });
         } else {
-            idSelecionadosPagina.splice(idSelecionadosPagina.indexOf(checkbox.name), 1);
+            idSelecionadosPagina.splice(idSelecionadosPagina.indexOf(selecionarTodos.name), 1);
+            $.each (checkboxes, function(key, value) {
+                idSelecionadosPagina.splice(idSelecionadosPagina.indexOf(value.value), 1);
+            });
         }
     });
 
@@ -332,11 +339,9 @@ function tabelaAutomoveis(retornoAjax, checked, coluna, ordem) {
 
     $.each (idSelecionadosPagina, function(key, value) {
         if (value == 'selecionarTodos') {
-            $('#automovelSelecionado').attr('checked', true);
             $('#selecionarTodos').attr('checked', true);
-        } else {
-            $('input:checkbox[value="'+ value +'"]').attr('checked', true);
         }
+        $('input:checkbox[value="'+ value +'"]').attr('checked', true);
     });
 
 }
