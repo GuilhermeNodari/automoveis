@@ -29,10 +29,13 @@ $(document).ready(function(){
             popover();
         },
         'componentes': function() {
-            editarComponente();
+            editarComponente('', '', 1);
+        },
+        'componentes/:pagina': function(pagina) {
+            editarComponente('', '', pagina);
         },
         'editarComponente/:id': function(id) {
-            editarComponente(id,'');
+            editarComponente(id, '', 1);
         },
     });
 

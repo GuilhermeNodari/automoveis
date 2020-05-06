@@ -31,7 +31,9 @@ if (isset($_POST['componentes'])) {
 } else if (isset($_POST['listar'])) {
 
     $componentes = new Componentes();
-    $dados = $componentes->listar();
+    $pagina = $_POST['pagina'];
+    $limite = 5;
+    $dados = $componentes->listar($pagina, $limite);
 
     echo json_encode($dados);
 

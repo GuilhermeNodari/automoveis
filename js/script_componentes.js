@@ -1,4 +1,4 @@
-function listarComponentes() {
+function listarComponentes(pagina) {
 
     var objDeferred = $.Deferred();
 
@@ -7,9 +7,10 @@ function listarComponentes() {
         url:  'acoesComponente.php',
         data: {
             listar: 'listar',
+            pagina: pagina
         },
         success: function(data){
-            dados = JSON.parse(data);
+            var dados = data;
             objDeferred.resolve(dados);
         }
     });
@@ -17,7 +18,29 @@ function listarComponentes() {
     return objDeferred.promise();
 }
 
-function editarComponente(id, componente) {
+function paginacaoComponentes(componentes){
+
+    var dados = componentes.length;
+    var limite = 5;
+    var paginas = Math.ceil(dados/limite);
+
+    $('.pagination').html('');
+
+    for (var i = 0; i < paginas; i++) {
+        $('.pagination').append(
+            $('<li>', {class:'page-item'}).append(
+                $('<a>', {class:'page-link'}).on('click', function(){
+                    routie('componentes/' + $(this).text());
+                }).append(i+1),
+                $('<input>', {type:'hidden', name:'pagina', id:'pagina', value:i+1}),
+            ),
+        )
+    }
+}
+
+function editarComponente(id, componente, pagina) {
+
+    pagina = parseInt(pagina)-1;
 
     if ($('.formComponente').hasClass('ui-dialog-content')) {
         $('.formComponente').dialog('destroy');
@@ -25,7 +48,6 @@ function editarComponente(id, componente) {
 
     $('.form').html('');
     $('.lista').html('');
-    $('.pagination').html('');
     $('.formComponente').html('');
     $('.listaComponente').html('');
 
@@ -72,50 +94,55 @@ function editarComponente(id, componente) {
 
     function tabelaComponentes(checked) {
 
-        $.each (dados, function(key, value) {
-            $('tbody').append(
-                $('<tr>').append(
-                    $('<td>').append(
-                        $('<input>', {type:'checkbox', id:'componenteSelecionado', name:'componenteSelecionado', value:value.id, style:'margin-top: 5px;', checked:checked}).on('click', function() {
-                            var checkbox = document.querySelectorAll('#componenteSelecionado');
-                            var k = 0;
-                            $.each (checkbox, function(key, value) {
-                                if (value.checked) {
-                                    k++;
+        listarComponentes(pagina).done(function(dados) {
+            var componentes = JSON.parse(dados);
+            $.each (componentes[1], function(key, value) {
+                $('tbody').append(
+                    $('<tr>').append(
+                        $('<td>').append(
+                            $('<input>', {type:'checkbox', id:'componenteSelecionado', name:'componenteSelecionado', value:value.id, style:'margin-top: 5px;', checked:checked}).on('click', function() {
+                                var checkbox = document.querySelectorAll('#componenteSelecionado');
+                                var k = 0;
+                                $.each (checkbox, function(key, value) {
+                                    if (value.checked) {
+                                        k++;
+                                    }
+                                });
+                                if (k > 0) {
+                                    $('#apagarComponentes').remove();
+                                    $('table').before(
+                                        $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
+                                            apagarComponentesSelecionados();
+                                        }),
+                                    );
+                                } else {
+                                    $('#apagarComponentes').remove();
                                 }
-                            });
-                            if (k > 0) {
-                                $('#apagarComponentes').remove();
-                                $('table').before(
-                                    $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
-                                        apagarComponentesSelecionados();
-                                    }),
-                                );
-                            } else {
-                                $('#apagarComponentes').remove();
-                            }
-                        }),
-                    ),
-                    $('<td>').append(value.componentes),
-                    $('<td>').append(
-                        $('<a>', {href:'#'}).append(
-                            $('<i>', {class:'fas fa-trash'}).on('click', function() {
-                                excluirComponente(value.id);
-                            }),
-                        ).append(' '),
-                        $('<a>', {href:'#'}).append(
-                            $('<i>', {class:'fas fa-pen'}).on('click', function() {
-                                routie('editarComponente/'+value.id);
                             }),
                         ),
+                        $('<td>').append(value.componentes),
+                        $('<td>').append(
+                            $('<a>', {href:'#'}).append(
+                                $('<i>', {class:'fas fa-trash'}).on('click', function() {
+                                    excluirComponente(value.id);
+                                }),
+                            ).append(' '),
+                            $('<a>', {href:'#'}).append(
+                                $('<i>', {class:'fas fa-pen'}).on('click', function() {
+                                    routie('editarComponente/'+value.id);
+                                }),
+                            ),
+                        ),
                     ),
-                ),
-            );
+                );
+            });
+            paginacaoComponentes(componentes[0]);
         });
 
     }
     
-    listarComponentes().done(function(dados) {
+    listarComponentes(pagina).done(function(dados) {
+        dados = JSON.parse(dados);
         $('.listaComponente').append(
             $('<div>', {class:'container'}).append(
                 $('<br>'),
@@ -152,7 +179,7 @@ function editarComponente(id, componente) {
             ),
         );
 
-        if (dados.length != 0) {
+        if (dados[0].length != 0) {
             tabelaComponentes();
         } else {
             $('.checkboxTabela').remove();
@@ -215,8 +242,9 @@ function enviarFormComponente() {
             if (data.dialog) {
                 var id = data.id;
                 $('.chosen').html('');
-                listarComponentes().done(function(dados) {
-                    $.each (dados, function(key, value) {
+                listarComponentes(pagina).done(function(dados) {
+                    dados = JSON.parse(dados);
+                    $.each (dados[0], function(key, value) {
                         $('.chosen').append(
                             $('<option>', {id:value.id, value:value.id}).append(value.componentes)
                         );

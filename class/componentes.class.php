@@ -38,12 +38,17 @@ class Componentes extends Database{
     
     }
 
-    public function listar() {
+    public function listar($pagina, $limite) {
 
-        $this->stmt = $this->pdo->prepare("SELECT * FROM componentes");
+        $this->stmt = $this->pdo->query("SELECT * FROM componentes");
+        $retorno[0] = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $pagina = is_numeric($pagina) ? $pagina * $limite : 0;
 
-        $this->stmt->execute();
-        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->stmt = $this->pdo->query("SELECT * FROM componentes LIMIT $pagina, $limite");
+        $retorno[1] = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $retorno;
 
     }
 
