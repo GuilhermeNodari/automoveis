@@ -35,7 +35,7 @@ if (isset($_POST['automovel'])) {
     $automovel->adicionar();
     
     $componentes = new Componentes();
-    $dados = $componentes->listar();
+    $dados = $componentes->listar(0,5);
 
     $automovel = new Automovel();
 
@@ -44,7 +44,7 @@ if (isset($_POST['automovel'])) {
     }
 
     foreach ($_POST['componentes'] as $chave => $valor) {
-        foreach ($dados as $chave2 => $valor2) {
+        foreach ($dados[0] as $chave2 => $valor2) {
             if ($valor == $valor2['id']) {
                 $id = empty($arrayAutomovel['id']) ? $automovel->lastInsert()['id'] : $arrayAutomovel['id'];
                 $automovel->adicionarComponentes($id, $valor);

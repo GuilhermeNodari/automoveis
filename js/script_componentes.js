@@ -1,3 +1,5 @@
+var idSelecionadosPagina = [];
+
 function listarComponentes(pagina) {
 
     var objDeferred = $.Deferred();
@@ -10,7 +12,7 @@ function listarComponentes(pagina) {
             pagina: pagina
         },
         success: function(data){
-            var dados = data;
+            var dados = JSON.parse(data);
             objDeferred.resolve(dados);
         }
     });
@@ -36,6 +38,45 @@ function paginacaoComponentes(componentes){
             ),
         )
     }
+
+    var checkboxes = document.querySelectorAll('#componenteSelecionado');
+    var selecionarTodos = document.getElementById('selecionarTodos');
+
+    $('#selecionarTodos').click(function() {
+        if (selecionarTodos.checked) {
+            idSelecionadosPagina.push(selecionarTodos.name);
+            $.each (checkboxes, function(key, value) {
+                idSelecionadosPagina.push(value.value);
+            });
+        } else {
+            idSelecionadosPagina.splice(idSelecionadosPagina.indexOf(selecionarTodos.name), 1);
+            $.each (checkboxes, function(key, value) {
+                idSelecionadosPagina.splice(idSelecionadosPagina.indexOf(value.value), 1);
+            });
+        }
+    });
+
+    var checkbox = document.querySelectorAll('#componenteSelecionado');
+
+    $('#componenteSelecionado').click(function() {
+        $.each (checkbox, function(key, value) {
+            if (value.checked) {
+                idSelecionadosPagina.push(value.value);
+            } else {
+                idSelecionadosPagina.splice(idSelecionadosPagina.indexOf(value.value), 1);
+            }
+        });
+    });
+
+}
+
+function botaoApagarTodosComponentes() {
+    $('#apagarComponentes').hide();
+    $('table').before(
+        $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
+            apagarComponentesSelecionados();
+        }),
+    );
 }
 
 function editarComponente(id, componente, pagina) {
@@ -94,9 +135,12 @@ function editarComponente(id, componente, pagina) {
 
     function tabelaComponentes(checked) {
 
+        if (idSelecionadosPagina.length > 0) {
+            botaoApagarTodosComponentes();
+        }
+
         listarComponentes(pagina).done(function(dados) {
-            var componentes = JSON.parse(dados);
-            $.each (componentes[1], function(key, value) {
+            $.each (dados[1], function(key, value) {
                 $('tbody').append(
                     $('<tr>').append(
                         $('<td>').append(
@@ -109,14 +153,14 @@ function editarComponente(id, componente, pagina) {
                                     }
                                 });
                                 if (k > 0) {
-                                    $('#apagarComponentes').remove();
+                                    $('#apagarComponentes').hide();
                                     $('table').before(
                                         $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
                                             apagarComponentesSelecionados();
                                         }),
                                     );
                                 } else {
-                                    $('#apagarComponentes').remove();
+                                    $('#apagarComponentes').hide();
                                 }
                             }),
                         ),
@@ -136,13 +180,23 @@ function editarComponente(id, componente, pagina) {
                     ),
                 );
             });
-            paginacaoComponentes(componentes[0]);
+
+            paginacaoComponentes(dados[0]);
+
+            $.each (idSelecionadosPagina, function(key, value) {
+                if (value == 'selecionarTodos') {
+                    $('#selecionarTodos').attr('checked', true);
+                }
+                $('input:checkbox[value="'+ value +'"]').attr('checked', true);
+            });
+        
+            $('#selecionarTodos').attr('checked', false);
+
         });
 
     }
     
     listarComponentes(pagina).done(function(dados) {
-        dados = JSON.parse(dados);
         $('.listaComponente').append(
             $('<div>', {class:'container'}).append(
                 $('<br>'),
@@ -155,16 +209,11 @@ function editarComponente(id, componente, pagina) {
                                         var checkbox = document.getElementById('selecionarTodos');
                                         if (checkbox.checked) {
                                             $('tbody').html('');
-                                            $('#apagarComponentes').remove();
-                                            $('table').before(
-                                                $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
-                                                    apagarComponentesSelecionados();
-                                                }),
-                                            );
+                                            botaoApagarTodosComponentes();
                                             tabelaComponentes('checked');
                                         } else {
                                             $('tbody').html('');
-                                            $('#apagarComponentes').remove();
+                                            $('#apagarComponentes').hide();
                                             tabelaComponentes();
                                         }
                                     }),
@@ -183,6 +232,7 @@ function editarComponente(id, componente, pagina) {
             tabelaComponentes();
         } else {
             $('.checkboxTabela').remove();
+            $('.pagination').html('');
             $('tbody').append(
                 $('<tr>').append(
                     $('<td>', {colspan:'2', style:'text-align:center;'}).append('Não há componentes cadastrados'),
@@ -242,8 +292,7 @@ function enviarFormComponente() {
             if (data.dialog) {
                 var id = data.id;
                 $('.chosen').html('');
-                listarComponentes(pagina).done(function(dados) {
-                    dados = JSON.parse(dados);
+                listarComponentes('').done(function(dados) {
                     $.each (dados[0], function(key, value) {
                         $('.chosen').append(
                             $('<option>', {id:value.id, value:value.id}).append(value.componentes)
@@ -268,19 +317,17 @@ function enviarFormComponente() {
 
 function apagarComponentesSelecionados() {
 
-    var componentesSelecionados = $('#apagarComponentesSelecionados').serializeArray();
-
     $.ajax({
         type: 'POST',
         url:  'acoesComponente.php',
         data: {
-            componentesSelecionados: componentesSelecionados
+            componentesSelecionados: idSelecionadosPagina
         },
         success: function(data){
             data = JSON.parse(data);
             var k = 0;
             var countData = 0;
-            $.each (componentesSelecionados, function(key, value) {
+            $.each (idSelecionadosPagina, function(key, value) {
                 if (value.name == 'selecionarTodos') {
                     countData = -1;
                 }

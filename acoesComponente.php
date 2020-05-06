@@ -59,8 +59,7 @@ if (isset($_POST['componentes'])) {
     $linhasAfetadas = [];
 
     for($k=0; $k < count($_POST['componentesSelecionados']); $k++){
-        $componente = $_POST['componentesSelecionados'][$k];
-        $id = $componente['value'];
+        $id = $_POST['componentesSelecionados'][$k];
         $linhasAfetadas[$id]['id'] = $id;
         $linhasAfetadas[$id]['linhaAfetada'] = $componentes->excluir($id);
     }

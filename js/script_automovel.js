@@ -85,8 +85,8 @@ function editarCadastro(id) {
     $('#ano_modelo').mask('0000');
     $('#ano_fabricacao').mask('0000');
 
-    listarComponentes().done(function(dados) {
-        $.each (dados, function(key, value) {
+    listarComponentes('').done(function(dados) {
+        $.each (dados[0], function(key, value) {
             $('.chosen').append(
                 $('<option>', {id:value.id, value:value.id}).append(value.componentes)
             );
@@ -246,9 +246,10 @@ function paginacao(retornoAjax, coluna, ordem){
         )
     }
 
+    var checkboxes = document.querySelectorAll('#automovelSelecionado');
+    var selecionarTodos = document.getElementById('selecionarTodos');
+
     $('#selecionarTodos').click(function() {
-        var selecionarTodos = document.getElementById('selecionarTodos');
-        var checkboxes = document.querySelectorAll('#automovelSelecionado');
         if (selecionarTodos.checked) {
             idSelecionadosPagina.push(selecionarTodos.name);
             $.each (checkboxes, function(key, value) {
@@ -262,8 +263,9 @@ function paginacao(retornoAjax, coluna, ordem){
         }
     });
 
+    var checkbox = document.querySelectorAll('#automovelSelecionado');
+
     $('#automovelSelecionado').click(function() {
-        var checkbox = document.querySelectorAll('#automovelSelecionado');
         $.each (checkbox, function(key, value) {
             if (value.checked) {
                 idSelecionadosPagina.push(value.value);
@@ -275,7 +277,7 @@ function paginacao(retornoAjax, coluna, ordem){
 
 }
 
-function botaoApagarTodos() {
+function botaoApagarTodosAutomoveis() {
     $('#apagarAutomoveis').remove();
     $('table').before(
         $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarAutomoveis'}).append('Apagar Selecionado(s)').on('click', function() {
@@ -287,7 +289,7 @@ function botaoApagarTodos() {
 function tabelaAutomoveis(retornoAjax, checked, coluna, ordem) {
 
     if (idSelecionadosPagina.length > 0) {
-        botaoApagarTodos();
+        botaoApagarTodosAutomoveis();
     }
 
     var selecionado = checked != '' ? true : false;
@@ -344,6 +346,8 @@ function tabelaAutomoveis(retornoAjax, checked, coluna, ordem) {
         $('input:checkbox[value="'+ value +'"]').attr('checked', true);
     });
 
+    $('#selecionarTodos').attr('checked', false);
+
 }
 
 function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
@@ -397,7 +401,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                         if (checkbox.checked) {
                                             $('tbody').html('');
                                             $('#apagarAutomoveis').hide();
-                                            botaoApagarTodos();
+                                            botaoApagarTodosAutomoveis();
                                             tabelaAutomoveis(retornoAjax, 'checked', coluna, ordem);
                                         } else {
                                             $('#automovelSelecionado').attr('checked', false);
@@ -476,6 +480,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
         } else {
             $('.checkboxTabela').remove();
             $('.ordenacao').hide();
+            $('.pagination').html('');
             $('tbody').append(
                 $('<tr>').append(
                     $('<td>', {colspan:'5', style:'text-align:center'}).append('Não há automóveis cadastrados!'),
