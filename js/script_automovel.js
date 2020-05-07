@@ -101,6 +101,7 @@ function editarCadastro(id) {
             type: 'POST',
             url:  'acoesAutomovel.php',
             data: {
+                funcao: 'editar',
                 idEditar: id
             },
             success: function(data){
@@ -141,6 +142,7 @@ function enviarForm() {
         type: 'POST',
         url:  'acoesAutomovel.php',
         data: {
+            funcao: 'cadastrar',
             automovel: arrayAutomovel,
             componentes: arrayComponentes
         },
@@ -158,6 +160,7 @@ function apagarAutomoveisSelecionados() {
         type: 'POST',
         url:  'acoesAutomovel.php',
         data: {
+            funcao: 'excluirSelecionados',
             automoveisSelecionados: idSelecionadosPagina
         },
         success: function(data){
@@ -210,6 +213,7 @@ function excluirCadastro(id) {
                 type: 'POST',
                 url:  'acoesAutomovel.php',
                 data: {
+                    funcao: 'excluir',
                     idExcluir: id
                 },
                 success: function(data){
@@ -499,6 +503,7 @@ function pesquisarAutomoveis(pesquisa, pagina, coluna = 'descricao', ordem = 'AS
         type: 'POST',
         url:  'acoesAutomovel.php',
         data: {
+            funcao: 'listar',
             pagina: pagina,
             pesquisa: pesquisa,
             coluna: coluna,

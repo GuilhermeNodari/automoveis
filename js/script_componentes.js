@@ -8,7 +8,7 @@ function listarComponentes(pagina) {
         type: 'POST',
         url:  'acoesComponente.php',
         data: {
-            listar: 'listar',
+            funcao: 'listar',
             pagina: pagina
         },
         success: function(data){
@@ -121,6 +121,7 @@ function editarComponente(id, componente, pagina) {
             type: 'POST',
             url:  'acoesComponente.php',
             data: {
+                funcao: 'editar',
                 idEditar: id
             },
             success: function(data){
@@ -284,6 +285,7 @@ function enviarFormComponente() {
         type: 'POST',
         url:  'acoesComponente.php',
         data: {
+            funcao: 'cadastrar',
             componentes: arrayComponentes
         },
         success: function(data){
@@ -321,6 +323,7 @@ function apagarComponentesSelecionados() {
         type: 'POST',
         url:  'acoesComponente.php',
         data: {
+            funcao: 'excluirSelecionados',
             componentesSelecionados: idSelecionadosPagina
         },
         success: function(data){
@@ -328,7 +331,7 @@ function apagarComponentesSelecionados() {
             var k = 0;
             var countData = 0;
             $.each (idSelecionadosPagina, function(key, value) {
-                if (value.name == 'selecionarTodos') {
+                if (value == 'selecionarTodos') {
                     countData = -1;
                 }
             })
@@ -338,6 +341,7 @@ function apagarComponentesSelecionados() {
                     k++;
                 }
             })
+            console.log(countData);
             if (k == countData) {
                 swalFire('Componente(s) excluído(s) com sucesso!', 'Todos os componentes selecionados foram excluídos', 's', editarComponente('', $('#componente').val()));
             } else if (k > 0 && k < countData) {
@@ -372,6 +376,7 @@ function excluirComponente(id) {
                 type: 'POST',
                 url:  'acoesComponente.php',
                 data: {
+                    funcao: 'excluir',
                     idExcluir: id
                 },
                 success: function(data){
