@@ -1,5 +1,8 @@
 <?php
 
+include_once 'class/automovel.class.php';
+include_once 'class/componentes.class.php';
+
 function cadastrarAutomovel($automovelCadastrado, $componenteCadastrado) {
 
     $arrayAutomovel = [];
