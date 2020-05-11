@@ -71,7 +71,7 @@ function paginacaoComponentes(componentes){
 }
 
 function botaoApagarTodosComponentes() {
-    $('#apagarComponentes').hide();
+    $('#apagarComponentes').remove();
     $('table').before(
         $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
             apagarComponentesSelecionados();
@@ -154,14 +154,14 @@ function editarComponente(id, componente, pagina) {
                                     }
                                 });
                                 if (k > 0) {
-                                    $('#apagarComponentes').hide();
+                                    $('#apagarComponentes').remove();
                                     $('table').before(
                                         $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
                                             apagarComponentesSelecionados();
                                         }),
                                     );
                                 } else {
-                                    $('#apagarComponentes').hide();
+                                    $('#apagarComponentes').remove();
                                 }
                             }),
                         ),
@@ -211,11 +211,13 @@ function editarComponente(id, componente, pagina) {
                                         if (checkbox.checked) {
                                             $('tbody').html('');
                                             botaoApagarTodosComponentes();
-                                            tabelaComponentes('checked');
+                                            tabelaComponentes(true);
                                         } else {
-                                            $('tbody').html('');
-                                            $('#apagarComponentes').hide();
-                                            tabelaComponentes();
+                                            $('#apagarComponentes').remove();
+                                            var checkbox = document.querySelectorAll('#componenteSelecionado');
+                                            $.each (checkbox, function(key, value) {
+                                                value.checked = false;
+                                            });
                                         }
                                     }),
                                 ),
@@ -230,7 +232,7 @@ function editarComponente(id, componente, pagina) {
         );
 
         if (dados[0].length != 0) {
-            tabelaComponentes();
+            tabelaComponentes(false);
         } else {
             $('.checkboxTabela').remove();
             $('.pagination').html('');
@@ -289,6 +291,7 @@ function enviarFormComponente() {
             componentes: arrayComponentes
         },
         success: function(data){
+            idSelecionadosPagina = [];
             data = JSON.parse(data);
             var componentesSelecionados = $(".chosen").chosen().val();
             if (data.dialog) {
@@ -341,7 +344,7 @@ function apagarComponentesSelecionados() {
                     k++;
                 }
             })
-            console.log(countData);
+            $('#apagarComponentes').remove();
             if (k == countData) {
                 swalFire('Componente(s) excluído(s) com sucesso!', 'Todos os componentes selecionados foram excluídos', 's', editarComponente('', $('#componente').val()));
             } else if (k > 0 && k < countData) {
@@ -380,6 +383,7 @@ function excluirComponente(id) {
                     idExcluir: id
                 },
                 success: function(data){
+                    $('#apagarComponentes').remove();
                     if (data == 1) {
                         swalFire('Excluído com sucesso!', '', 's', editarComponente('', $('#componente').val()));
                     } else {
