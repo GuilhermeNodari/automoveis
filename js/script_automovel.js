@@ -3,7 +3,7 @@ var idSelecionadosPagina = [];
 function editarCadastro(id) {
 
     $('.lista').html('');
-    $('.pagination').html('');
+    $('.paginacao').html('');
     $('.listaComponente').html('');
     $('.formComponente').html('');
     $('.form').html('');
@@ -238,8 +238,13 @@ function paginacao(retornoAjax, coluna, ordem){
     var limite = 5;
     var paginas = Math.ceil(dados/limite);
 
-    $('.pagination').html('');
-
+    $('.paginacao').html('');
+    $('.paginacao').append(
+        $('<nav>', {class:'navbar navbar-light d-flex justify-content-center'}).append(
+            $('<ul>', {class:'pagination'}),
+        ),
+    );
+    
     for (var i = 0; i < paginas; i++) {
         $('.pagination').append(
             $('<li>', {class:'page-item'}).append(
@@ -377,7 +382,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                         pesquisarAutomoveis($('#pesquisa').val(), 0, coluna, ordem, function(retornoAjax) {
                             $('tbody').html('');
                             $('.ordenacao').show();
-                            $('.pagination').html('');
+                            $('.paginacao').html('');
                             retornoAjax = JSON.parse(retornoAjax);
                             if (retornoAjax[1].length > 0) {
                                 tabelaAutomoveis(retornoAjax, false, coluna, ordem);
@@ -489,7 +494,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
         } else {
             $('.checkboxTabela').remove();
             $('.ordenacao').hide();
-            $('.pagination').html('');
+            $('.paginacao').html('');
             $('tbody').append(
                 $('<tr>').append(
                     $('<td>', {colspan:'5', style:'text-align:center'}).append('Não há automóveis cadastrados!'),
@@ -499,7 +504,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
     });
 
     $('.lista').show();
-    $('.pagination').show();
+    $('.paginacao').show();
 
 }
 

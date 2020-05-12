@@ -26,7 +26,12 @@ function paginacaoComponentes(componentes){
     var limite = 5;
     var paginas = Math.ceil(dados/limite);
 
-    $('.pagination').html('');
+    $('.paginacao').html('');
+    $('.paginacao').append(
+        $('<nav>', {class:'navbar navbar-light d-flex justify-content-center'}).append(
+            $('<ul>', {class:'pagination'}),
+        ),
+    );
 
     for (var i = 0; i < paginas; i++) {
         $('.pagination').append(
@@ -235,7 +240,7 @@ function editarComponente(id, componente, pagina) {
             tabelaComponentes(false);
         } else {
             $('.checkboxTabela').remove();
-            $('.pagination').html('');
+            $('.paginacao').html('');
             $('tbody').append(
                 $('<tr>').append(
                     $('<td>', {colspan:'2', style:'text-align:center;'}).append('Não há componentes cadastrados'),

@@ -15,26 +15,33 @@ $(document).ready(function(){
 
     routie({
         'listar': function() {
+            $('#carousel').remove();
             listar();
         },
         'listar/:pesquisa/:pagina/:coluna/:ordem': function(pesquisa, pagina, coluna, ordem) {
+            $('#carousel').remove();
             listar(pesquisa, pagina, coluna, ordem);
         },
         'cadastro': function() {
+            $('#carousel').remove();
             editarCadastro();
             popover();
         },
         'editar/:id': function(id) {
+            $('#carousel').remove();
             editarCadastro(id);
             popover();
         },
         'componentes': function() {
+            $('#carousel').remove();
             editarComponente('', '', 1);
         },
         'componentes/:pagina': function(pagina) {
+            $('#carousel').remove();
             editarComponente('', '', pagina);
         },
         'editarComponente/:id': function(id) {
+            $('#carousel').remove();
             editarComponente(id, '', 1);
         },
     });
