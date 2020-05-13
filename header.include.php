@@ -22,23 +22,23 @@
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="home.php">Automóveis</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-              <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav">
-                      <li class="nav-item">
-                          <a class="nav-link" href="home.php#listar">Lista</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="home.php#cadastro">Cadastro</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="home.php#componentes">Componentes</a>
-                      </li>
-                  </ul>
-              </div>
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e8e8e8;">
+                <a class="navbar-brand" href="home.php"><i class="fas fa-car-side"></i></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="home.php#listar">Lista</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="home.php#cadastro">Cadastro</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="home.php#componentes">Componentes</a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </header>

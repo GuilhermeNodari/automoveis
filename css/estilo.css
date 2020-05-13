@@ -1,7 +1,3 @@
-h1 {
-    text-align: center;
-}
-
 .ordenacao {
     margin-left: 5px; 
     margin-top: 3px; 
@@ -17,4 +13,13 @@ h1 {
 
 .imagemCarousel {
     width: 100%;
+}
+
+.fa-car-side {
+    margin-top: 4px;
+}
+
+.fa-plus {
+    float: right;
+    margin-top: 4px;
 }

@@ -99,14 +99,15 @@ function editarComponente(id, componente, pagina) {
 
     $('.formComponente').append(
         $('<div>', {class:'container'}).append(
-            $('<h1>').append('Dados dos Componentes'),
+            $('<br>'),
+            $('<br>'),
+            $('<h4>').append('Dados dos Componentes'),
             $('<hr>'),
             $('<form>', {id:'formComponentes'}).append(
                 $('<div>', {class:'form-row'}).append(
                     $('<div>', {class:'form-group col-md-12'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'idComponente', name:'idComponente'}),
                         $('<input>', {type:'hidden', class:'form-control', id:'dialog', name:'dialog', value:''}),
-                        $('<label>', {for:'componente'}).append('Componente'),
                         $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
                     ),
                 ),
@@ -172,15 +173,17 @@ function editarComponente(id, componente, pagina) {
                         ),
                         $('<td>').append(value.componentes),
                         $('<td>').append(
-                            $('<a>', {href:'#'}).append(
-                                $('<i>', {class:'fas fa-trash'}).on('click', function() {
-                                    excluirComponente(value.id);
-                                }),
-                            ).append(' '),
-                            $('<a>', {href:'#'}).append(
-                                $('<i>', {class:'fas fa-pen'}).on('click', function() {
-                                    routie('editarComponente/'+value.id);
-                                }),
+                            $('<div>', {style: 'text-align: center;'}).append(
+                                $('<a>', {href:'#'}).append(
+                                    $('<i>', {class:'fas fa-trash'}).on('click', function() {
+                                        excluirComponente(value.id);
+                                    }),
+                                ).append(' '),
+                                $('<a>', {href:'#'}).append(
+                                    $('<i>', {class:'fas fa-pen'}).on('click', function() {
+                                        routie('editarComponente/'+value.id);
+                                    }),
+                                ),
                             ),
                         ),
                     ),
@@ -210,7 +213,7 @@ function editarComponente(id, componente, pagina) {
                     $('<table>', {class:'table table-striped'}).append(
                         $('<thead>').append(
                             $('<tr>').append(
-                                $('<th>', {class:'checkboxTabela', style:'width:5%;'}).append(
+                                $('<th>', {class:'checkboxTabela', style:'width: 10px;'}).append(
                                     $('<input>', {type:'checkbox', id:'selecionarTodos', name:'selecionarTodos', style:'margin-top: 5px;'}).on('click', function() {
                                         var checkbox = document.getElementById('selecionarTodos');
                                         if (checkbox.checked) {
@@ -227,7 +230,7 @@ function editarComponente(id, componente, pagina) {
                                     }),
                                 ),
                                 $('<th>').append('Nome'),
-                                $('<th>').append('Ações')
+                                $('<th>', {style: 'width: 150px; text-align: center;'}).append('Ações')
                             ),
                         ),
                         $('<tbody>'),

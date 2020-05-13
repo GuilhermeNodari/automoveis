@@ -10,7 +10,9 @@ function editarCadastro(id) {
     
     $('.form').append(
         $('<div>', {class:'container'}).append(
-            $('<h1>').append('Dados Cadastrais'),
+            $('<br>'),
+            $('<br>'),
+            $('<h4>').append('Dados Cadastrais'),
             $('<hr>'),
             $('<form>', {id:'form'}).append(
                 $('<div>', {class:'form-row'}).append(
@@ -61,13 +63,19 @@ function editarCadastro(id) {
                     ),
                 ),
                 $('<br>'),
-                $('<h1>').append('Componenetes Adicionais'),
+                $('<div>', {style:'width: 325px;'}).append(
+                    $('<h4>').append('Componenetes Adicionais').append(
+                        $('<a>', {href:'#'}).append(
+                            $('<i>', {class:'fas fa-plus'}).on('click', function() {
+                                dialogComponente();
+                            }),
+                        ),
+                    ),
+                ),
                 $('<hr>'),
                 $('<input>', {type:'hidden', class:'form-control', name:'atualizar', id:'atualizar', value:'false'}),
                 $('<select>',{multiple:'true', class:'chosen', 'data-placeholder':'Escolhas os componentes...'}),
-                $('<button>', {class:'btn btn-primary', type:'button', id:'buttonComponentes'}).append('Cadastrar Componente').on('click', function(){
-                    dialogComponente();
-                }),
+                $('<br>'),
                 $('<button>', {class:'btn btn-primary', type:'button', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
                     if (validar(event)) {
                         enviarForm();
@@ -331,15 +339,17 @@ function tabelaAutomoveis(retornoAjax, checked, coluna, ordem) {
                 $('<td>').append(value.placa),
                 $('<td>').append(value.marca),
                 $('<td>').append(
-                    $('<a>', {href:'#'}).append(
-                        $('<i>', {class:'fas fa-trash'}).on('click', function() {
-                            excluirCadastro(value.id);
-                        }),
-                    ).append(' '),
-                    $('<a>', {href:'#'}).append(
-                        $('<i>', {class:'fas fa-pen'}).on('click', function() {
-                            routie('editar/'+value.id);
-                        }),
+                    $('<div>', {style: 'text-align: center;'}).append(
+                        $('<a>', {href:'#'}).append(
+                            $('<i>', {class:'fas fa-trash'}).on('click', function() {
+                                excluirCadastro(value.id);
+                            }),
+                        ).append(' '),
+                        $('<a>', {href:'#'}).append(
+                            $('<i>', {class:'fas fa-pen'}).on('click', function() {
+                                routie('editar/'+value.id);
+                            }),
+                        ),
                     ),
                 ),
             ),
@@ -375,8 +385,11 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
     pesquisarAutomoveis(busca, parseInt(pagina)-1, coluna, ordem, function(retornoAjax) {
         $('.lista').append(
             $('<div>', {class:'container'}).append(
-                $('<h1>').append('Lista de Automóveis'),
+                $('<br>'),
+                $('<br>'),
+                $('<h4>').append('Lista de Automóveis'),
                 $('<hr>'),
+                $('<br>'),
                 $('<div>', {class:'form-group col-md-12 input'}).append(
                     $('<input>', {type:'text', class:'form-control', id:'pesquisa', name:'pesquisa', placeholder:'Pesquise aqui por descrição ou marca'}).on('keyup', function() {
                         pesquisarAutomoveis($('#pesquisa').val(), 0, coluna, ordem, function(retornoAjax) {
@@ -405,7 +418,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                     $('<table>', {class:'table table-striped'}).append(
                         $('<thead>').append(
                             $('<tr>').append(
-                                $('<th>', {class:'checkboxTabela', style:'width:5%;'}).append(
+                                $('<th>', {class:'checkboxTabela', style:'width: 10px;'}).append(
                                     $('<input>', {type:'checkbox', id:'selecionarTodos', name:'selecionarTodos', style:'margin-top: 5px;'}).on('click', function() {
                                         var checkbox = document.getElementById('selecionarTodos');
                                         if (checkbox.checked) {
@@ -424,7 +437,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                     }),
                                 ),
                                 $('<th>').append(
-                                    $('<div>', {style:'width: 33%;'}).append('Descrição').append(
+                                    $('<div>', {style:'width: 93px;'}).append('Descrição').append(
                                         $('<div>', {class:'ordenacao'}).append(
                                             $('<a>', {href:'#', style:'height: 4px;'}).append(
                                                 $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
@@ -442,7 +455,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                     ),
                                 ),
                                 $('<th>').append(
-                                    $('<div>', {style:'width: 30%;'}).append('Placa').append(
+                                    $('<div>', {style:'width: 60px;'}).append('Placa').append(
                                         $('<div>', {class:'ordenacao'}).append(
                                             $('<a>', {href:'#', style:'height: 4px;'}).append(
                                                 $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
@@ -460,7 +473,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                     ),
                                 ),
                                 $('<th>').append(
-                                    $('<div>', {style:'width: 33%;'}).append('Marca').append(
+                                    $('<div>', {style:'width: 68px;'}).append('Marca').append(
                                         $('<div>', {class:'ordenacao'}).append(
                                             $('<a>', {href:'#', style:'height: 4px;'}).append(
                                                 $('<i>', {class:'fas fa-sort-up'}).on('click', function() {
@@ -477,7 +490,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                         ),
                                     ),
                                 ),
-                                $('<th>').append('Ações')
+                                $('<th>', {style: 'width: 150px; text-align: center;'}).append('Ações')
                             ),
                         ),
                         $('<tbody>'),
