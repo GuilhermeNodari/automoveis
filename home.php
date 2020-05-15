@@ -28,7 +28,7 @@
             <div class="container">
                 <div class="carousel-caption">
                 <h1>Cadastre um automóvel e teste o sistema!</h1>
-                <p><a class="btn btn-lg btn-primary" href="home.php#cadastro" role="button">Clique Aqui</a></p><br>
+                <p><a class="button" href="home.php#cadastro" role="button">Clique Aqui</a></p><br>
                 </div>
             </div>
         </div>
