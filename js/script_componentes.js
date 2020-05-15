@@ -176,12 +176,12 @@ function editarComponente(id, componente, pagina) {
                         $('<td>').append(
                             $('<div>', {style: 'text-align: center;'}).append(
                                 $('<a>', {href:'#'}).append(
-                                    $('<i>', {class:'fas fa-trash'}).on('click', function() {
+                                    $('<i>', {class:'fas fa-trash', style:'color: red;'}).on('click', function() {
                                         excluirComponente(value.id);
                                     }),
                                 ).append(' '),
                                 $('<a>', {href:'#'}).append(
-                                    $('<i>', {class:'fas fa-pen'}).on('click', function() {
+                                    $('<i>', {class:'fas fa-pen', style:'color: #878787;'}).on('click', function() {
                                         routie('editarComponente/'+value.id);
                                     }),
                                 ),
@@ -361,7 +361,8 @@ function apagarComponentesSelecionados() {
                     title: 'Componente(s) excluído(s) com sucesso!',
                     text: 'Alguns componentes selecionados foram excluídos',
                     icon: 'success',
-                    showConfirmButton: true
+                    showConfirmButton: true,
+                    confirmButtonColor: '#a9a9a9'
                 }).then((result) => {
                     swalFire('Algum componente não pôde ser excluído!', 'Esse componente está linkado com algum automóvel', 'e', editarComponente('', $('#componente').val()));
                 })
@@ -378,7 +379,7 @@ function excluirComponente(id) {
         title: 'Você quer realmente excluir?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#a9a9a9',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Sim!',
         cancelButtonText: "Não!"

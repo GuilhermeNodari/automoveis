@@ -193,7 +193,8 @@ function apagarAutomoveisSelecionados() {
                     title: 'Automóveis excluídos com sucesso!',
                     text: 'Alguns automóveis selecionados foram excluídos',
                     icon: 'success',
-                    showConfirmButton: true
+                    showConfirmButton: true,
+                    confirmButtonColor: '#a9a9a9'
                 }).then((result) => {
                     swalFire('Algum automóvel não pôde ser excluído!', 'Esse automóvel está linkado com algum componente', 'e', listar());
                 })
@@ -211,7 +212,7 @@ function excluirCadastro(id) {
         title: 'Você quer realmente excluir?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#a9a9a9',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Sim!',
         cancelButtonText: "Não!"
@@ -340,12 +341,12 @@ function tabelaAutomoveis(retornoAjax, checked, coluna, ordem) {
                 $('<td>').append(
                     $('<div>', {style: 'text-align: center;'}).append(
                         $('<a>', {href:'#'}).append(
-                            $('<i>', {class:'fas fa-trash'}).on('click', function() {
+                            $('<i>', {class:'fas fa-trash', style:'color: red;'}).on('click', function() {
                                 excluirCadastro(value.id);
                             }),
                         ).append(' '),
                         $('<a>', {href:'#'}).append(
-                            $('<i>', {class:'fas fa-pen'}).on('click', function() {
+                            $('<i>', {class:'fas fa-pen', style:'color: #878787;'}).on('click', function() {
                                 routie('editar/'+value.id);
                             }),
                         ),

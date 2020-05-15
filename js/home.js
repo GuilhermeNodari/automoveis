@@ -91,7 +91,8 @@ function swalFire(titulo, texto, icone, resultado) {
         title: titulo,
         text: texto,
         icon: icone,
-        showConfirmButton: true
+        showConfirmButton: true,
+        confirmButtonColor: '#a9a9a9'
     }).then((result) => {
         resultado;
     });
