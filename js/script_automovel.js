@@ -75,13 +75,12 @@ function editarCadastro(id) {
                 $('<hr>'),
                 $('<input>', {type:'hidden', class:'form-control', name:'atualizar', id:'atualizar', value:'false'}),
                 $('<select>',{multiple:'true', class:'chosen', 'data-placeholder':'Escolhas os componentes...'}),
-                $('<br>'),
-                $('<button>', {class:'btn btn-primary', type:'button', style:'margin-right:10px', id:'salvar'}).append('Salvar').on('click', function() {
+                $('<a>', {href:'#', class:'button', id:'salvar', style:'margin-top: 15px;'}).append('Salvar').on('click', function() {
                     if (validar(event)) {
                         enviarForm();
                     }
                 }),
-                $('<button>', {class:'btn btn-light', type:'button', onClick:'window.location.href = "home.php#listar"'}).append('Voltar'),
+                $('<a>', {href:'home.php#listar', class:'button'}).append('Voltar'),
             ),
         ),
     );
@@ -299,7 +298,7 @@ function paginacao(retornoAjax, coluna, ordem){
 function botaoApagarTodosAutomoveis() {
     $('#apagarAutomoveis').remove();
     $('table').before(
-        $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarAutomoveis'}).append('Apagar Selecionado(s)').on('click', function() {
+        $('<a>', {href:'#', class:'button', id:'apagarAutomoveis', style:'margin-bottom: 10px;'}).append('Apagar Selecionado(s)').on('click', function() {
             apagarAutomoveisSelecionados();
         }),
     );
@@ -326,7 +325,7 @@ function tabelaAutomoveis(retornoAjax, checked, coluna, ordem) {
                         if (k > 0) {
                             $('#apagarAutomoveis').remove();
                             $('table').before(
-                                $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarAutomoveis'}).append('Apagar Selecionado(s)').on('click', function() {
+                                $('<a>', {href:'#', class:'button', id:'apagarAutomoveis', style:'margin-bottom: 10px;'}).append('Apagar Selecionado(s)').on('click', function() {
                                     apagarAutomoveisSelecionados();
                                 }),
                             );

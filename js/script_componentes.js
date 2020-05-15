@@ -78,7 +78,7 @@ function paginacaoComponentes(componentes){
 function botaoApagarTodosComponentes() {
     $('#apagarComponentes').remove();
     $('table').before(
-        $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
+        $('<a>', {href:'#', class:'button', id:'apagarComponentes', style:'margin-bottom: 10px;'}).append('Apagar Selecionado(s)').on('click', function() {
             apagarComponentesSelecionados();
         }),
     );
@@ -111,11 +111,12 @@ function editarComponente(id, componente, pagina) {
                         $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
                     ),
                 ),
-                $('<button>', {class:'btn btn-primary', type:'button', style:'margin-right:10px', id:'salvarComponentes'}).append('Salvar').on('click', function() {
+                $('<a>', {href:'#', class:'button', id:'salvarComponentes'}).append('Salvar').on('click', function() {
                     if (validarComponente(event)) {
                         enviarFormComponente();
                     }
                 }),
+                $('<a>', {href:'home.php#listar', class:'button'}).append('Voltar'),
             ),
         ),
     );
@@ -162,7 +163,7 @@ function editarComponente(id, componente, pagina) {
                                 if (k > 0) {
                                     $('#apagarComponentes').remove();
                                     $('table').before(
-                                        $('<button>', {class:'btn btn-primary', type:'button', style:'margin-bottom:15px', id:'apagarComponentes'}).append('Apagar Selecionado(s)').on('click', function() {
+                                        $('<a>', {href:'#', class:'button', id:'apagarComponentes', style:'margin-bottom: 10px;'}).append('Apagar Selecionado(s)').on('click', function() {
                                             apagarComponentesSelecionados();
                                         }),
                                     );
@@ -271,7 +272,7 @@ function dialogComponente() {
                         $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
                     ),
                 ),
-                $('<button>', {class:'btn btn-primary', type:'button', style:'margin-right:10px', id:'salvarComponentes'}).append('Salvar').on('click', function() {
+                $('<a>', {href:'#', class:'button', id:'salvarComponentes'}).append('Salvar').on('click', function() {
                     if (validarComponente(event)) {
                         enviarFormComponente();
                     }

@@ -23,3 +23,34 @@
     float: right;
     margin-top: 4px;
 }
+
+a.button{
+    display: inline-block;
+    padding: 0.2em 1.45em;
+    margin: 0.1em;
+    border: 0.15em solid #DEE2E4;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: 400;
+    color: #000000;
+    background-color: #DEE2E4;
+    text-align: center;
+    position: relative;
+}
+
+a.button:hover{
+    border-color: #7a7a7a;
+    color: #000000;
+    text-decoration: none;
+}
+
+a.button:active{
+    background-color: #999999;
+}
+
+@media all and (max-width:30em){
+    a.button{
+        display: block;
+        margin: 0.2em auto;
+    }
+}
