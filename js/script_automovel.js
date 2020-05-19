@@ -16,57 +16,50 @@ function editarCadastro(id) {
             $('<hr>'),
             $('<form>', {id:'form'}).append(
                 $('<div>', {class:'form-row'}).append(
-                    $('<div>', {class:'form-group col-md-4'}).append(
+                    $('<div>', {class:'col-4'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'id', name:'id'}),
-                        $('<label>', {for:'descricao', id:'popoverDescricao'}).append('Descrição'),
-                        $('<input>', {type:'text', class:'form-control', id:'descricao', name:'descricao'})
+                        $('<input>', {type:'text', class:'form-control', id:'descricao', name:'descricao', placeholder:'Descrição'})
                     ),
-                    $('<div>', {class:'form-group col-md-4'}).append(
-                        $('<label>', {for:'placa', id:'popoverPlaca'}).append('Placa'),
-                        $('<input>', {type:'text', class:'form-control', id:'placa', name:'placa'})
+                    $('<div>', {class:'col-4'}).append(
+                        $('<input>', {type:'text', class:'form-control', id:'placa', name:'placa', placeholder:'Placa'})
                     ),
-                    $('<div>', {class:'form-group col-md-4'}).append(
-                        $('<label>', {for:'renavan', id:'popoverRenavan'}).append('Código RENAVAN'),
-                        $('<input>', {type:'text', class:'form-control', id:'renavan', name:'renavan'})
-                    ),
-                ),
-                $('<div>', {class:'form-row'}).append(
-                    $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'ano_modelo', id:'popoverAnoModelo'}).append('Ano do Modelo'),
-                        $('<input>', {type:'text', class:'form-control', id:'ano_modelo', name:'ano_modelo'})
-                    ),
-                    $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'ano_fabricacao', id:'popoverAnoFabricacao'}).append('Ano de Fabricação'),
-                        $('<input>', {type:'text', class:'form-control', id:'ano_fabricacao', name:'ano_fabricacao'})
-                    ),
-                    $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'cor', id:'popoverCor'}).append('Cor'),
-                        $('<input>', {type:'text', class:'form-control', id:'cor', name:'cor'})
-                    ),
-                    $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'km', id:'popoverKM'}).append('KM'),
-                        $('<input>', {type:'text', class:'form-control', id:'km', name:'km'})
-                    ),
-                    $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'marca', id:'popoverMarca'}).append('Marca'),
-                        $('<input>', {type:'text', class:'form-control', id:'marca', name:'marca'})
-                    ),
-                ),
-                $('<div>', {class:'form-row'}).append(
-                    $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'preco', id:'popoverPreco'}).append('Preço'),
-                        $('<input>', {type:'text', class:'form-control', id:'preco', name:'preco'})
-                    ),
-                    $('<div>', {class:'form-group col-md-2'}).append(
-                        $('<label>', {for:'preco_fipe', id:'popoverPrecoFipe'}).append('Preço Fipe'),
-                        $('<input>', {type:'text', class:'form-control', id:'preco_fipe', name:'preco_fipe'})
+                    $('<div>', {class:'col-4'}).append(
+                        $('<input>', {type:'text', class:'form-control', id:'renavan', name:'renavan', placeholder:'Código RENAVAN'})
                     ),
                 ),
                 $('<br>'),
-                $('<div>', {style:'width: 325px;'}).append(
-                    $('<h4>').append('Componenetes Adicionais').append(
+                $('<div>', {class:'form-row'}).append(
+                    $('<div>', {class:'col-2'}).append(
+                        $('<input>', {type:'text', class:'form-control', id:'ano_modelo', name:'ano_modelo', placeholder:'Ano do Modelo'})
+                    ),
+                    $('<div>', {class:'col-2'}).append(
+                        $('<input>', {type:'text', class:'form-control', id:'ano_fabricacao', name:'ano_fabricacao', placeholder:'Ano de Fabricação'})
+                    ),
+                    $('<div>', {class:'col-2'}).append(
+                        $('<input>', {type:'text', class:'form-control', id:'cor', name:'cor', placeholder:'Cor'})
+                    ),
+                    $('<div>', {class:'col-2'}).append(
+                        $('<input>', {type:'text', class:'form-control', id:'km', name:'km', placeholder:'KM'})
+                    ),
+                    $('<div>', {class:'col-2'}).append(
+                        $('<input>', {type:'text', class:'form-control', id:'marca', name:'marca', placeholder:'Marca'})
+                    ),
+                ),
+                $('<br>'),
+                $('<div>', {class:'form-row'}).append(
+                    $('<div>', {class:'col-2'}).append(
+                        $('<input>', {type:'text', class:'form-control', id:'preco', name:'preco', placeholder:'Preço'})
+                    ),
+                    $('<div>', {class:'col-2'}).append(
+                        $('<input>', {type:'text', class:'form-control', id:'preco_fipe', name:'preco_fipe', placeholder:'Preço FIPE'})
+                    ),
+                ),
+                $('<br>'),
+                $('<br>'),
+                $('<div>', {style:'width: 315px;'}).append(
+                    $('<h4>').append('Componentes Adicionais').append(
                         $('<a>', {href:'#'}).append(
-                            $('<i>', {class:'fas fa-plus'}).on('click', function() {
+                            $('<i>', {class:'fas fa-plus', style:'color: #009688;'}).on('click', function() {
                                 dialogComponente();
                             }),
                         ),
@@ -154,12 +147,11 @@ function enviarForm() {
             componentes: arrayComponentes
         },
         success: function(data){
-            window.location.href = 'home.php#listar';
+            routie('listar');
         }
     });
 
 }
-
 
 function apagarAutomoveisSelecionados() {
 
@@ -212,7 +204,7 @@ function excluirCadastro(id) {
         title: 'Você quer realmente excluir?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#a9a9a9',
+        confirmButtonColor: '#008000',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Sim!',
         cancelButtonText: "Não!"
@@ -248,13 +240,13 @@ function paginacao(retornoAjax, coluna, ordem){
 
     $('.paginacao').html('');
     $('.paginacao').append(
-        $('<nav>', {class:'navbar navbar-light d-flex justify-content-center'}).append(
-            $('<ul>', {class:'pagination'}),
+        $('<nav>', {'aria-label':'Paginação'}).append(
+            $('<ul>', {class:'pagination justify-content-center', id:'paginacao'}),
         ),
     );
     
     for (var i = 0; i < paginas; i++) {
-        $('.pagination').append(
+        $('ul#paginacao').append(
             $('<li>', {class:'page-item'}).append(
                 $('<a>', {class:'page-link'}).on('click', function(){
                     var busca = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
@@ -346,7 +338,7 @@ function tabelaAutomoveis(retornoAjax, checked, coluna, ordem) {
                             }),
                         ).append(' '),
                         $('<a>', {href:'#'}).append(
-                            $('<i>', {class:'fas fa-pen', style:'color: #878787;'}).on('click', function() {
+                            $('<i>', {class:'fas fa-pen', style:'color: #696969;'}).on('click', function() {
                                 routie('editar/'+value.id);
                             }),
                         ),
@@ -390,7 +382,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                 $('<h4>').append('Lista de Automóveis'),
                 $('<hr>'),
                 $('<br>'),
-                $('<div>', {class:'form-group col-md-12 input'}).append(
+                $('<div>', {class:'col-12'}).append(
                     $('<input>', {type:'text', class:'form-control', id:'pesquisa', name:'pesquisa', placeholder:'Pesquise aqui por descrição ou marca'}).on('keyup', function() {
                         pesquisarAutomoveis($('#pesquisa').val(), 0, coluna, ordem, function(retornoAjax) {
                             $('tbody').html('');
@@ -412,7 +404,6 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                         });
                     })
                 ),
-                
                 $('<br>'),
                 $('<form>', {id:'apagarAutomoveisSelecionados'}).append(
                     $('<table>', {class:'table table-striped'}).append(
@@ -490,7 +481,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                                         ),
                                     ),
                                 ),
-                                $('<th>', {style: 'width: 150px; text-align: center;'}).append('Ações')
+                                $('<th>', {style: 'width: 150px;'}),
                             ),
                         ),
                         $('<tbody>'),

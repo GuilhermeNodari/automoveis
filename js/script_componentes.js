@@ -28,13 +28,13 @@ function paginacaoComponentes(componentes){
 
     $('.paginacao').html('');
     $('.paginacao').append(
-        $('<nav>', {class:'navbar navbar-light d-flex justify-content-center'}).append(
-            $('<ul>', {class:'pagination'}),
+        $('<nav>', {'aria-label':'Paginação'}).append(
+            $('<ul>', {class:'pagination justify-content-center', id:'paginacao'}),
         ),
     );
 
     for (var i = 0; i < paginas; i++) {
-        $('.pagination').append(
+        $('ul#paginacao').append(
             $('<li>', {class:'page-item'}).append(
                 $('<a>', {class:'page-link'}).on('click', function(){
                     routie('componentes/' + $(this).text());
@@ -104,13 +104,12 @@ function editarComponente(id, componente, pagina) {
             $('<h4>').append('Dados dos Componentes'),
             $('<hr>'),
             $('<form>', {id:'formComponentes'}).append(
-                $('<div>', {class:'form-row'}).append(
-                    $('<div>', {class:'form-group col-md-12'}).append(
-                        $('<input>', {type:'hidden', class:'form-control', id:'idComponente', name:'idComponente'}),
-                        $('<input>', {type:'hidden', class:'form-control', id:'dialog', name:'dialog', value:''}),
-                        $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
-                    ),
+                $('<input>', {type:'hidden', class:'form-control', id:'idComponente', name:'idComponente'}),
+                $('<input>', {type:'hidden', class:'form-control', id:'dialog', name:'dialog', value:''}),
+                $('<div>', {class:'md-12'}).append(
+                    $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente', placeholder:'Componente'})
                 ),
+                $('<br>'),
                 $('<a>', {href:'#', class:'button', id:'salvarComponentes'}).append('Salvar').on('click', function() {
                     if (validarComponente(event)) {
                         enviarFormComponente();
@@ -181,7 +180,7 @@ function editarComponente(id, componente, pagina) {
                                     }),
                                 ).append(' '),
                                 $('<a>', {href:'#'}).append(
-                                    $('<i>', {class:'fas fa-pen', style:'color: #878787;'}).on('click', function() {
+                                    $('<i>', {class:'fas fa-pen', style:'color: #696969;'}).on('click', function() {
                                         routie('editarComponente/'+value.id);
                                     }),
                                 ),
@@ -209,7 +208,6 @@ function editarComponente(id, componente, pagina) {
     listarComponentes(pagina).done(function(dados) {
         $('.listaComponente').append(
             $('<div>', {class:'container'}).append(
-                $('<br>'),
                 $('<form>', {id:'apagarComponentesSelecionados'}).append(
                     $('<table>', {class:'table table-striped'}).append(
                         $('<thead>').append(
@@ -231,7 +229,7 @@ function editarComponente(id, componente, pagina) {
                                     }),
                                 ),
                                 $('<th>').append('Nome'),
-                                $('<th>', {style: 'width: 150px; text-align: center;'}).append('Ações')
+                                $('<th>', {style: 'width: 150px;'}),
                             ),
                         ),
                         $('<tbody>'),
@@ -265,14 +263,13 @@ function dialogComponente() {
         $('<div>', {class:'container'}).append(
             $('<form>', {id:'formComponentes'}).append(
                 $('<div>', {class:'form-row'}).append(
-                    $('<div>', {class:'form-group col-md-12'}).append(
+                    $('<div>', {class:'col-12'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'idComponente', name:'idComponente'}),
                         $('<input>', {type:'hidden', class:'form-control', id:'dialog', name:'dialog', value:'dialog'}),
-                        $('<label>', {for:'componente'}).append('Componente'),
-                        $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente'})
+                        $('<input>', {type:'text', class:'form-control', id:'componente', name:'componente', placeholder:'Componente'}),
                     ),
                 ),
-                $('<a>', {href:'#', class:'button', id:'salvarComponentes'}).append('Salvar').on('click', function() {
+                $('<a>', {href:'#', class:'button', id:'salvarComponentes', style:'margin-top: 10px;'}).append('Salvar').on('click', function() {
                     if (validarComponente(event)) {
                         enviarFormComponente();
                     }
@@ -282,7 +279,7 @@ function dialogComponente() {
     );
 
     $('.formComponente').dialog({
-        height: 210,
+        height: 165,
         width: 500
     });
 
@@ -379,7 +376,7 @@ function excluirComponente(id) {
         title: 'Você quer realmente excluir?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#a9a9a9',
+        confirmButtonColor: '#008000',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Sim!',
         cancelButtonText: "Não!"

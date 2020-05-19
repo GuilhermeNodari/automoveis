@@ -1,16 +1,16 @@
 $(document).ready(function(){
 
     function popover() {
-        adicionarPopover('popoverDescricao','A descrição serve para descrever o carro, com seu nome e motorização por exemplo');
-        adicionarPopover('popoverPlaca','Digite a placa do seu carro. <br> Exemplo: XXX1234');
-        adicionarPopover('popoverRenavan',' O Código RENAVAM é, hoje, um código numeral de 11 dígitos e está localizado na parte superior de sua CNH');
-        adicionarPopover('popoverAnoModelo','Digite o ano do modelo do seu carro. <br> Exemplo: 2020');
-        adicionarPopover('popoverAnoFabricacao','Digite o ano de fabricação do seu carro. <br> Exemplo: 2020');
-        adicionarPopover('popoverCor','Digite a cor do seu carro. <br> Exemplo: Branco');
-        adicionarPopover('popoverKM','Digite a quilometragem do seu carro, está localizada no painel do seu automóvel');
-        adicionarPopover('popoverMarca','Digite a marca do seu carro. <br> Exemplo: Fiat');
-        adicionarPopover('popoverPreco','Digite o preço que você quer ganhar do seu carro');
-        adicionarPopover('popoverPrecoFipe','Digite o preço do seu carro que está na Tabela FIPE, que é a principal referência no mercado de carros usados e seminovos, além de ser usada como base para contratos e seguros. <br> Entre no site: <a href="https://veiculos.fipe.org.br/" target="_blank"> Veículos FIPE </a>');
+        adicionarPopover('descricao','A descrição serve para descrever o carro, com seu nome e motorização por exemplo');
+        adicionarPopover('placa','Digite a placa do seu carro. <br> Exemplo: XXX1234');
+        adicionarPopover('renavan',' O Código RENAVAM é, hoje, um código numeral de 11 dígitos e está localizado na parte superior de sua CNH');
+        adicionarPopover('ano_modelo','Digite o ano do modelo do seu carro. <br> Exemplo: 2020');
+        adicionarPopover('ano_fabricacao','Digite o ano de fabricação do seu carro. <br> Exemplo: 2020');
+        adicionarPopover('cor','Digite a cor do seu carro. <br> Exemplo: Branco');
+        adicionarPopover('km','Digite a quilometragem do seu carro, está localizada no painel do seu automóvel');
+        adicionarPopover('marca','Digite a marca do seu carro. <br> Exemplo: Fiat');
+        adicionarPopover('preco','Digite o preço que você quer ganhar do seu carro');
+        adicionarPopover('preco_fipe','Digite o preço do seu carro que está na Tabela FIPE, que é a principal referência no mercado de carros usados e seminovos, além de ser usada como base para contratos e seguros. <br> Entre no site: <a href="https://veiculos.fipe.org.br/" target="_blank"> Veículos FIPE </a>');
     }
 
     routie({
@@ -58,20 +58,20 @@ function esconderPopover(elemento) {
 
 function adicionarPopover(id, texto) {
 
-    $('label#'+id).append(
-        $('<a>', {href:'#', id:id}).append(
-            $('<i>', {class:'far fa-question-circle', style:'margin-left: 5px;'})
+    $('input#'+id).before(
+        $('<a>', {href:'#', id:'popover_'+id}).append(
+            $('<i>', {class:'far fa-question-circle', style:'color: #009688;'}),
         ),
     );
 
-    $('#'+id).attr({
+    $('#popover_'+id).attr({
         'data-toggle': 'popover',
         'data-html': 'true',
         'data-placement': 'right',
-        'data-content': '<a href="#" style="float:right;" onClick="Javascript:esconderPopover('+id+')"> <i class="far fa-times-circle"></i> </a> <div>'+ texto + '</div>'
+        'data-content': '<a href="#" style="float:right;" onClick="Javascript:esconderPopover(popover_'+id+')"> <i class="far fa-times-circle"></i> </a> <div>'+ texto + '</div>'
     });
 
-    $('#'+id).popover();
+    $('#popover_'+id).popover();
     
     $('html').on('click', function(e) {
         $('[data-toggle="popover"]').each(function () {
