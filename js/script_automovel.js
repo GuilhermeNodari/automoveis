@@ -24,7 +24,7 @@ function editarCadastro(id) {
                         $('<input>', {type:'text', class:'form-control', id:'placa', name:'placa', placeholder:'Placa'})
                     ),
                     $('<div>', {class:'col-4'}).append(
-                        $('<input>', {type:'text', class:'form-control', id:'renavan', name:'renavan', placeholder:'Código RENAVAN'})
+                        $('<input>', {type:'text', class:'form-control', id:'renavan', name:'renavan', placeholder:'Código RENAVAM'})
                     ),
                 ),
                 $('<br>'),
@@ -199,7 +199,6 @@ function apagarAutomoveisSelecionados() {
 }
 
 function excluirCadastro(id) {
-
     Swal.fire({
         title: 'Você quer realmente excluir?',
         icon: 'warning',
@@ -228,7 +227,6 @@ function excluirCadastro(id) {
             });
         }
     });
-
 }
                 
 

@@ -24,16 +24,14 @@ class Componentes extends Database{
 
     public function adicionar() {
 
-        if($this->idComponente == ""){
+        if ($this->idComponente == "") {
             $sql = "INSERT INTO componentes(componentes) VALUES (:componente)";
-        }else{
+        } else {
             $sql = "UPDATE componentes SET componentes = :componente WHERE id = $this->idComponente";
         }
                               
         $this->stmt = $this->pdo->prepare($sql);
-
         $this->stmt->bindParam(':componente', $this->componente, PDO::PARAM_STR);
-
         $this->stmt->execute();
     
     }
@@ -55,7 +53,6 @@ class Componentes extends Database{
     public function dados($id) {
 
         $this->stmt = $this->pdo->prepare("SELECT * FROM componentes WHERE id = :id;");
-
         $this->stmt->bindParam(':id', $id, PDO::PARAM_STR);
 
         $this->stmt->execute();
@@ -66,7 +63,6 @@ class Componentes extends Database{
     public function excluir($id) {
 
         $this->stmt = $this->pdo->prepare('DELETE FROM componentes WHERE id = :id');
-
         $this->stmt->bindParam(':id', $id, PDO::PARAM_STR); 
 
         $this->stmt->execute();
@@ -77,7 +73,7 @@ class Componentes extends Database{
     public function lastInsert() {
 
         $this->stmt = $this->pdo->prepare("SELECT id FROM componentes ORDER BY id DESC LIMIT 1");
-
+        
         $this->stmt->execute();
         return $this->stmt->fetch(PDO::FETCH_ASSOC);
 

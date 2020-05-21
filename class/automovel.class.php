@@ -52,6 +52,7 @@ class Automovel extends Database{
         $this->stmt->bindParam(':preco_fipe', $this->preco_fipe, PDO::PARAM_STR);
                                               
         $this->stmt->execute();
+
     }
 
     public function excluirComponentes($idAutomovel) {
@@ -97,7 +98,6 @@ class Automovel extends Database{
         $this->stmt->bindParam(':id', $id, PDO::PARAM_STR); 
 
         $this->stmt->execute();
-
         return $this->stmt->rowCount();
 
     }
