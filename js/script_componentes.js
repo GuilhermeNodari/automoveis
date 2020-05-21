@@ -61,10 +61,8 @@ function paginacaoComponentes(componentes){
         }
     });
 
-    var checkbox = document.querySelectorAll('#componenteSelecionado');
-
     $('#componenteSelecionado').click(function() {
-        $.each (checkbox, function(key, value) {
+        $.each (checkboxes, function(key, value) {
             if (value.checked) {
                 idSelecionadosPagina.push(value.value);
             } else {

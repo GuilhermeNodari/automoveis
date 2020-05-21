@@ -272,10 +272,8 @@ function paginacao(retornoAjax, coluna, ordem){
         }
     });
 
-    var checkbox = document.querySelectorAll('#automovelSelecionado');
-
     $('#automovelSelecionado').click(function() {
-        $.each (checkbox, function(key, value) {
+        $.each (checkboxes, function(key, value) {
             if (value.checked) {
                 idSelecionadosPagina.push(value.value);
             } else {
