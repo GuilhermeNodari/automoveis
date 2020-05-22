@@ -10,8 +10,8 @@ CREATE TABLE `automoveis` (
   `cor` varchar(20) NOT NULL,
   `km` int(6) NOT NULL,
   `marca` varchar(20) NOT NULL,
-  `preco` decimal(11,2) NOT NULL,
-  `preco_fipe` decimal(11,2) NOT NULL
+  `preco` decimal(14,2) NOT NULL,
+  `preco_fipe` decimal(14,2) NOT NULL
 );
 
 CREATE TABLE `componentes` (

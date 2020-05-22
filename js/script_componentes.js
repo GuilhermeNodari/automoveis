@@ -36,7 +36,7 @@ function paginacaoComponentes(componentes){
     for (var i = 0; i < paginas; i++) {
         $('ul#paginacao').append(
             $('<li>', {class:'page-item'}).append(
-                $('<a>', {class:'page-link'}).on('click', function(){
+                $('<a>', {class:'page-link', id:i+1}).on('click', function(){
                     routie('componentes/' + $(this).text());
                 }).append(i+1),
                 $('<input>', {type:'hidden', name:'pagina', id:'pagina', value:i+1}),
@@ -83,8 +83,6 @@ function botaoApagarTodosComponentes() {
 }
 
 function editarComponente(id, componente, pagina) {
-
-    pagina = parseInt(pagina)-1;
 
     if ($('.formComponente').hasClass('ui-dialog-content')) {
         $('.formComponente').dialog('destroy');
@@ -144,7 +142,7 @@ function editarComponente(id, componente, pagina) {
             botaoApagarTodosComponentes();
         }
 
-        listarComponentes(pagina).done(function(dados) {
+        listarComponentes(pagina-1).done(function(dados) {
             $.each (dados[1], function(key, value) {
                 $('tbody').append(
                     $('<tr>').append(
@@ -189,6 +187,7 @@ function editarComponente(id, componente, pagina) {
             });
 
             paginacaoComponentes(dados[0]);
+            $('a#'+pagina).attr('style', 'background-color: #e8e8e8; border: 1px solid #696969;');
 
             $.each (idSelecionadosPagina, function(key, value) {
                 if (value == 'selecionarTodos') {
@@ -203,7 +202,7 @@ function editarComponente(id, componente, pagina) {
 
     }
     
-    listarComponentes(pagina).done(function(dados) {
+    listarComponentes(pagina-1).done(function(dados) {
         $('.listaComponente').append(
             $('<div>', {class:'container'}).append(
                 $('<form>', {id:'apagarComponentesSelecionados'}).append(

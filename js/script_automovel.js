@@ -246,7 +246,7 @@ function paginacao(retornoAjax, coluna, ordem){
     for (var i = 0; i < paginas; i++) {
         $('ul#paginacao').append(
             $('<li>', {class:'page-item'}).append(
-                $('<a>', {class:'page-link'}).on('click', function(){
+                $('<a>', {class:'page-link', id:i+1}).on('click', function(){
                     var busca = $('#pesquisa').val() == '' ? 'NULL' : $('#pesquisa').val();
                     routie('listar/' + busca + '/' + $(this).text() + '/' + coluna + '/' + ordem);
                 }).append(i+1),
@@ -371,6 +371,7 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
     $('.form').html('');
     
     pesquisarAutomoveis(busca, parseInt(pagina)-1, coluna, ordem, function(retornoAjax) {
+        pagina = typeof pagina == 'undefined' ? 1 : pagina;
         $('.lista').append(
             $('<div>', {class:'container'}).append(
                 $('<br>'),
@@ -501,6 +502,9 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
                 ),
             );
         }
+
+        $('a#'+pagina).attr('style', 'background-color: #e8e8e8; border: 1px solid #696969;');
+    
     });
 
     $('.lista').show();
