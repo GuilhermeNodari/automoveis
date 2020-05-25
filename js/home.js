@@ -58,7 +58,7 @@ function esconderPopover(elemento) {
 
 function adicionarPopover(id, texto) {
 
-    $('input#'+id).before(
+    $('input#'+id).after(
         $('<a>', {href:'#', id:'popover_'+id}).append(
             $('<i>', {class:'far fa-question-circle', style:'color: #009688;'}),
         ),

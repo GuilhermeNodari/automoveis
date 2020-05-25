@@ -1,3 +1,7 @@
+.bmd-form-group {
+    padding: 0 !important;
+}
+
 .ordenacao {
     margin-left: 5px; 
     margin-top: 3px; 
@@ -22,6 +26,11 @@
 
 .fa-plus {
     float: right;
+}
+
+#divInputCadastro {
+    display: flex;
+    align-items: center;
 }
 
 a.button{

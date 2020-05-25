@@ -16,41 +16,41 @@ function editarCadastro(id) {
             $('<hr>'),
             $('<form>', {id:'form'}).append(
                 $('<div>', {class:'form-row'}).append(
-                    $('<div>', {class:'col-4'}).append(
+                    $('<div>', {class:'col-4', id:'divInputCadastro'}).append(
                         $('<input>', {type:'hidden', class:'form-control', id:'id', name:'id'}),
                         $('<input>', {type:'text', class:'form-control', id:'descricao', name:'descricao', placeholder:'Descrição'})
                     ),
-                    $('<div>', {class:'col-4'}).append(
+                    $('<div>', {class:'col-4', id:'divInputCadastro'}).append(
                         $('<input>', {type:'text', class:'form-control', id:'placa', name:'placa', placeholder:'Placa'})
                     ),
-                    $('<div>', {class:'col-4'}).append(
+                    $('<div>', {class:'col-4', id:'divInputCadastro'}).append(
                         $('<input>', {type:'text', class:'form-control', id:'renavan', name:'renavan', placeholder:'Código RENAVAM'})
                     ),
                 ),
                 $('<br>'),
                 $('<div>', {class:'form-row'}).append(
-                    $('<div>', {class:'col-2'}).append(
+                    $('<div>', {class:'col-2', id:'divInputCadastro'}).append(
                         $('<input>', {type:'text', class:'form-control', id:'ano_modelo', name:'ano_modelo', placeholder:'Ano do Modelo'})
                     ),
-                    $('<div>', {class:'col-2'}).append(
+                    $('<div>', {class:'col-2', id:'divInputCadastro'}).append(
                         $('<input>', {type:'text', class:'form-control', id:'ano_fabricacao', name:'ano_fabricacao', placeholder:'Ano de Fabricação'})
                     ),
-                    $('<div>', {class:'col-2'}).append(
+                    $('<div>', {class:'col-2', id:'divInputCadastro'}).append(
                         $('<input>', {type:'text', class:'form-control', id:'cor', name:'cor', placeholder:'Cor'})
                     ),
-                    $('<div>', {class:'col-2'}).append(
+                    $('<div>', {class:'col-2', id:'divInputCadastro'}).append(
                         $('<input>', {type:'text', class:'form-control', id:'km', name:'km', placeholder:'KM'})
                     ),
-                    $('<div>', {class:'col-2'}).append(
+                    $('<div>', {class:'col-2', id:'divInputCadastro'}).append(
                         $('<input>', {type:'text', class:'form-control', id:'marca', name:'marca', placeholder:'Marca'})
                     ),
                 ),
                 $('<br>'),
                 $('<div>', {class:'form-row'}).append(
-                    $('<div>', {class:'col-2'}).append(
+                    $('<div>', {class:'col-2', id:'divInputCadastro'}).append(
                         $('<input>', {type:'text', class:'form-control', id:'preco', name:'preco', placeholder:'Preço'})
                     ),
-                    $('<div>', {class:'col-2'}).append(
+                    $('<div>', {class:'col-2', id:'divInputCadastro'}).append(
                         $('<input>', {type:'text', class:'form-control', id:'preco_fipe', name:'preco_fipe', placeholder:'Preço FIPE'})
                     ),
                 ),
