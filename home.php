@@ -47,5 +47,7 @@
 <div class="listaComponente"></div>
 <div class="paginacao"></div>
 
+<?php include_once 'footer.include.php'?>
+
 </body>
 </html>

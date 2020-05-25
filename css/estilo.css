@@ -33,6 +33,16 @@
     align-items: center;
 }
 
+.footer {
+    position: fixed;
+    padding: 5px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #e8e8e8;
+    text-align: center;
+  }
+
 a.button{
     display: inline-block;
     padding: 0.2em 1.45em;
