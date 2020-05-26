@@ -7,11 +7,21 @@ function editarCadastro(id) {
     $('.listaComponente').html('');
     $('.formComponente').html('');
     $('.form').html('');
-    
+    $('.breadcrumbPrincipal').remove();
+
+    $('.form').before(
+        $('<nav>', {'aria-label':'breadcrumb', class:'breadcrumbPrincipal'}).append(
+            $('<ol>', {class:'breadcrumb'}).append(
+                $('<li>', {class:'breadcrumb-item'}).append(
+                    $('<a>', {href:'home.php'}).append('Home'),
+                ),
+                $('<li>', {class:'breadcrumb-item active', 'aria-curent':'page'}).append('Cadastro'),
+            ),
+        ),
+    );
+
     $('.form').append(
         $('<div>', {class:'container'}).append(
-            $('<br>'),
-            $('<br>'),
             $('<h4>').append('Dados Cadastrais'),
             $('<hr>'),
             $('<form>', {id:'form'}).append(
@@ -369,13 +379,26 @@ function listar(pesquisa, pagina, coluna = 'descricao', ordem = 'ASC') {
     $('.listaComponente').html('');
     $('.lista').html('');
     $('.form').html('');
+    $('.breadcrumbPrincipal').remove();
+
+    $('.lista').before(
+        $('<nav>', {'aria-label':'breadcrumb', class:'breadcrumbPrincipal'}).append(
+            $('<ol>', {class:'breadcrumb'}).append(
+                $('<li>', {class:'breadcrumb-item'}).append(
+                    $('<a>', {href:'home.php'}).append('Home'),
+                ),
+                $('<li>', {class:'breadcrumb-item'}).append(
+                    $('<a>', {href:'home.php#cadastro'}).append('Cadastro'),
+                ),
+                $('<li>', {class:'breadcrumb-item active', 'aria-curent':'page'}).append('Lista'),
+            ),
+        ),
+    );
     
     pesquisarAutomoveis(busca, parseInt(pagina)-1, coluna, ordem, function(retornoAjax) {
         pagina = typeof pagina == 'undefined' ? 1 : pagina;
         $('.lista').append(
             $('<div>', {class:'container'}).append(
-                $('<br>'),
-                $('<br>'),
                 $('<h4>').append('Lista de Automóveis'),
                 $('<hr>'),
                 $('<br>'),

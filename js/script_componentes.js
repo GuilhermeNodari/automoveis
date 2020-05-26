@@ -92,11 +92,21 @@ function editarComponente(id, componente, pagina) {
     $('.lista').html('');
     $('.formComponente').html('');
     $('.listaComponente').html('');
+    $('.breadcrumbPrincipal').remove();
+
+    $('.lista').before(
+        $('<nav>', {'aria-label':'breadcrumb', class:'breadcrumbPrincipal'}).append(
+            $('<ol>', {class:'breadcrumb'}).append(
+                $('<li>', {class:'breadcrumb-item'}).append(
+                    $('<a>', {href:'home.php'}).append('Home'),
+                ),
+                $('<li>', {class:'breadcrumb-item active', 'aria-curent':'page'}).append('Componentes'),
+            ),
+        ),
+    );
 
     $('.formComponente').append(
         $('<div>', {class:'container'}).append(
-            $('<br>'),
-            $('<br>'),
             $('<h4>').append('Dados dos Componentes'),
             $('<hr>'),
             $('<form>', {id:'formComponentes'}).append(

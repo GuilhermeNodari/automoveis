@@ -2,6 +2,10 @@
     padding: 0 !important;
 }
 
+.breadcrumb {
+    background-color: transparent !important;
+}
+
 .ordenacao {
     margin-left: 5px; 
     margin-top: 3px; 
